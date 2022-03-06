@@ -13,7 +13,7 @@ export default function HomeScreen() {
   
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Welcome user {user.uid}</Text>
+      <Text style={styles.text}>Welcome {user.email}</Text>
       <View style={styles.button}>
         <FormButton buttonTitle='Logout' onPress={() => logout()} />
       </View>
