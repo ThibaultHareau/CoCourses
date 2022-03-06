@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 import FormButton from '../components/atoms/FormButton';
+import InOrOutTemplate from '../components/templates/InOrOutTemplate';
 
 import { Colors } from '../styles/index';
 
@@ -17,6 +18,7 @@ export default function HomeScreen() {
       <View style={styles.button}>
         <FormButton buttonTitle='Logout' onPress={() => logout()} />
       </View>
+      <InOrOutTemplate />
     </View>
   );
 }
