@@ -9,6 +9,7 @@ import Loading from '../components/Loading';
 export default function Routes() {
 
   const { user, setUser } = useContext(AuthContext);
+  const [inShop, setInShop] = useState(null);
   const [loading, setLoading] = useState(true);
   const [initializing, setInitializing] = useState(true);
 

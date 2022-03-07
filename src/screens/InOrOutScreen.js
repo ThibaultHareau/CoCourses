@@ -1,22 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import FormButton from '../components/atoms/FormButton';
+import InOrOutTemplate from '../components/templates/InOrOutTemplate';
 
 import { Colors } from '../styles/index';
 
 import { AuthContext } from '../navigation/AuthProvider';
 
-export default function HomeScreen( {navigation} ) {
+export default function InOrOutScreen( {navigation} ) {
   
+  const [inShop, setInShop] = useState(null);
   const { user, logout } = useContext(AuthContext);
   
+  const inShopPress = () => {navigation.navigate('Home');setInShop(1);console.log(inShop)}; 
+  const outShopPress = () => {navigation.navigate('Home');setInShop(-1);console.log(inShop)}; 
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Welcome {user.email}</Text>
-      <View style={styles.button}>
-        <FormButton buttonTitle='Logout' onPress={() => logout()} />
-      </View>
+      <InOrOutTemplate inShopPress={inShopPress} outShopPress={outShopPress} />
     </View>
   );
 }

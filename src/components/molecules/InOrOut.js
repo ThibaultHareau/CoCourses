@@ -6,18 +6,18 @@ import ChoiceButton from '../atoms/ChoiceButton';
 
 import { Colors } from '../../styles/index';
 
-export default function InOrOut() {
+export default function InOrOut({inShopPress,outShopPress}) {
   
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Choisissez votre mode</Text>
 
       <View style={styles.button}>
-        <ChoiceButton buttonTitle='Je suis en magasin'/>
+        <ChoiceButton buttonTitle='Je suis en magasin' onPress={inShopPress}/>
       </View>
 
       <View style={styles.button}>
-        <ChoiceButton buttonTitle='Je ne suis pas en magasin'/>
+        <ChoiceButton buttonTitle='Je ne suis pas en magasin' onPress={outShopPress}/>
       </View>
 
     </View>
