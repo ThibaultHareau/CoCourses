@@ -1,10 +1,13 @@
 import React from 'react';
 import { AuthProvider } from './AuthProvider';
+import { InShopProvider } from './InShopProvider';
 import Routes from './Routes';
 export default function Providers() {
   return (
     <AuthProvider>
-      <Routes />
+      <InShopProvider>
+        <Routes />
+      </InShopProvider>
     </AuthProvider>
   );
 }

@@ -4,14 +4,29 @@ import auth from '@react-native-firebase/auth';
 import AuthStack from './AuthStack';
 import HomeStack from './HomeStack';
 import { AuthContext } from './AuthProvider';
+import { InShopContext } from './InShopProvider';
 import Loading from '../components/Loading';
 
 export default function Routes() {
 
   const { user, setUser } = useContext(AuthContext);
-  const [inShop, setInShop] = useState(null);
+  /*const { inShop, setInShop } = useContext(null);*/
   const [loading, setLoading] = useState(true);
   const [initializing, setInitializing] = useState(true);
+
+  /*
+  // Handle inShop state changes
+  function onInShopStateChanged(user) {
+    setInShop(inShop);
+    if (initializing) setInitializing(false);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    const subscriber = onInShopStateChanged(onInShopStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);*/
+
 
   // Handle user state changes
   function onAuthStateChanged(user) {

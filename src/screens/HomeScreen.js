@@ -6,14 +6,22 @@ import FormButton from '../components/atoms/FormButton';
 import { Colors } from '../styles/index';
 
 import { AuthContext } from '../navigation/AuthProvider';
+import { InShopContext } from '../navigation/InShopProvider';
 
 export default function HomeScreen( {navigation} ) {
   
   const { user, logout } = useContext(AuthContext);
+  const { inShop } = useContext(InShopContext);
   
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Welcome {user.email}</Text>
+      <Text style={styles.text}>
+        {inShop===-1 ? 
+        "Vous êtes en mode hors magasin" :
+        "Bienvenue dans le magasin " + inShop
+        }
+       </Text>
       <View style={styles.button}>
         <FormButton buttonTitle='Logout' onPress={() => logout()} />
       </View>

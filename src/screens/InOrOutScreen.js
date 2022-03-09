@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext , useEffect} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 import InOrOutTemplate from '../components/templates/InOrOutTemplate';
@@ -6,14 +6,15 @@ import InOrOutTemplate from '../components/templates/InOrOutTemplate';
 import { Colors } from '../styles/index';
 
 import { AuthContext } from '../navigation/AuthProvider';
+import { InShopContext } from '../navigation/InShopProvider';
 
 export default function InOrOutScreen( {navigation} ) {
   
-  const [inShop, setInShop] = useState(null);
+  const { inShop, setInShop } = useContext(InShopContext);
   const { user, logout } = useContext(AuthContext);
   
-  const inShopPress = () => {navigation.navigate('Home');setInShop(1);console.log(inShop)}; 
-  const outShopPress = () => {navigation.navigate('Home');setInShop(-1);console.log(inShop)}; 
+  const inShopPress = () => {setInShop(1),navigation.navigate('Home')}; 
+  const outShopPress = () => {setInShop(-1),navigation.navigate('Home')}; 
 
   return (
     <View style={styles.container}>
