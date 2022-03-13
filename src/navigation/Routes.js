@@ -14,20 +14,6 @@ export default function Routes() {
   const [loading, setLoading] = useState(true);
   const [initializing, setInitializing] = useState(true);
 
-  /*
-  // Handle inShop state changes
-  function onInShopStateChanged(user) {
-    setInShop(inShop);
-    if (initializing) setInitializing(false);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    const subscriber = onInShopStateChanged(onInShopStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);*/
-
-
   // Handle user state changes
   function onAuthStateChanged(user) {
     setUser(user);

@@ -5,13 +5,11 @@ import InOrOutTemplate from '../components/templates/InOrOutTemplate';
 
 import { Colors } from '../styles/index';
 
-import { AuthContext } from '../navigation/AuthProvider';
 import { InShopContext } from '../navigation/InShopProvider';
 
 export default function InOrOutScreen( {navigation} ) {
   
   const { inShop, setInShop } = useContext(InShopContext);
-  const { user, logout } = useContext(AuthContext);
   
   const inShopPress = () => {setInShop(1),navigation.navigate('Home')}; 
   const outShopPress = () => {setInShop(-1),navigation.navigate('Home')}; 

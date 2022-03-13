@@ -24,6 +24,7 @@ export default function HomeScreen( {navigation} ) {
        </Text>
       <View style={styles.button}>
         <FormButton buttonTitle='Logout' onPress={() => logout()} />
+        <FormButton buttonTitle='Listes' onPress={() => navigation.navigate('Lists')} />
       </View>
     </View>
   );
