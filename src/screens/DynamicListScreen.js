@@ -16,7 +16,7 @@ export default function DynamicListScreen ( {navigation} ) {
   const reference = firebase
   .app()
   .database('https://cocourses-cbe6a-default-rtdb.europe-west1.firebasedatabase.app/')
-  .ref('Lists');
+  .ref('/');
 
   const { inShop, setInShop } = useContext(InShopContext);
   const { user, logout } = useContext(AuthContext);
@@ -31,22 +31,26 @@ export default function DynamicListScreen ( {navigation} ) {
     setName(textInput)
   }
 
-  //read
-  useEffect(() => {
+  //read in database
+  const readDatabase = (path,dbParam,param,setState) => {
     database()
-    .ref('/lists')
+    .ref(path)
     .on('value', snapshot => {
-      setLists([]);
+      setState([]);
       let data = snapshot.val();
       if (data !== null) {
         Object.values(data).map((list) => {
-          /*setLists(oldArray => [...oldArray, list])*/
-          if (list.owner === user.uid){
-            setLists(oldArray => [...oldArray, list])
+          if (list[dbParam] === param){
+            setState(oldArray => [...oldArray, list])
           } 
         })
       }
     });
+  }
+
+  //read
+  useEffect(() => {
+      readDatabase ('lists','owner',user.uid,setLists)
   },[]);
 
   //write
@@ -57,7 +61,7 @@ export default function DynamicListScreen ( {navigation} ) {
       .set({
         uuid,
         name,
-        items : {0 : {quantity:0,inCart:false}},
+        items : {0 : {quantity:0,inCart:false,uid:0}},
         owner : user.uid,
         creationDate : Date.now(),
         updateDate : Date.now(),
@@ -91,27 +95,19 @@ export default function DynamicListScreen ( {navigation} ) {
 
   return (
     <MainTemplate>
-      <FormInput
+      <View>
+        <FormInput
           value={name}
           placeholderText="Nom de la liste"
           onChangeText={handleNameChange}
           style={styles.input}
         />
-      {isEdit ? 
-        <View style={styles.button}>
-          <FormButton buttonTitle='Ecraser' onPress={handleListSubmitChange} />
-          <FormButton buttonTitle='X' onPress={() => setIsEdit(false)} />
-        </View>
-          : 
-        <View style={styles.button}>
-          <FormButton buttonTitle='Entrer' onPress={writeToDatabase} />
-       </View>  
-      }
+        <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} />
+      </View>
       {lists.map((list) => (
         <View >
           <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle='Supprimer' onPress={() => handleListDelete(list)} key={"delete"+list.uuid.toString()}/>
-          <FormButton buttonTitle='Modifier' onPress={() => handleListUpdate(list)} key={"update"+list.uuid.toString()}/>
+          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid})}/>
         </View>
       ))}
     </MainTemplate>
