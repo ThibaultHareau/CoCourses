@@ -26,6 +26,7 @@ export default function HomeScreen( {navigation} ) {
       <View style={styles.button}>
         <FormButton buttonTitle='Logout' onPress={() => logout()} />
         <FormButton buttonTitle='Listes' onPress={() => navigation.navigate('Lists')} />
+        <FormButton buttonTitle='Catalogue' onPress={() => navigation.navigate('Catalog')} />
       </View>
     </MainTemplate>
   );
