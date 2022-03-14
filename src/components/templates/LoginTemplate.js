@@ -1,12 +1,10 @@
 import React from 'react';
 
-import LoginSection from '../organisms/LoginSection';
+import LoginForm from '../molecules/LoginForm';
 
 export default function LoginTemplate( {formInfo} ) {
   
   return (
-    <LoginSection 
-        formInfo={formInfo}
-    />
+    <LoginForm formInfo={formInfo}/>
   );
 }

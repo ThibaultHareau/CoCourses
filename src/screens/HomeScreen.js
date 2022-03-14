@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 import FormButton from '../components/atoms/FormButton';
+import MainTemplate from '../components/templates/MainTemplate';
 
 import { Colors } from '../styles/index';
 
@@ -14,7 +15,7 @@ export default function HomeScreen( {navigation} ) {
   const { inShop } = useContext(InShopContext);
   
   return (
-    <View style={styles.container}>
+    <MainTemplate>
       <Text style={styles.text}>Welcome {user.email}</Text>
       <Text style={styles.text}>
         {inShop===-1 ? 
@@ -26,7 +27,7 @@ export default function HomeScreen( {navigation} ) {
         <FormButton buttonTitle='Logout' onPress={() => logout()} />
         <FormButton buttonTitle='Listes' onPress={() => navigation.navigate('Lists')} />
       </View>
-    </View>
+    </MainTemplate>
   );
 }
 

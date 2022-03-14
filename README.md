@@ -24,7 +24,12 @@ Générateur de uid
 yarn add uid
 ```
 
-Possible conflit des modules masked-view (et suprrimer le module @react-native-masked-view dans le dossier node_modules)
+Couleurs dégradées
+```
+yarn add react-native-linear-gradient
+```
+
+Conflit des modules masked-view (supprimer le module @react-native-masked-view dans le dossier node_modules)
 ```
 yarn remove @react-native-masked-view
 ```

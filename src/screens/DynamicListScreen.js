@@ -3,6 +3,7 @@ import {Alert ,StyleSheet, Text, TextInput, TouchableOpacity ,View} from 'react-
 
 import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
+import MainTemplate from '../components/templates/MainTemplate';
 
 import { AuthContext } from '../navigation/AuthProvider';
 import { InShopContext } from '../navigation/InShopProvider';
@@ -36,10 +37,13 @@ export default function DynamicListScreen ( {navigation} ) {
     .ref('/lists')
     .on('value', snapshot => {
       setLists([]);
-      const data = snapshot.val();
+      let data = snapshot.val();
       if (data !== null) {
         Object.values(data).map((list) => {
-          setLists(oldArray => [...oldArray, list])
+          /*setLists(oldArray => [...oldArray, list])*/
+          if (list.owner === user.uid){
+            setLists(oldArray => [...oldArray, list])
+          } 
         })
       }
     });
@@ -86,7 +90,7 @@ export default function DynamicListScreen ( {navigation} ) {
 
 
   return (
-    <View style={styles.container}>
+    <MainTemplate>
       <FormInput
           value={name}
           placeholderText="Nom de la liste"
@@ -110,7 +114,7 @@ export default function DynamicListScreen ( {navigation} ) {
           <FormButton buttonTitle='Modifier' onPress={() => handleListUpdate(list)} key={"update"+list.uuid.toString()}/>
         </View>
       ))}
-    </View>
+    </MainTemplate>
   );
 }
   
@@ -131,6 +135,12 @@ export default function DynamicListScreen ( {navigation} ) {
       width:'90%',
       marginBottom:1,
       borderRadius:5
+    },
+    linearGradient: {
+      flex: 1,
+      paddingLeft: 15,
+      paddingRight: 15,
+      borderRadius: 5
     },
     listName: {
       fontSize: 28

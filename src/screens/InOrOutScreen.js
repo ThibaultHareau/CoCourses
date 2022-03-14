@@ -1,7 +1,8 @@
 import React, { useState, useContext , useEffect} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import InOrOutTemplate from '../components/templates/InOrOutTemplate';
+import InOrOut from '../components/molecules/InOrOut';
+import MainTemplate from '../components/templates/MainTemplate';
 
 import { Colors } from '../styles/index';
 
@@ -15,9 +16,9 @@ export default function InOrOutScreen( {navigation} ) {
   const outShopPress = () => {setInShop(-1),navigation.navigate('Home')}; 
 
   return (
-    <View style={styles.container}>
-      <InOrOutTemplate inShopPress={inShopPress} outShopPress={outShopPress} />
-    </View>
+    <MainTemplate>
+      <InOrOut inShopPress={inShopPress} outShopPress={outShopPress} />
+    </MainTemplate>
   );
 }
 
