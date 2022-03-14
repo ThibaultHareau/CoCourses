@@ -135,7 +135,7 @@ export default function ProductScreen ( {navigation, route} ) {
       {lists.map((list) => (
         <View >
           <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("CatalogDetails",{listUid:list.uuid})}/>
+          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("ProductDetails",{listUid:list.uuid})}/>
         </View>
       ))}
     </MainTemplate>
