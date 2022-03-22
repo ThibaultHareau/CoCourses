@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 import FormButton from '../components/atoms/FormButton';
@@ -8,15 +8,23 @@ import { Colors } from '../styles/index';
 
 import { AuthContext } from '../navigation/AuthProvider';
 import { InShopContext } from '../navigation/InShopProvider';
+import { DatabaseContext } from '../navigation/DatabaseProvider';
+
+import database, {firebase} from '@react-native-firebase/database';
 
 export default function HomeScreen( {navigation} ) {
   
   const { user, logout } = useContext(AuthContext);
   const { inShop } = useContext(InShopContext);
+  const { userData, getUser } = useContext(DatabaseContext);
+
+  useEffect(() => {
+    getUser(user.uid)
+  },[]);
   
   return (
     <MainTemplate>
-      <Text style={styles.text}>Welcome {user.email}</Text>
+      <Text style={styles.text}>Welcome {userData===null ? "" : userData.firstName}</Text>
       <Text style={styles.text}>
         {inShop===-1 ? 
         "Vous êtes en mode hors magasin" :

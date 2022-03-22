@@ -10,6 +10,8 @@ export default function SignupScreen({navigation}) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const { register } = useContext(AuthContext);
 
   return (
@@ -29,9 +31,19 @@ export default function SignupScreen({navigation}) {
         onChangeText={userPassword => setPassword(userPassword)}
         secureTextEntry={true}
       />
+      <FormInput
+        value={firstName}
+        placeholderText='Prénom'
+        onChangeText={userFirstName => setFirstName(userFirstName)}
+      />
+      <FormInput
+        value={lastName}
+        placeholderText='Nom'
+        onChangeText={userLastName => setLastName(userLastName)}
+      />
       <FormButton
         buttonTitle='Signup'
-        onPress={() => register(email, password)}
+        onPress={() => register(email, password,firstName,lastName)}
       />
     </View>
   );
