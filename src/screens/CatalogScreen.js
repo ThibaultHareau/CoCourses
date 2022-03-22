@@ -7,89 +7,32 @@ import MainTemplate from '../components/templates/MainTemplate';
 
 import { AuthContext } from '../navigation/AuthProvider';
 import { InShopContext } from '../navigation/InShopProvider';
-
-import database, {firebase} from '@react-native-firebase/database';
-import { uid } from 'uid';
-
+import { DatabaseContext } from '../navigation/DatabaseProvider';
 
 export default function CatalogScreen ( {navigation} ) {
-  const reference = firebase
-  .app()
-  .database('https://cocourses-cbe6a-default-rtdb.europe-west1.firebasedatabase.app/')
-  .ref('/');
 
   const { inShop, setInShop } = useContext(InShopContext);
   const { user, logout } = useContext(AuthContext);
+  const { addDepartment, departmentList, getDepartments } = useContext(DatabaseContext);
 
 
   const [name,setName] = useState("");
-  const [lists, setLists] = useState([]);
-  const [isEdit,setIsEdit] = useState(false);
-  const [tempUuid,setTempUuid] = useState("");
 
   const handleNameChange=(textInput)=>{
     setName(textInput)
   }
 
-  //read in database
-  const readDatabase = (path,dbParam,param,setState) => {
-    database()
-    .ref(path)
-    .on('value', snapshot => {
-      setState([]);
-      let data = snapshot.val();
-      if (data !== null) {
-        Object.values(data).map((list) => {
-          if (list[dbParam] === param){
-            setState(oldArray => [...oldArray, list])
-          } 
-        })
-      }
-    });
-  }
-
   //read
   useEffect(() => {
-      readDatabase ('department','shopId',inShop,setLists)
+    getDepartments(inShop)
   },[]);
 
   //write
   const writeToDatabase = () => {
-    const uuid = uid()
-    database()
-      .ref('/department/'+uuid)
-      .set({
-        uuid,
-        name,
-        creationDate : Date.now(),
-        updateDate : Date.now(),
-        shopId : inShop
-      });
+    addDepartment(name,inShop);
     setName("");
     alert("Rayon crée avec succés");
   }
-
-  //delete
-  const handleListDelete = async (list) => {
-    await database().ref('/department/'+list.uuid).remove();
-  }
-
-  //update
-  const handleListUpdate = (list) => {
-    setIsEdit(true);
-    setTempUuid(list.uuid);
-  }
-  const handleListSubmitChange = () => {
-    database()
-      .ref('/department/'+tempUuid)
-      .update({
-        name: name,
-        updateDate : Date.now()
-      })
-    setIsEdit(false);
-    setName("");
-  }
-
 
   return (
     <MainTemplate>
@@ -102,7 +45,7 @@ export default function CatalogScreen ( {navigation} ) {
         />
         <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} />
       </View>
-      {lists.map((list) => (
+      {departmentList.map((list) => (
         <View >
           <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
           <FormButton buttonTitle="Details" onPress={() => navigation.navigate("Products",{deptUid:list.uuid})}/>

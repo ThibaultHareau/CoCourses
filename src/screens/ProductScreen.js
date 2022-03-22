@@ -7,24 +7,21 @@ import MainTemplate from '../components/templates/MainTemplate';
 
 import { AuthContext } from '../navigation/AuthProvider';
 import { InShopContext } from '../navigation/InShopProvider';
+import { DatabaseContext } from '../navigation/DatabaseProvider';
 
 import database, {firebase} from '@react-native-firebase/database';
 import { uid } from 'uid';
 
 
 export default function ProductScreen ( {navigation, route} ) {
-  const reference = firebase
-  .app()
-  .database('https://cocourses-cbe6a-default-rtdb.europe-west1.firebasedatabase.app/')
-  .ref('/');
 
   const { inShop, setInShop } = useContext(InShopContext);
   const { user, logout } = useContext(AuthContext);
+  const { addItem, getItems, itemList } = useContext(DatabaseContext);
 
 
   const [name,setName] = useState("");
   const [price,setPrice] = useState(null);
-  const [lists, setLists] = useState([]);
   const [isEdit,setIsEdit] = useState(false);
   const [tempUuid,setTempUuid] = useState("");
 
@@ -37,81 +34,17 @@ export default function ProductScreen ( {navigation, route} ) {
     setPrice(parseFloat(priceInput))
   }
 
-  //read in database
-  const getFilteredDatabase = (path1,path2,param1,value1,param2,param3,setState) => {
-    database()
-    .ref('/')
-    .on('value', snapshot => {
-      setState([]);
-      let targets = [];
-      let data = snapshot.val();
-      if (data !== null) {
-        Object.values(data[path1]).map((list) => {
-          if (value1 === list[param1]){
-            targets = [...targets, list[param2]]
-          } 
-        })
-        console.log("ID à afficher : " + targets)
-        Object.values(data[path2]).map((list) => {
-          if (targets.includes(list[param3])){
-            setState(oldArray => [...oldArray,list])
-          } 
-        })
-      }
-    });
-  }
-
   //read
   useEffect(() => {
-    getFilteredDatabase ('department-items','items','deptId',deptUid,'itemId','uuid',setLists)
+    getItems(deptUid)
   },[]);
 
-  //write
   const writeToDatabase = () => {
-    const uuid = uid()
-    const uuid2 = uid()
-    database()
-      .ref('/items/'+uuid)
-      .set({
-        uuid,
-        name,
-        creationDate : Date.now(),
-        updateDate : Date.now(),
-        text : "Description",
-        price : price
-      });
-    database()
-      .ref('/department-items/'+uuid2)
-      .set({
-        uuid : uuid2,
-        deptId : deptUid,
-        itemId : uuid
-      });
+    addItem(name,price,deptUid);
+    alert("Produit crée avec succès");
     setName("");
-    alert("Produit crée avec succés");
+    setPrice(null);
   }
-
-  //delete
-  const handleListDelete = async (list) => {
-    await database().ref('/items/'+list.uuid).remove();
-  }
-
-  //update
-  const handleListUpdate = (list) => {
-    setIsEdit(true);
-    setTempUuid(list.uuid);
-  }
-  const handleListSubmitChange = () => {
-    database()
-      .ref('/items/'+tempUuid)
-      .update({
-        name: name,
-        updateDate : Date.now()
-      })
-    setIsEdit(false);
-    setName("");
-  }
-
 
   return (
     <MainTemplate>
@@ -132,7 +65,7 @@ export default function ProductScreen ( {navigation, route} ) {
         />
         <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} />
       </View>
-      {lists.map((list) => (
+      {itemList.map((list) => (
         <View >
           <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
           <FormButton buttonTitle="Details" onPress={() => navigation.navigate("ProductDetails",{listUid:list.uuid})}/>
