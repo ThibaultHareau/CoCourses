@@ -9,15 +9,19 @@ import { AuthContext } from '../navigation/AuthProvider';
 import { InShopContext } from '../navigation/InShopProvider';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 
-export default function CatalogScreen ( {navigation, route} ) {
+export default function ListsChoiceScreen ( {navigation, route} ) {
 
   const { inShop, setInShop } = useContext(InShopContext);
-  const { user, logout } = useContext(AuthContext);
-  const { addDepartment, departmentList, getDepartments } = useContext(DatabaseContext);
+  const { user } = useContext(AuthContext);
+  const { addItemToList, getLists, listsList } = useContext(DatabaseContext);
 
   const [name,setName] = useState("");
+  const [lists, setLists] = useState([]);
 
   const userId = route.params.userId;
+  const itemName = route.params.itemName;
+  const itemId = route.params.itemId;
+  const deptId = route.params.deptId;
 
   const handleNameChange=(textInput)=>{
     setName(textInput)
@@ -25,32 +29,24 @@ export default function CatalogScreen ( {navigation, route} ) {
 
   //read
   useEffect(() => {
-    getDepartments(inShop)
+    getLists(userId)
   },[]);
 
   //write
-  const writeToDatabase = () => {
-    addDepartment(name,inShop);
-    setName("");
-    alert("Rayon crée avec succés");
+  const writeToDatabase = (listId,listName) => {
+    addItemToList(listId,itemId,1);
+    alert("Ajout de : "+ itemName+" dans "+listName);
+    navigation.navigate("ProductDetails",{deptId:deptId, productId:itemId,userId:userId})
   }
 
   return (
     <MainTemplate>
       <View>
-        <Text>{userId}</Text>
-        <FormInput
-          value={name}
-          placeholderText="Nom de la liste"
-          onChangeText={handleNameChange}
-          style={styles.input}
-        />
-        <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} />
+        <Text>{itemName}</Text>
       </View>
-      {departmentList.map((list) => (
+      {listsList.map((list) => (
         <View >
-          <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("Products",{deptId:list.uuid,userId:userId})}/>
+          <FormButton buttonTitle={list.name}  key={"Button"+list.uuid} onPress={() => writeToDatabase(list.uuid,list.name)}/>
         </View>
       ))}
     </MainTemplate>

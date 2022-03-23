@@ -52,7 +52,6 @@ export const DatabaseProvider = ({ children }) => {
         },
         addItem : (name,price,deptUid) => {
           const uuid = uid()
-          const uuid2 = uid()
           database()
             .ref('/items/'+uuid)
             .set({
@@ -93,14 +92,21 @@ export const DatabaseProvider = ({ children }) => {
             owner : userId,
             creationDate : Date.now(),
             updateDate : Date.now(),
-            shopId
+            shopId,
+            itemsList : {
+              '-1' : {
+                inCart : false,
+                quantity : -1,
+                itemId : '-1'
+              }
+            }
           });
         },
         getLists : (userId) => {
           getElement('/lists/',userId,"owner",setListsList)
         },
-        updateListName : (name,listId) => {
-          database()
+        updateListName : async (name,listId) => {
+          await database()
           .ref('/lists/'+listId)
           .update({
             name: name,
@@ -126,8 +132,39 @@ export const DatabaseProvider = ({ children }) => {
             name : name,
             text: text,
             updateDate : Date.now()
-        })
-        }
+          })
+        },
+        getItemsList : (itemsList) => {
+          database()
+          .ref("/items/")
+          .on('value', snapshot => {
+            setItemList([]);
+            let data = snapshot.val();
+            if (data !== null) {
+              Object.values(data).map((list) => {
+                if (Object.keys(itemsList).includes(list.uuid)){
+                  setItemList(oldArray => [...oldArray, Object.assign(list,itemsList[list.uuid])])
+                } 
+              })
+            }
+          });
+        },
+        updateInCart : async (value,listId,itemId) => {
+          await database()
+          .ref('/lists/'+listId+"/itemsList/"+itemId)
+          .update({
+            inCart : value
+          })
+        },
+        addItemToList : (listId,itemId,quantity) => {
+          database()
+            .ref('/lists/'+listId+'/itemsList/'+itemId)
+            .set({
+                inCart : false,
+                quantity,
+                itemId
+            });
+        },
       }}
     >
       {children}

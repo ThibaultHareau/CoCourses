@@ -9,15 +9,16 @@ import { AuthContext } from '../navigation/AuthProvider';
 import { InShopContext } from '../navigation/InShopProvider';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 
-export default function ListsScreen ( {navigation} ) {
+export default function ListsScreen ( {navigation, route} ) {
 
   const { inShop, setInShop } = useContext(InShopContext);
   const { user, logout } = useContext(AuthContext);
   const { addList, getLists, listsList } = useContext(DatabaseContext);
 
-
   const [name,setName] = useState("");
   const [lists, setLists] = useState([]);
+
+  const userId = route.params.userId;
 
   const handleNameChange=(textInput)=>{
     setName(textInput)
@@ -49,7 +50,7 @@ export default function ListsScreen ( {navigation} ) {
       {listsList.map((list) => (
         <View >
           <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details"  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid})}/>
+          <FormButton buttonTitle="Details"  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid,listName:list.name,userId:userId})}/>
         </View>
       ))}
     </MainTemplate>

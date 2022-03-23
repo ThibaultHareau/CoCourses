@@ -18,6 +18,7 @@ export default function ProductDetailScreen ( {navigation, route} ) {
 
     const productId = route.params.productId;
     const deptId = route.params.deptId;
+    const userId = route.params.userId;
   
     const handleTextChange=(textInput)=>{
       setText(textInput)
@@ -76,6 +77,7 @@ export default function ProductDetailScreen ( {navigation, route} ) {
           <Text key={list.uuid}>{list.text}</Text>
           <FormButton buttonTitle='Supprimer' onPress={() => handleListDelete(list)} key={"delete"+list.uuid.toString()}/>
           <FormButton buttonTitle='Modifier' onPress={() => setOnEdit(list)} key={"update"+list.uuid.toString()}/>
+          <FormButton buttonTitle='Ajouter' onPress={() => navigation.navigate("ListsChoice",{itemName:list.name,itemId:list.uuid,userId:userId,deptId:deptId})} key={"update"+list.uuid.toString()}/>
         </View>
       ))}
     </MainTemplate>

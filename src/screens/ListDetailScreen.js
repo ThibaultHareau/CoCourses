@@ -5,25 +5,44 @@ import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
 import MainTemplate from '../components/templates/MainTemplate';
 
+import { Colors } from '../styles/index';
+
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 
 export default function ListDetailScreen ( {navigation, route} ) {
 
-    const { deleteList, getListDetails, listDetails, updateListName } = useContext(DatabaseContext);
+    const { deleteList, getItemsList, getListDetails, itemList, listDetails, updateInCart , updateListName } = useContext(DatabaseContext);
     
     const [name,setName] = useState("");
     const [isEdit,setIsEdit] = useState(false);
+    const [items,setItems] = useState({});
 
     const listUid = route.params.listUid;
+    const listName = route.params.listName;
+    const userId = route.params.userId;
   
     const handleNameChange=(textInput)=>{
       setName(textInput)
+    }
+
+    const getItems=()=>{
+      listDetails.map((list) => (
+        setItems(list["itemsList"])
+      ))
     }
 
     //read
     useEffect(() => {
       getListDetails(route.params.listUid)
     },[]);
+
+    useEffect(() => {
+      getItems()
+    },[listDetails])
+
+    useEffect(() => {
+      getItemsList(items)
+    },[items])
   
     //delete
     const handleListDelete = async (list) => {
@@ -36,6 +55,10 @@ export default function ListDetailScreen ( {navigation, route} ) {
       updateListName(name,listUid);
       setIsEdit(false);
       setName("");
+    }
+
+    const handleInCartChange = (value,itemId) => {
+      updateInCart(value,listUid,itemId);
     }
 
   return (
@@ -53,11 +76,17 @@ export default function ListDetailScreen ( {navigation, route} ) {
             </View>
             : null
         }
-      {listDetails.map((list) => (
         <View >
-          <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle='Supprimer' key={"Delete"+list.uuid} onPress={() => handleListDelete(list)} key={"delete"+list.uuid.toString()}/>
-          <FormButton buttonTitle='Modifier' key={"Update"+list.uuid} onPress={() => setIsEdit(true)} key={"update"+list.uuid.toString()}/>
+          <Text style={styles.listName} key={listUid}>{listName}</Text>
+          <FormButton buttonTitle='Supprimer' key={"Delete"+listUid} onPress={() => handleListDelete(list)} key={"delete"+listUid.toString()}/>
+          <FormButton buttonTitle='Modifier' key={"Update"+listUid} onPress={() => setIsEdit(true)} key={"update"+listUid.toString()}/>
+        </View>
+      {itemList.map((item) => (
+        <View style={(item['inCart']) ? styles.productIn : styles.productOut}>
+          <Text style={styles.listName} key={"Name"+item.uuid.toString()}>{item.name}</Text>
+          <Text style={styles.listName} key={"Price"+item.uuid.toString()}>{item.price+"€ "}</Text>
+          <Text style={styles.listName} key={item.uuid.toString()}>{"Quantité : "+item['quantity']}</Text>
+          <FormButton buttonTitle={(item['inCart']) ? "Je ne l'ai pas" : "Je l'ai"} onPress={() => handleInCartChange(!item['inCart'],item.uuid)} key={"Change"+item.uuid.toString()}/>
         </View>
       ))}
     </MainTemplate>
@@ -90,5 +119,15 @@ export default function ListDetailScreen ( {navigation, route} ) {
     },
     listName: {
       fontSize: 28
+    },
+    productIn: {
+      marginBottom:5,
+      marginTop:5,
+      backgroundColor:Colors.GREEN
+    },
+    productOut: {
+      marginBottom:5,
+      marginTop:5,
+      backgroundColor:Colors.RED
     }
   });

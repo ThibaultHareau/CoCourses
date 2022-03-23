@@ -15,6 +15,7 @@ export default function ProductScreen ( {navigation, route} ) {
   const [price,setPrice] = useState(null);
 
   const deptId = route.params.deptId;
+  const userId = route.params.userId;
 
   const handleNameChange=(textInput)=>{
     setName(textInput)
@@ -57,7 +58,7 @@ export default function ProductScreen ( {navigation, route} ) {
       {itemList.map((list) => (
         <View >
           <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("ProductDetails",{deptId:deptId, productId:list.uuid})}/>
+          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("ProductDetails",{deptId:deptId, productId:list.uuid,userId:userId})}/>
         </View>
       ))}
     </MainTemplate>
