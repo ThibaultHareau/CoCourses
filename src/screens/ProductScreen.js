@@ -5,27 +5,16 @@ import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
 import MainTemplate from '../components/templates/MainTemplate';
 
-import { AuthContext } from '../navigation/AuthProvider';
-import { InShopContext } from '../navigation/InShopProvider';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
-
-import database, {firebase} from '@react-native-firebase/database';
-import { uid } from 'uid';
-
 
 export default function ProductScreen ( {navigation, route} ) {
 
-  const { inShop, setInShop } = useContext(InShopContext);
-  const { user, logout } = useContext(AuthContext);
   const { addItem, getItems, itemList } = useContext(DatabaseContext);
-
 
   const [name,setName] = useState("");
   const [price,setPrice] = useState(null);
-  const [isEdit,setIsEdit] = useState(false);
-  const [tempUuid,setTempUuid] = useState("");
 
-  const deptUid = route.params.deptUid;
+  const deptId = route.params.deptId;
 
   const handleNameChange=(textInput)=>{
     setName(textInput)
@@ -36,11 +25,11 @@ export default function ProductScreen ( {navigation, route} ) {
 
   //read
   useEffect(() => {
-    getItems(deptUid)
+    getItems(deptId)
   },[]);
 
   const writeToDatabase = () => {
-    addItem(name,price,deptUid);
+    addItem(name,price,deptId);
     alert("Produit crée avec succès");
     setName("");
     setPrice(null);
@@ -68,7 +57,7 @@ export default function ProductScreen ( {navigation, route} ) {
       {itemList.map((list) => (
         <View >
           <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("ProductDetails",{listUid:list.uuid})}/>
+          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("ProductDetails",{deptId:deptId, productId:list.uuid})}/>
         </View>
       ))}
     </MainTemplate>

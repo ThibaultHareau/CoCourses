@@ -10,14 +10,35 @@ export const DatabaseProvider = ({ children }) => {
   const [userData, setUser] = useState(null);
   const [itemList, setItemList] = useState([]);
   const [departmentList, setDepartmentList] = useState([]);
+  const [listsList, setListsList] = useState([]);
+  const [listDetails, setListDetails] = useState([]);
+  const [item, setItem] = useState(null);
+
+  const getElement = (path,elementId,elementName,setState) => {
+    database()
+      .ref(path)
+      .on('value', snapshot => {
+        setState([]);
+        let data = snapshot.val();
+        if (data !== null) {
+          Object.values(data).map((list) => {
+            if (elementId === list[elementName]){
+              setState(oldArray => [...oldArray, list])
+            } 
+          })
+        }
+      });
+  }
   
   return (
-
     <DatabaseContext.Provider
       value={{
         userData,
         itemList,
         departmentList,
+        listsList,
+        listDetails,
+        item,
         getUser : (useruid) => {
           database()
           .ref('/users/'+useruid)
@@ -40,43 +61,12 @@ export const DatabaseProvider = ({ children }) => {
               creationDate : Date.now(),
               updateDate : Date.now(),
               text : "Description",
-              price : price
-            });
-          database()
-            .ref('/department-items/'+uuid2)
-            .set({
-              uuid : uuid2,
-              deptId : deptUid,
-              itemId : uuid
+              price : price,
+              deptUid
             });
         },
         getItems : (deptUid) => {
-          let targets = [];
-          database()
-          .ref('/department-items/')
-          .on('value', snapshot => {
-            let data = snapshot.val();
-            if (data !== null) {
-              Object.values(data).map((list) => {
-                if (deptUid === list.deptId){
-                  targets = [...targets, list.itemId]
-                } 
-              })
-            }
-          });
-          database()
-          .ref('/items/')
-          .on('value', snapshot => {
-            setItemList([]);
-            let data = snapshot.val();
-            if (data !== null) {
-              Object.values(data).map((list) => {
-                if (targets.includes(list.uuid)){
-                  setItemList(oldArray => [...oldArray,list])
-                } 
-              })
-            }
-          });
+          getElement('/items/',deptUid,"deptUid",setItemList)
         },
         addDepartment : (name, shopId) => {
           const uuid = uid()
@@ -91,19 +81,52 @@ export const DatabaseProvider = ({ children }) => {
             });
         },
         getDepartments : (shopId) => {
+          getElement('/department/',shopId,"shopId",setDepartmentList)
+        },
+        addList : (name,userId,shopId) => {
+          const uuid = uid()
           database()
-          .ref('/department/')
-          .on('value', snapshot => {
-            setDepartmentList([]);
-            let data = snapshot.val();
-            if (data !== null) {
-              Object.values(data).map((list) => {
-                if (list["shopId"] === shopId){
-                  setDepartmentList(oldArray => [...oldArray, list])
-                } 
-              })
-            }
+          .ref('/lists/'+uuid)
+          .set({
+            uuid,
+            name,
+            owner : userId,
+            creationDate : Date.now(),
+            updateDate : Date.now(),
+            shopId
           });
+        },
+        getLists : (userId) => {
+          getElement('/lists/',userId,"owner",setListsList)
+        },
+        updateListName : (name,listId) => {
+          database()
+          .ref('/lists/'+listId)
+          .update({
+            name: name,
+            updateDate : Date.now()
+          })
+        },
+        deleteList : async (listId) => {
+          await database().ref('/lists/'+listId).remove();
+        },
+        getListDetails : (listId) => {
+          getElement('/lists/',listId,'uuid',setListDetails)
+        },
+        getItem : (itemId) => {
+          getElement('/items/',itemId,'uuid',setItem)
+        },
+        deleteItem : async (itemId) => {
+          await database().ref('/items/'+itemId).remove();
+        },
+        updateItem : (productId,name,text) => {
+          database()
+          .ref('/items/'+productId)
+          .update({
+            name : name,
+            text: text,
+            updateDate : Date.now()
+        })
         }
       }}
     >

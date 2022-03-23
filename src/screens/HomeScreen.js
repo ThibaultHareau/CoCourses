@@ -10,8 +10,6 @@ import { AuthContext } from '../navigation/AuthProvider';
 import { InShopContext } from '../navigation/InShopProvider';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 
-import database, {firebase} from '@react-native-firebase/database';
-
 export default function HomeScreen( {navigation} ) {
   
   const { user, logout } = useContext(AuthContext);

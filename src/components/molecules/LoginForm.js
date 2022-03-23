@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
@@ -6,9 +6,13 @@ import FormButton from '../atoms/FormButton';
 import FormInput from '../atoms/FormInput';
 import SignInLink from '../atoms/SignInLink';
 
+import { LoginDataContext } from '../../navigation/LoginDataProvider';
+
 import { Colors } from '../../styles/index';
 
-export default function LoginForm({formInfo}) {
+export default function LoginForm({signInOnPress}) {
+
+  const { emailData, passwordData, loginOnPress } = useContext(LoginDataContext);
   
   return (
     <View style={styles.container}>
@@ -16,9 +20,9 @@ export default function LoginForm({formInfo}) {
   
       <View style={styles.formInput}>
         <FormInput
-          value={formInfo["emailInfo"]["value"]}
+          value={emailData.email}
           placeholderText='Email'
-          onChangeText={formInfo["emailInfo"]["change"]}
+          onChangeText={emailData.setEmail}
           autoCapitalize='none'
           keyboardType='email-address'
           autoCorrect={false}
@@ -27,19 +31,19 @@ export default function LoginForm({formInfo}) {
 
       <View style={styles.formInput}>
         <FormInput
-          value={formInfo["passwordInfo"]["value"]}
+          value={passwordData.password}
           placeholderText='Password'
-          onChangeText={formInfo["passwordInfo"]["change"]}
+          onChangeText={passwordData.setPassword}
           secureTextEntry={true}
         />
       </View>
 
       <View style={styles.button}>
-        <FormButton buttonTitle='Login' onPress={formInfo["loginInfo"]["press"]}/>
+        <FormButton buttonTitle='Login' onPress={loginOnPress}/>
       </View>
 
       <View style={styles.signInLink}>
-        <SignInLink onPress={formInfo["signInInfo"]["press"]}/>
+        <SignInLink onPress={signInOnPress}/>
       </View>
 
     </View>

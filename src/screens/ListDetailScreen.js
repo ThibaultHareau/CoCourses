@@ -5,25 +5,13 @@ import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
 import MainTemplate from '../components/templates/MainTemplate';
 
-import { AuthContext } from '../navigation/AuthProvider';
-import { InShopContext } from '../navigation/InShopProvider';
-
-import database, {firebase} from '@react-native-firebase/database';
-import { uid } from 'uid';
-
+import { DatabaseContext } from '../navigation/DatabaseProvider';
 
 export default function ListDetailScreen ( {navigation, route} ) {
-    const reference = firebase
-    .app()
-    .database('https://cocourses-cbe6a-default-rtdb.europe-west1.firebasedatabase.app/')
-    .ref('/');
-  
-    const { inShop, setInShop } = useContext(InShopContext);
-    const { user, logout } = useContext(AuthContext);
-  
-  
+
+    const { deleteList, getListDetails, listDetails, updateListName } = useContext(DatabaseContext);
+    
     const [name,setName] = useState("");
-    const [lists, setLists] = useState([]);
     const [isEdit,setIsEdit] = useState(false);
 
     const listUid = route.params.listUid;
@@ -31,61 +19,21 @@ export default function ListDetailScreen ( {navigation, route} ) {
     const handleNameChange=(textInput)=>{
       setName(textInput)
     }
-  
-    //read in database
-    const readDatabase = (path,dbParam,param,setState) => {
-      database()
-      .ref(path)
-      .on('value', snapshot => {
-        setState([]);
-        let data = snapshot.val();
-        if (data !== null) {
-          Object.values(data).map((list) => {
-            if (list[dbParam] === param){
-              setState(oldArray => [...oldArray, list])
-            } 
-          })
-        }
-      });
-    }
-  
+
     //read
     useEffect(() => {
-        readDatabase ('lists','uuid',route.params.listUid,setLists)
+      getListDetails(route.params.listUid)
     },[]);
-  
-    //write
-    const writeToDatabase = () => {
-      const uuid = uid()
-      database()
-        .ref('/lists/'+uuid)
-        .set({
-          uuid,
-          name,
-          items : {0 : {quantity:0,inCart:false}},
-          owner : user.uid,
-          creationDate : Date.now(),
-          updateDate : Date.now(),
-          shopId : inShop
-        });
-      setName("");
-      alert("Liste crée avec succés");
-    }
   
     //delete
     const handleListDelete = async (list) => {
-      await database().ref('/lists/'+list.uuid).remove();
+      deleteList(list.uuid)
       navigation.navigate("Lists");
     }
   
     //update
     const handleListSubmitChange = () => {
-      database()
-        .ref('/lists/'+listUid)
-        .update({
-          name: name,
-          updateDate : Date.now()
-        })
+      updateListName(name,listUid);
       setIsEdit(false);
       setName("");
     }
@@ -105,11 +53,11 @@ export default function ListDetailScreen ( {navigation, route} ) {
             </View>
             : null
         }
-      {lists.map((list) => (
+      {listDetails.map((list) => (
         <View >
           <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle='Supprimer' onPress={() => handleListDelete(list)} key={"delete"+list.uuid.toString()}/>
-          <FormButton buttonTitle='Modifier' onPress={() => setIsEdit(true)} key={"update"+list.uuid.toString()}/>
+          <FormButton buttonTitle='Supprimer' key={"Delete"+list.uuid} onPress={() => handleListDelete(list)} key={"delete"+list.uuid.toString()}/>
+          <FormButton buttonTitle='Modifier' key={"Update"+list.uuid} onPress={() => setIsEdit(true)} key={"update"+list.uuid.toString()}/>
         </View>
       ))}
     </MainTemplate>

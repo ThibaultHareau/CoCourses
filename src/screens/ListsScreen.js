@@ -7,91 +7,33 @@ import MainTemplate from '../components/templates/MainTemplate';
 
 import { AuthContext } from '../navigation/AuthProvider';
 import { InShopContext } from '../navigation/InShopProvider';
+import { DatabaseContext } from '../navigation/DatabaseProvider';
 
-import database, {firebase} from '@react-native-firebase/database';
-import { uid } from 'uid';
-
-
-export default function DynamicListScreen ( {navigation} ) {
-  const reference = firebase
-  .app()
-  .database('https://cocourses-cbe6a-default-rtdb.europe-west1.firebasedatabase.app/')
-  .ref('/');
+export default function ListsScreen ( {navigation} ) {
 
   const { inShop, setInShop } = useContext(InShopContext);
   const { user, logout } = useContext(AuthContext);
+  const { addList, getLists, listsList } = useContext(DatabaseContext);
 
 
   const [name,setName] = useState("");
   const [lists, setLists] = useState([]);
-  const [isEdit,setIsEdit] = useState(false);
-  const [tempUuid,setTempUuid] = useState("");
 
   const handleNameChange=(textInput)=>{
     setName(textInput)
   }
 
-  //read in database
-  const readDatabase = (path,dbParam,param,setState) => {
-    database()
-    .ref(path)
-    .on('value', snapshot => {
-      setState([]);
-      let data = snapshot.val();
-      if (data !== null) {
-        Object.values(data).map((list) => {
-          if (list[dbParam] === param){
-            setState(oldArray => [...oldArray, list])
-          } 
-        })
-      }
-    });
-  }
-
   //read
   useEffect(() => {
-      readDatabase ('lists','owner',user.uid,setLists)
+    getLists(user.uid)
   },[]);
 
   //write
   const writeToDatabase = () => {
-    const uuid = uid()
-    database()
-      .ref('/lists/'+uuid)
-      .set({
-        uuid,
-        name,
-        items : {0 : {quantity:0,inCart:false,uid:0}},
-        owner : user.uid,
-        creationDate : Date.now(),
-        updateDate : Date.now(),
-        shopId : inShop
-      });
+    addList(name,user.uid,inShop);
     setName("");
     alert("Liste crée avec succés");
   }
-
-  //delete
-  const handleListDelete = async (list) => {
-    await database().ref('/lists/'+list.uuid).remove();
-  }
-
-  //update
-  const handleListUpdate = (list) => {
-    setIsEdit(true);
-    setTempUuid(list.uuid);
-  }
-  const handleListSubmitChange = () => {
-    database()
-      .ref('/lists/'+tempUuid)
-      .update({
-        name: name,
-        updateDate : Date.now()
-      })
-    setIsEdit(false);
-    setName("");
-  }
-
 
   return (
     <MainTemplate>
@@ -104,10 +46,10 @@ export default function DynamicListScreen ( {navigation} ) {
         />
         <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} />
       </View>
-      {lists.map((list) => (
+      {listsList.map((list) => (
         <View >
           <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid})}/>
+          <FormButton buttonTitle="Details"  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid})}/>
         </View>
       ))}
     </MainTemplate>

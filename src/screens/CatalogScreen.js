@@ -48,7 +48,7 @@ export default function CatalogScreen ( {navigation} ) {
       {departmentList.map((list) => (
         <View >
           <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("Products",{deptUid:list.uuid})}/>
+          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("Products",{deptId:list.uuid})}/>
         </View>
       ))}
     </MainTemplate>

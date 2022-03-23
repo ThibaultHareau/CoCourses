@@ -2,9 +2,8 @@ import React from 'react';
 
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import FormButton from '../atoms/FormButton';
-import FormInput from '../atoms/FormInput';
-import SignInLink from '../atoms/SignInLink';
+import FormButton from '../components/atoms/FormButton';
+import FormInput from '../components/atoms/FormInput';
 
 import { Colors } from '../../styles/index';
 
@@ -12,37 +11,36 @@ export default function SignUpForm({formInfo}) {
   
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Bienvenue sur CoCourses</Text>
-  
-      <View style={styles.formInput}>
-        <FormInput
-          value={formInfo["emailInfo"]["value"]}
-          placeholderText='Email'
-          onChangeText={formInfo["emailInfo"]["change"]}
-          autoCapitalize='none'
-          keyboardType='email-address'
-          autoCorrect={false}
-        />
-      </View>
-
-      <View style={styles.formInput}>
-        <FormInput
-          value={formInfo["passwordInfo"]["value"]}
-          placeholderText='Password'
-          onChangeText={formInfo["passwordInfo"]["change"]}
-          secureTextEntry={true}
-        />
-      </View>
-
-      <View style={styles.button}>
-        <FormButton buttonTitle='Login' onPress={formInfo["loginInfo"]["press"]}/>
-      </View>
-
-      <View style={styles.signInLink}>
-        <SignInLink onPress={formInfo["signInInfo"]["press"]}/>
-      </View>
-
-    </View>
+    <Text style={styles.text}>Create an account</Text>
+    <FormInput
+      value={email}
+      placeholderText='Email'
+      onChangeText={userEmail => setEmail(userEmail)}
+      autoCapitalize='none'
+      keyboardType='email-address'
+      autoCorrect={false}
+    />
+    <FormInput
+      value={password}
+      placeholderText='Password'
+      onChangeText={userPassword => setPassword(userPassword)}
+      secureTextEntry={true}
+    />
+    <FormInput
+      value={firstName}
+      placeholderText='Prénom'
+      onChangeText={userFirstName => setFirstName(userFirstName)}
+    />
+    <FormInput
+      value={lastName}
+      placeholderText='Nom'
+      onChangeText={userLastName => setLastName(userLastName)}
+    />
+    <FormButton
+      buttonTitle='Signup'
+      onPress={() => register(email, password,firstName,lastName)}
+    />
+  </View>
   );
 }
 const styles = StyleSheet.create({

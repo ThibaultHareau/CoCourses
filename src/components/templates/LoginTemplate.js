@@ -2,9 +2,9 @@ import React from 'react';
 
 import LoginForm from '../molecules/LoginForm';
 
-export default function LoginTemplate( {formInfo} ) {
+export default function LoginTemplate({signInOnPress}) {
   
   return (
-    <LoginForm formInfo={formInfo}/>
+    <LoginForm signInOnPress={signInOnPress}/>
   );
 }
