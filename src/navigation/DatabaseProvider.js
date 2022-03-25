@@ -165,6 +165,9 @@ export const DatabaseProvider = ({ children }) => {
                 itemId
             });
         },
+        deleteItemInList : async (listId,itemId) => {
+          await database().ref('/lists/'+listId+'/itemsList/'+itemId).remove();
+        }
       }}
     >
       {children}
