@@ -12,6 +12,8 @@ target 'CoCourses' do
     :hermes_enabled => false
   )
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
   target 'CoCoursesTests' do
     inherit! :complete
     # Pods for testing

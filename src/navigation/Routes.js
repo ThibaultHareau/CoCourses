@@ -5,6 +5,7 @@ import AuthStack from './AuthStack';
 import HomeStack from './HomeStack';
 import { AuthContext } from './AuthProvider';
 import Loading from '../components/Loading';
+import LoadingScreen from '../components/LoadingScreen';
 
 export default function Routes() {
 
@@ -25,7 +26,7 @@ export default function Routes() {
   }, []);
 
   if (loading) {
-    return <Loading />;
+    return <LoadingScreen />;
   }
   
   return (

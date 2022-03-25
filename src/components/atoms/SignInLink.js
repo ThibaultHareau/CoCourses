@@ -15,6 +15,7 @@ export default function SignInLink({ onPress }) {
 const styles = StyleSheet.create({
   signInLink: {
     fontSize: 20,
-    color: Colors.PRIMARY
+    fontStyle: 'italic',
+    color: Colors.WHITE
   }
 });

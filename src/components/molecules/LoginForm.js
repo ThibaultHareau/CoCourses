@@ -1,14 +1,19 @@
 import React, {useContext} from 'react';
 
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 import FormButton from '../atoms/FormButton';
 import FormInput from '../atoms/FormInput';
 import SignInLink from '../atoms/SignInLink';
+import LoginButton from '../atoms/LoginButton';
+import LoginInput from '../atoms/LoginInput';
 
 import { LoginDataContext } from '../../navigation/LoginDataProvider';
 
 import { Colors } from '../../styles/index';
+import { color } from 'react-native-reanimated';
 
 export default function LoginForm({signInOnPress}) {
 
@@ -16,10 +21,11 @@ export default function LoginForm({signInOnPress}) {
   
   return (
     <View style={styles.container}>
+      <Image source={require("../../assets/images/Logo.png")} style={styles.image}/>
       <Text style={styles.text}>Bienvenue sur CoCourses</Text>
   
       <View style={styles.formInput}>
-        <FormInput
+        <LoginInput
           value={emailData.email}
           placeholderText='Email'
           onChangeText={emailData.setEmail}
@@ -30,16 +36,16 @@ export default function LoginForm({signInOnPress}) {
       </View>
 
       <View style={styles.formInput}>
-        <FormInput
+        <LoginInput
           value={passwordData.password}
-          placeholderText='Password'
+          placeholderText='Mot de passe'
           onChangeText={passwordData.setPassword}
           secureTextEntry={true}
         />
       </View>
 
       <View style={styles.button}>
-        <FormButton buttonTitle='Login' onPress={loginOnPress}/>
+        <LoginButton buttonTitle='Se connecter' onPress={loginOnPress}/>
       </View>
 
       <View style={styles.signInLink}>
@@ -51,14 +57,24 @@ export default function LoginForm({signInOnPress}) {
 }
 const styles = StyleSheet.create({
   button: {
-    marginTop:10
+    marginTop:hp('10%')
+  },
+  image: {
+    width: wp('27%'),
+    height: hp('13%'),
+    marginBottom:hp('5%')
   },
   container: {
-    marginLeft: 10
+    display:'flex',
+    // marginLeft: 10,
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+    gap:hp('10%')
   },
   formInput: {
     marginTop:5,
-    marginBottom:5
+    marginBottom:5,
   },
   navButton: {
     marginTop: 15
@@ -72,7 +88,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 24,
-    marginBottom: 10,
-    color: Colors.DARK_GREY
+    marginBottom: hp('5%'),
+    color: Colors.WHITE,
+    fontWeight:'bold'
   }
 });
