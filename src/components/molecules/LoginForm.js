@@ -60,9 +60,10 @@ const styles = StyleSheet.create({
     marginTop:hp('10%')
   },
   image: {
-    width: wp('27%'),
-    height: hp('13%'),
-    marginBottom:hp('5%')
+    width: wp('30%'),
+    height: hp('12%'),
+    marginBottom:hp('5%'),
+    resizeMode:'contain'
   },
   container: {
     display:'flex',
