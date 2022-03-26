@@ -13,11 +13,11 @@ export default function CatalogScreen ( {navigation, route} ) {
 
   const { inShop, setInShop } = useContext(InShopContext);
   const { user, logout } = useContext(AuthContext);
-  const { addDepartment, departmentList, getDepartments } = useContext(DatabaseContext);
+  const { getUser, addDepartment, departmentList, getDepartments } = useContext(DatabaseContext);
 
   const [name,setName] = useState("");
 
-  const userId = route.params.userId;
+  // const userId = route.params.userId;
 
   const handleNameChange=(textInput)=>{
     setName(textInput)
@@ -26,6 +26,10 @@ export default function CatalogScreen ( {navigation, route} ) {
   //read
   useEffect(() => {
     getDepartments(inShop)
+  },[]);
+
+  useEffect(() => {
+    getUser(user.uid)
   },[]);
 
   //write
@@ -38,7 +42,7 @@ export default function CatalogScreen ( {navigation, route} ) {
   return (
     <MainTemplate>
       <View>
-        <Text>{userId}</Text>
+        <Text>{user.uid}</Text>
         <FormInput
           value={name}
           placeholderText="Nom de la liste"
@@ -50,7 +54,7 @@ export default function CatalogScreen ( {navigation, route} ) {
       {departmentList.map((list) => (
         <View >
           <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("Products",{deptId:list.uuid,userId:userId})}/>
+          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("Products",{deptId:list.uuid,userId:user.uid})}/>
         </View>
       ))}
     </MainTemplate>

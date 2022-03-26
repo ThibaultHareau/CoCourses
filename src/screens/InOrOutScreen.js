@@ -12,8 +12,8 @@ export default function InOrOutScreen( {navigation} ) {
   
   const { inShop, setInShop } = useContext(InShopContext);
   
-  const inShopPress = () => {setInShop(1),navigation.navigate('Home')}; 
-  const outShopPress = () => {setInShop(-1),navigation.navigate('Home')}; 
+  const inShopPress = () => {setInShop(1),navigation.navigate('Main')}; 
+  const outShopPress = () => {setInShop(-1),navigation.navigate('Main')}; 
 
   return (
     <MainTemplate>

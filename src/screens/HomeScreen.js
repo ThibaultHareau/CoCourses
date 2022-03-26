@@ -30,9 +30,7 @@ export default function HomeScreen( {navigation} ) {
         }
        </Text>
       <View style={styles.button}>
-        <FormButton buttonTitle='Logout' onPress={() => logout()} />
         <FormButton buttonTitle='Listes' onPress={() => navigation.navigate('Lists',{userId:user.uid})} />
-        <FormButton buttonTitle='Catalogue' onPress={() => navigation.navigate('Catalog',{userId:user.uid})} />
       </View>
     </MainTemplate>
   );
@@ -45,8 +43,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    //justifyContent: 'center',
-    //alignItems: 'center',
   },
   text: {
     color: Colors.DARK_GREY,
