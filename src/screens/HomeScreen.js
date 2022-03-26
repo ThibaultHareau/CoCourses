@@ -22,7 +22,7 @@ export default function HomeScreen( {navigation} ) {
   
   return (
     <MainTemplate>
-      <Text style={styles.text}>Welcome {userData===null ? "" : userData.firstName}</Text>
+      <Text style={styles.text}>Bienvenue {userData===null ? "" : userData.firstName}</Text>
       <Text style={styles.text}>
         {inShop===-1 ? 
         "Vous êtes en mode hors magasin" :

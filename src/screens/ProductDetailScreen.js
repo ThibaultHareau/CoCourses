@@ -1,15 +1,17 @@
 import React, {Components, useContext, useState, useEffect} from 'react';
-import {Alert ,StyleSheet, Text, TextInput, TouchableOpacity ,View} from 'react-native'; 
+import {Alert, Image,  StyleSheet, Text, TextInput, TouchableOpacity ,View} from 'react-native'; 
 
 import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
 import MainTemplate from '../components/templates/MainTemplate';
 
 import { DatabaseContext } from '../navigation/DatabaseProvider';
+import { StorageContext } from '../navigation/StorageProvider';
 
 export default function ProductDetailScreen ( {navigation, route} ) {
   
     const { deleteItem, item, getItem, updateItem } = useContext(DatabaseContext);
+    const { getImage, imageUrl } = useContext(StorageContext);
     
     const [text,setText] = useState();
     const [name,setName] = useState("");
@@ -33,6 +35,7 @@ export default function ProductDetailScreen ( {navigation, route} ) {
     //read
     useEffect(() => {
       getItem(productId)
+      getImage(productId)
     },[]);
   
     //delete
@@ -66,18 +69,19 @@ export default function ProductDetailScreen ( {navigation, route} ) {
                 style={styles.input}
                 key={"Text"}
               />
-              <FormButton buttonTitle='Ecraser' onPress={handleListSubmitChange} />
-              <FormButton buttonTitle='X' onPress={() => setOnEdit(null)} />
+              <FormButton buttonTitle='Ecraser' onPress={handleListSubmitChange} key={"Save"}/>
+              <FormButton buttonTitle='X' onPress={() => setOnEdit(null)} key={"Cancel"} />
             </View>
             : null
         }
       {(item === null) ? <View></View> : item.map((list) => (
-        <View >
-          <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
-          <Text key={list.uuid}>{list.text}</Text>
-          <FormButton buttonTitle='Supprimer' onPress={() => handleListDelete(list)} key={"delete"+list.uuid.toString()}/>
-          <FormButton buttonTitle='Modifier' onPress={() => setOnEdit(list)} key={"update"+list.uuid.toString()}/>
-          <FormButton buttonTitle='Ajouter' onPress={() => navigation.navigate("ListsChoice",{itemName:list.name,itemId:list.uuid,userId:userId,deptId:deptId})} key={"update"+list.uuid.toString()}/>
+        <View key={list.uuid}>
+          {/*<Image source={imageUrl} />*/}
+          <Text style={styles.listName} key={"Name"+list.uuid}>{list.name}</Text>
+          <Text key={"Text"+list.uuid}>{list.text}</Text>
+          <FormButton buttonTitle='Supprimer' onPress={() => handleListDelete(list)} key={"delete"+list.uuid}/>
+          <FormButton buttonTitle='Modifier' onPress={() => setOnEdit(list)} key={"update"+list.uuid}/>
+          <FormButton buttonTitle='Ajouter' onPress={() => navigation.navigate("ListsChoice",{itemName:list.name,itemId:list.uuid,userId:userId,deptId:deptId})} key={"add"+list.uuid}/>
         </View>
       ))}
     </MainTemplate>

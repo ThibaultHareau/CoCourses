@@ -1,9 +1,17 @@
 import React, {Components, useContext, useState, useEffect} from 'react';
-import {Alert ,StyleSheet, Text, TextInput, TouchableOpacity ,View} from 'react-native'; 
+import {Alert, Image, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity ,View} from 'react-native'; 
+
+/* Upload images
+import {launchImageLibrary} from 'react-native-image-picker';
+import * as Progress from 'react-native-progress';
+*/
 
 import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
 import MainTemplate from '../components/templates/MainTemplate';
+
+
+//import storage from '@react-native-firebase/storage';
 
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 
@@ -14,8 +22,69 @@ export default function ProductScreen ( {navigation, route} ) {
   const [name,setName] = useState("");
   const [price,setPrice] = useState(null);
 
+  /*
+  //Image upload
+  const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [transferred, setTransferred] = useState(0);
+  */
+
   const deptId = route.params.deptId;
   const userId = route.params.userId;
+
+  /*
+  const selectImage = () => {
+    const options = {
+      maxWidth: 2000,
+      maxHeight: 2000,
+      storageOptions: {
+        skipBackup: true,
+        path: 'images'
+      }
+    };
+    launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = { uri: response.uri };
+        console.log(source);
+        setImage(source);
+      }
+    });
+  };
+
+  const uploadImage = async () => {
+    const { uri } = image;
+    const filename = uri.substring(uri.lastIndexOf('/') + 1);
+    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+    setUploading(true);
+    setTransferred(0);
+    const task = storage()
+      .ref(filename)
+      .putFile(uploadUri);
+    // set progress state
+    task.on('state_changed', snapshot => {
+      setTransferred(
+        Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+      );
+    });
+    try {
+      await task;
+    } catch (e) {
+      console.error(e);
+    }
+    setUploading(false);
+    Alert.alert(
+      'Photo uploaded!',
+      'Your photo has been uploaded to Firebase Cloud Storage!'
+    );
+    setImage(null);
+  };
+  */
 
   const handleNameChange=(textInput)=>{
     setName(textInput)
@@ -44,6 +113,7 @@ export default function ProductScreen ( {navigation, route} ) {
           placeholderText="Nom du produit"
           onChangeText={handleNameChange}
           style={styles.input}
+          key={"Name"}
         />
         <FormInput
           value={price}
@@ -52,15 +122,33 @@ export default function ProductScreen ( {navigation, route} ) {
           style={styles.input}
           numeric
           keyboardType="numeric"
+          key={"Price"}
         />
         <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} />
       </View>
       {itemList.map((list) => (
-        <View >
-          <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("ProductDetails",{deptId:deptId, productId:list.uuid,userId:userId})}/>
+        <View key={list.uuid}>
+          <Text style={styles.listName} key={'Name'+list.uuid}>{list.name}</Text>
+          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("ProductDetails",{deptId:deptId, productId:list.uuid,userId:userId})} key={"Details"+list.uuid}/>
         </View>
       ))}
+      {/*<TouchableOpacity onPress={selectImage}>
+        <Text>Pick an image</Text>
+      </TouchableOpacity>*/}
+      {/*<<View>
+        {image !== null ? (
+          <Image source={{ uri: image.uri }} style={styles.imageBox} />
+        ) : null}
+        {uploading ? (
+          <View >
+            <Progress.Bar progress={transferred} width={300} />
+          </View>
+        ) : (
+          <TouchableOpacity onPress={uploadImage}>
+            <Text >Upload image</Text>
+          </TouchableOpacity>
+        )}
+        </View>*/}
     </MainTemplate>
   );
 }

@@ -38,6 +38,11 @@ Animation du logo dans l'écran de chargement
 ```
 yarn add react-native-svg lottie-react-native
 ```
+Barre de navigation
+```
+yarn add @react-navigation/bottom-tabs
+yarn add react-native-screens
+```
 
 Conflit des modules masked-view (supprimer le module @react-native-masked-view dans le dossier node_modules)
 ```
