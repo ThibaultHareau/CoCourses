@@ -35,7 +35,7 @@ export default function ListDetailScreen ( {navigation, route} ) {
 
     const listUid = route.params.listUid;
     const listName = route.params.listName;
-    const userId = route.params.userId;
+    // const userId = route.params.userId;
   
     const handleNameChange=(textInput)=>{
       setName(textInput)

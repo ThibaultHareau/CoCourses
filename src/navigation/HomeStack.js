@@ -1,5 +1,5 @@
-import React , { useState } from 'react';
-import {StyleSheet} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Dimensions, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import ListsScreen from '../screens/ListsScreen';
@@ -20,6 +20,7 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const StackHome = createStackNavigator();
 const StackCatalog = createStackNavigator();
+const { width, height } = Dimensions.get("window")
 
 function StackHomeScreen() {
   return (
@@ -28,11 +29,12 @@ function StackHomeScreen() {
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
-      }}}>
-      <StackHome.Screen name='Home' component={HomeScreen} options={{ header: () => null }}/>
+      }
+    }}>
+      <StackHome.Screen name='Home' component={HomeScreen} options={{ header: () => null }} />
       <StackHome.Screen name='Lists' component={ListsScreen} />
       <StackHome.Screen name='ListsChoice' component={ListsChoiceScreen} />
-      <StackHome.Screen name='ListDetails' component={ListDetailScreen}/>
+      <StackHome.Screen name='ListDetails' component={ListDetailScreen} />
     </StackHome.Navigator>
   )
 }
@@ -44,20 +46,21 @@ function StackCatalogScreen() {
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
-      }}}>
-      <StackCatalog.Screen name='Catalog' component={CatalogScreen} options={{ header: () => null }}/>
-      <StackCatalog.Screen name='ProductDetails' component={ProductDetailScreen}/>
-      <StackCatalog.Screen name='Products' component={ProductScreen}/>
+      }
+    }}>
+      <StackCatalog.Screen name='Catalog' component={CatalogScreen} options={{ header: () => null }} />
+      <StackCatalog.Screen name='ProductDetails' component={ProductDetailScreen} />
+      <StackCatalog.Screen name='Products' component={ProductScreen} />
     </StackCatalog.Navigator>
   )
 }
 
 function TabNav() {
   return (
-    <Tab.Navigator tabBar={(props) => <NavBar {...props} />} initialRouteName='Accueil' >
+    <Tab.Navigator tabBar={(props) => <NavBar {...props} />} initialRouteName='Accueil' screenOptions={{ tabBarHideOnKeyboard: true }} >
       <Tab.Screen name="Accueil" component={StackHomeScreen} options={{ header: () => null }} />
       <Tab.Screen name="Catalogue" component={StackCatalogScreen} options={{ header: () => null }} />
-      <Tab.Screen name="Scan" component={ScanScreen} options={{ header: () => null}} />
+      <Tab.Screen name="Scan" component={ScanScreen} options={{ header: () => null }} />
       <Tab.Screen name="Profil" component={ProfileScreen} options={{ header: () => null }} />
     </Tab.Navigator>
   )
@@ -65,13 +68,15 @@ function TabNav() {
 
 export default function HomeStack() {
 
-  const [inShop,setInShop] = useState(null);
+  const [inShop, setInShop] = useState(null);
 
   return (
-    <Stack.Navigator initialRouteName='InOrOut'>
-      <Stack.Screen name='InOrOut' component={InOrOutScreen} options={{ header: () => null }}/>
-      <Stack.Screen name='Main' component={TabNav} options={{ header: () => null }} />
-    </Stack.Navigator>
+    <View style={{ width, height, }}>
+      <Stack.Navigator initialRouteName='InOrOut'>
+        <Stack.Screen name='InOrOut' component={InOrOutScreen} options={{ header: () => null }} />
+        <Stack.Screen name='Main' component={TabNav} options={{ header: () => null }} />
+      </Stack.Navigator>
+    </View>
   );
 }
 
