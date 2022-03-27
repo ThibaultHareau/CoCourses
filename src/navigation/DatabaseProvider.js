@@ -146,11 +146,13 @@ export const DatabaseProvider = ({ children }) => {
             let data = snapshot.val();
             if (data !== null) {
               Object.values(data).map((list) => {
-                Object.values(list.members).map((member) => {
-                  if (member.userId === userId) {
-                    setListsList(oldArray => [...oldArray, list])
-                  }
-                })
+                if (list.members !== null && list.members !== undefined) {
+                  Object.values(list.members).map((member) => {
+                    if (member.userId === userId) {
+                      setListsList(oldArray => [...oldArray, list])
+                    }
+                  })
+                }
               })
             }
           });
