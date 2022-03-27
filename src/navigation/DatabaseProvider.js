@@ -13,6 +13,8 @@ export const DatabaseProvider = ({ children }) => {
   const [listsList, setListsList] = useState([]);
   const [listDetails, setListDetails] = useState([]);
   const [item, setItem] = useState(null);
+  const [listMembers, setListMembers] = useState([]);
+  const [userToShare, setUserToShare] = useState([]);
 
   const getElement = (path,elementId,elementName,setState) => {
     database()
@@ -29,6 +31,30 @@ export const DatabaseProvider = ({ children }) => {
         }
       });
   }
+
+  const addMemberInList = (listId,userId,userEmail) => {
+    database()
+      .ref('/lists/'+listId+'/members/'+userId)
+      .set({
+        userId,
+        email : userEmail,
+        joinDate : Date.now()
+      });
+  }
+
+  const getMembersInList = (listId) => {
+    database()
+      .ref('/lists/'+listId+'/members/')
+      .on('value', snapshot => {
+        setListMembers([]);
+        let data = snapshot.val();
+        if (data !== null) {
+          Object.values(data).map((member) => {
+              setListMembers(oldArray => [...oldArray, member])
+          })
+        }
+      });
+  }
   
   return (
     <DatabaseContext.Provider
@@ -39,6 +65,9 @@ export const DatabaseProvider = ({ children }) => {
         listsList,
         listDetails,
         item,
+        listMembers,
+        setUserToShare,
+        userToShare,
         getUser : (useruid) => {
           database()
           .ref('/users/'+useruid)
@@ -82,7 +111,7 @@ export const DatabaseProvider = ({ children }) => {
         getDepartments : (shopId) => {
           getElement('/department/',shopId,"shopId",setDepartmentList)
         },
-        addList : (name,userId,shopId) => {
+        addList : (name,userId,shopId,userEmail) => {
           const uuid = uid()
           database()
           .ref('/lists/'+uuid)
@@ -101,9 +130,30 @@ export const DatabaseProvider = ({ children }) => {
               }
             }
           });
+          addMemberInList (uuid,userId,userEmail)
+        },
+        addListMember : (listId,userId,userEmail) => {
+          addMemberInList(listId,userId,userEmail)
+        },
+        getListMembers : (listId) => {
+          getMembersInList(listId)
         },
         getLists : (userId) => {
-          getElement('/lists/',userId,"owner",setListsList)
+          database()
+          .ref('/lists/')
+          .on('value', snapshot => {
+            setListsList([]);
+            let data = snapshot.val();
+            if (data !== null) {
+              Object.values(data).map((list) => {
+                Object.values(list.members).map((member) => {
+                  if (member.userId === userId) {
+                    setListsList(oldArray => [...oldArray, list])
+                  }
+                })
+              })
+            }
+          });
         },
         updateListName : async (name,listId) => {
           await database()
@@ -167,6 +217,9 @@ export const DatabaseProvider = ({ children }) => {
         },
         deleteItemInList : async (listId,itemId) => {
           await database().ref('/lists/'+listId+'/itemsList/'+itemId).remove();
+        },
+        getUserByEmail : (email) => {
+          getElement('/users/',email,'email',setUserToShare);
         }
       }}
     >
