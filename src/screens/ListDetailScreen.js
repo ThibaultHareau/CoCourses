@@ -11,9 +11,25 @@ import { DatabaseContext } from '../navigation/DatabaseProvider';
 
 export default function ListDetailScreen ( {navigation, route} ) {
 
-    const { deleteItemInList, deleteList, getItemsList, getListDetails, itemList, listDetails, updateInCart , updateListName } = useContext(DatabaseContext);
+    const { 
+      addListMember,
+      deleteItemInList, 
+      deleteList, 
+      getItemsList, 
+      getListDetails,
+      getListMembers, 
+      getUserByEmail,
+      itemList, 
+      listDetails,
+      listMembers, 
+      setUserToShare,
+      updateInCart , 
+      updateListName,
+      userData,
+      userToShare    } = useContext(DatabaseContext);
     
     const [name,setName] = useState("");
+    const [email,setEmail] = useState("");
     const [isEdit,setIsEdit] = useState(false);
     const [items,setItems] = useState({});
 
@@ -23,6 +39,9 @@ export default function ListDetailScreen ( {navigation, route} ) {
   
     const handleNameChange=(textInput)=>{
       setName(textInput)
+    }
+    const handleEmailChange=(textInput)=>{
+      setEmail(textInput)
     }
 
     const getItems=()=>{
@@ -34,6 +53,7 @@ export default function ListDetailScreen ( {navigation, route} ) {
     //read
     useEffect(() => {
       getListDetails(route.params.listUid)
+      getListMembers(route.params.listUid)
     },[]);
 
     useEffect(() => {
@@ -65,6 +85,36 @@ export default function ListDetailScreen ( {navigation, route} ) {
       deleteItemInList(listUid,itemId);
     }
 
+    const handleShareList = (email) => {
+      getUserByEmail(email)
+    }
+
+    const checkIfUserIsNew = (user) => {
+      let alreadyMember = false
+      getListMembers(listUid)
+      listMembers.map((member) => {
+        console.log(member)
+        console.log(user)
+        if (member.userId===user.uid) {
+          alreadyMember=true
+
+        }
+      });
+      if (alreadyMember) {
+        alert("Cette personne est déjà dans la liste")
+      }
+      else {
+        addListMember(listUid,user.uid,user.email)
+        alert("Ajout de "+user.email)
+      }
+      setUserToShare([])
+    }
+
+    useEffect (() => {
+      if (userToShare.length !==0) {checkIfUserIsNew(userToShare[0])}
+      else {(email !== '') ? alert("Cette adresse mail n'est pas enregistrée") : null}
+    }, [userToShare])
+
   return (
     <MainTemplate>
         {isEdit ?
@@ -75,6 +125,7 @@ export default function ListDetailScreen ( {navigation, route} ) {
                 onChangeText={handleNameChange}
                 style={styles.input}
                 key="EditListName"
+                keyboardType='email-address'
                 />
                 <FormButton buttonTitle='Ecraser' onPress={handleListSubmitChange} key="SaveEditList"/>
                 <FormButton buttonTitle='X' onPress={() => setIsEdit(false)} key="CancelEditList"/>
@@ -95,6 +146,24 @@ export default function ListDetailScreen ( {navigation, route} ) {
           <FormButton buttonTitle={"X"} onPress={() => handleDeleteItem(item.uuid)} key={"Delete"+(item.uuid).toString()}/>
         </View>
       ))}
+      <View key="Membres">
+        <Text>Membres de la liste</Text>
+      </View>
+      {listMembers.map((member) => (
+        <View key={member.userId}>
+          <Text style={styles.listName} key={"Id"+member.userId}>{member.email}</Text>
+        </View>
+      ))}
+      <View>
+        <FormInput
+          value={email}
+          placeholderText="Email de votre ami"
+          onChangeText={handleEmailChange}
+          style={styles.input}
+          key="AddUserByEmail"
+          />
+        <FormButton buttonTitle={"Partager"} onPress={() => handleShareList(email)} key={"ShareButton"}/>
+      </View>
     </MainTemplate>
   );
 }

@@ -31,7 +31,7 @@ export default function ListsScreen ( {navigation, route} ) {
 
   //write
   const writeToDatabase = () => {
-    addList(name,user.uid,inShop);
+    addList(name,user.uid,inShop,user.email);
     setName("");
     alert("Liste crée avec succés");
   }
