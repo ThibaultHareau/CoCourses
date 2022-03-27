@@ -32,7 +32,6 @@ export default function ListsScreen ( {navigation, route} ) {
   //write
   const writeToDatabase = () => {
     addList(name,user.uid,inShop,user.email);
-    setName("");
     alert("Liste crée avec succés");
   }
 
@@ -47,7 +46,8 @@ export default function ListsScreen ( {navigation, route} ) {
         />
         <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} />
       </View>
-      {listsList.map((list) => (
+      {(listsList === null || listsList === undefined) ? null : 
+      listsList.map((list) => (
         <View key={list.uuid}>
           <Text style={styles.listName} key={'Name'+list.uuid}>{list.name}</Text>
           <FormButton buttonTitle="Details"  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid,listName:list.name,userId:userId})}/>
