@@ -16,7 +16,7 @@ yarn add @react-navigation/native@6.0.2 @react-navigation/stack@6.0.7 react-nati
 
 Pour l'installation de firebase
 ```
-yarn add @react-native-firebase/app @react-native-firebase/auth @react-native-firebase/database
+yarn add @react-native-firebase/app @react-native-firebase/auth @react-native-firebase/database @react-native-firebase/storage
 ```
 
 Générateur de uid

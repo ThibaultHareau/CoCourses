@@ -65,9 +65,9 @@ export default function ListDetailScreen ( {navigation, route} ) {
     },[items])
   
     //delete
-    const handleListDelete = async (list) => {
-      deleteList(list.uuid)
-      navigation.navigate("Lists");
+    const handleListDelete = async (listId) => {
+      deleteList(listId)
+      navigation.navigate("Lists",{userId:userId});
     }
   
     //update
@@ -134,7 +134,7 @@ export default function ListDetailScreen ( {navigation, route} ) {
         }
         <View key={listUid}>
           <Text style={styles.listName} key={"Name"+listUid}>{listName}</Text>
-          <FormButton buttonTitle='Supprimer' key={"Delete"+listUid} onPress={() => handleListDelete(list)} key={"delete"+listUid.toString()}/>
+          <FormButton buttonTitle='Supprimer' key={"Delete"+listUid} onPress={() => handleListDelete(listUid)} key={"delete"+listUid.toString()}/>
           <FormButton buttonTitle='Modifier' key={"Update"+listUid} onPress={() => setIsEdit(true)} key={"update"+listUid.toString()}/>
         </View>
       {itemList.map((item) => (

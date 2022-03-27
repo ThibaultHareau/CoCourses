@@ -44,7 +44,7 @@ export default function CatalogScreen ( {navigation, route} ) {
       <View>
         <FormInput
           value={name}
-          placeholderText="Nom de la liste"
+          placeholderText="Nom du rayon"
           onChangeText={handleNameChange}
           style={styles.input}
           key={"FormListName"}
