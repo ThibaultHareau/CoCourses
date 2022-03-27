@@ -1,11 +1,9 @@
 import React, {useContext} from 'react';
 
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-import FormButton from '../atoms/FormButton';
-import FormInput from '../atoms/FormInput';
 import SignInLink from '../atoms/SignInLink';
 import LoginButton from '../atoms/LoginButton';
 import LoginInput from '../atoms/LoginInput';
@@ -13,7 +11,6 @@ import LoginInput from '../atoms/LoginInput';
 import { LoginDataContext } from '../../navigation/LoginDataProvider';
 
 import { Colors } from '../../styles/index';
-import { color } from 'react-native-reanimated';
 
 export default function LoginForm({signInOnPress}) {
 

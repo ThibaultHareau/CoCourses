@@ -7,7 +7,7 @@ export default function SignInLink({ onPress }) {
     <TouchableOpacity
         onPress={onPress}
     >
-        <Text style={styles.signInLink}>New user? Join here</Text>
+        <Text style={styles.signInLink}>Se créer un compte</Text>
     </TouchableOpacity>
   );
 }
