@@ -14,6 +14,7 @@ import ScanScreen from '../screens/ScanScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import NavBar from '../components/molecules/NavBar';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { Colors } from '../styles/index';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -22,7 +23,12 @@ const StackCatalog = createStackNavigator();
 
 function StackHomeScreen() {
   return (
-    <StackHome.Navigator initialRouteName='Home'>
+    <StackHome.Navigator initialRouteName='Home' screenOptions={{
+      headerStyle: styles.header,
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      }}}>
       <StackHome.Screen name='Home' component={HomeScreen} options={{ header: () => null }}/>
       <StackHome.Screen name='Lists' component={ListsScreen} />
       <StackHome.Screen name='ListsChoice' component={ListsChoiceScreen} />
@@ -33,7 +39,12 @@ function StackHomeScreen() {
 
 function StackCatalogScreen() {
   return (
-    <StackCatalog.Navigator initialRouteName='Catalogue'>
+    <StackCatalog.Navigator initialRouteName='Catalogue' screenOptions={{
+      headerStyle: styles.header,
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      }}}>
       <StackCatalog.Screen name='Catalog' component={CatalogScreen} options={{ header: () => null }}/>
       <StackCatalog.Screen name='ProductDetails' component={ProductDetailScreen}/>
       <StackCatalog.Screen name='Products' component={ProductScreen}/>
@@ -43,7 +54,7 @@ function StackCatalogScreen() {
 
 function TabNav() {
   return (
-    <Tab.Navigator tabBar={(props) => <NavBar {...props} />} initialRouteName='Accueil'>
+    <Tab.Navigator tabBar={(props) => <NavBar {...props} />} initialRouteName='Accueil' >
       <Tab.Screen name="Accueil" component={StackHomeScreen} options={{ header: () => null }} />
       <Tab.Screen name="Catalogue" component={StackCatalogScreen} options={{ header: () => null }} />
       <Tab.Screen name="Scan" component={ScanScreen} options={{ header: () => null}} />
@@ -59,13 +70,6 @@ export default function HomeStack() {
   return (
     <Stack.Navigator initialRouteName='InOrOut'>
       <Stack.Screen name='InOrOut' component={InOrOutScreen} options={{ header: () => null }}/>
-      {/* <Stack.Screen name='Home' component={HomeScreen} />
-      <Stack.Screen name='Lists' component={ListsScreen} />
-      <Stack.Screen name='ListsChoice' component={ListsChoiceScreen} />
-      <Stack.Screen name='ListDetails' component={ListDetailScreen}/>
-      <Stack.Screen name='Catalog' component={CatalogScreen}/>
-      <Stack.Screen name='ProductDetails' component={ProductDetailScreen}/>
-      <Stack.Screen name='Products' component={ProductScreen}/> */}
       <Stack.Screen name='Main' component={TabNav} options={{ header: () => null }} />
     </Stack.Navigator>
   );
@@ -76,5 +80,8 @@ const styles = StyleSheet.create({
     width: wp('10%'),
     height: hp('12%'),
     resizeMode: 'contain'
+  },
+  header: {
+    backgroundColor: '#F7E7D5'
   }
 })
