@@ -16,6 +16,8 @@ export default function ProfileScreen ({ navigation, route }) {
 
     return (
         <MainTemplate>
+            {userData === null ? null : <Text>Profil de {userData.firstName+' '+userData.lastName}</Text>}
+            <Text>{user.email}</Text>
             <LoginButton buttonTitle='Se déconnecter' onPress={() => logout()} />
         </MainTemplate>
     );

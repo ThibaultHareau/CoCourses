@@ -7,7 +7,7 @@ export default function ProfileScreen ({ navigation, route }) {
     return (
         <MainTemplate>
             <Text>
-                Vide !
+                Notre équipe travail sur cette fonctionnalité
             </Text>
         </MainTemplate>
     );

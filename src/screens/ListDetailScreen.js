@@ -11,7 +11,7 @@ import { DatabaseContext } from '../navigation/DatabaseProvider';
 
 export default function ListDetailScreen ( {navigation, route} ) {
 
-    const { deleteList, getItemsList, getListDetails, itemList, listDetails, updateInCart , updateListName } = useContext(DatabaseContext);
+    const { deleteItemInList, deleteList, getItemsList, getListDetails, itemList, listDetails, updateInCart , updateListName } = useContext(DatabaseContext);
     
     const [name,setName] = useState("");
     const [isEdit,setIsEdit] = useState(false);
@@ -61,32 +61,38 @@ export default function ListDetailScreen ( {navigation, route} ) {
       updateInCart(value,listUid,itemId);
     }
 
+    const handleDeleteItem = (itemId) => {
+      deleteItemInList(listUid,itemId);
+    }
+
   return (
     <MainTemplate>
         {isEdit ?
-            <View>
+            <View key="EditList">
                 <FormInput
                 value={name}
                 placeholderText="Nom de la liste"
                 onChangeText={handleNameChange}
                 style={styles.input}
+                key="EditListName"
                 />
-                <FormButton buttonTitle='Ecraser' onPress={handleListSubmitChange} />
-                <FormButton buttonTitle='X' onPress={() => setIsEdit(false)} />
+                <FormButton buttonTitle='Ecraser' onPress={handleListSubmitChange} key="SaveEditList"/>
+                <FormButton buttonTitle='X' onPress={() => setIsEdit(false)} key="CancelEditList"/>
             </View>
             : null
         }
-        <View >
-          <Text style={styles.listName} key={listUid}>{listName}</Text>
+        <View key={listUid}>
+          <Text style={styles.listName} key={"Name"+listUid}>{listName}</Text>
           <FormButton buttonTitle='Supprimer' key={"Delete"+listUid} onPress={() => handleListDelete(list)} key={"delete"+listUid.toString()}/>
           <FormButton buttonTitle='Modifier' key={"Update"+listUid} onPress={() => setIsEdit(true)} key={"update"+listUid.toString()}/>
         </View>
       {itemList.map((item) => (
-        <View style={(item['inCart']) ? styles.productIn : styles.productOut}>
-          <Text style={styles.listName} key={"Name"+item.uuid.toString()}>{item.name}</Text>
-          <Text style={styles.listName} key={"Price"+item.uuid.toString()}>{item.price+"€ "}</Text>
+        <View style={(item['inCart']) ? styles.productIn : styles.productOut} key={item.uuid}>
+          <Text style={styles.listName} key={"Name"+(item.uuid).toString()}>{item.name}</Text>
+          <Text style={styles.listName} key={"Price"+(item.uuid).toString()}>{item.price+"€ "}</Text>
           <Text style={styles.listName} key={item.uuid.toString()}>{"Quantité : "+item['quantity']}</Text>
-          <FormButton buttonTitle={(item['inCart']) ? "Je ne l'ai pas" : "Je l'ai"} onPress={() => handleInCartChange(!item['inCart'],item.uuid)} key={"Change"+item.uuid.toString()}/>
+          <FormButton buttonTitle={(item['inCart']) ? "Je ne l'ai pas" : "Je l'ai"} onPress={() => handleInCartChange(!item['inCart'],item.uuid)} key={"Change"+(item.uuid).toString()}/>
+          <FormButton buttonTitle={"X"} onPress={() => handleDeleteItem(item.uuid)} key={"Delete"+(item.uuid).toString()}/>
         </View>
       ))}
     </MainTemplate>

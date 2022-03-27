@@ -42,19 +42,19 @@ export default function CatalogScreen ( {navigation, route} ) {
   return (
     <MainTemplate>
       <View>
-        <Text>{user.uid}</Text>
         <FormInput
           value={name}
           placeholderText="Nom de la liste"
           onChangeText={handleNameChange}
           style={styles.input}
+          key={"FormListName"}
         />
-        <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} />
+        <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} key={"AddListButton"}/>
       </View>
       {departmentList.map((list) => (
-        <View >
-          <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("Products",{deptId:list.uuid,userId:user.uid})}/>
+        <View key={list.uuid}>
+          <Text style={styles.listName} key={"Name"+list.uuid}>{list.name}</Text>
+          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("Products",{deptId:list.uuid,userId:user.uid})} key={"Details"+list.uuid}/>
         </View>
       ))}
     </MainTemplate>

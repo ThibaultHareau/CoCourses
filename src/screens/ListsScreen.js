@@ -48,8 +48,8 @@ export default function ListsScreen ( {navigation, route} ) {
         <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} />
       </View>
       {listsList.map((list) => (
-        <View >
-          <Text style={styles.listName} key={list.uuid}>{list.name}</Text>
+        <View key={list.uuid}>
+          <Text style={styles.listName} key={'Name'+list.uuid}>{list.name}</Text>
           <FormButton buttonTitle="Details"  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid,listName:list.name,userId:userId})}/>
         </View>
       ))}

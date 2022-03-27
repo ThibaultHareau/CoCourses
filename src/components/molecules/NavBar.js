@@ -53,6 +53,7 @@ export default function NavBar({ state, descriptors, navigation }) {
                         onLongPress={onLongPress}
                         style={styles.bar}
                         activeOpacity={.9}
+                        key={"Button"+label}
                     >
                         <Image source={(label == 'Accueil')?
                             (isFocused? require(HomeHighlight):require(Home))
@@ -61,7 +62,7 @@ export default function NavBar({ state, descriptors, navigation }) {
                             : (label == 'Profil')?
                             (isFocused? require(ProfileHighlight):require(Profile))
                             : (isFocused? require(ScanHighlight):require(Scan))}
-                            style={styles.image} />
+                            style={styles.image} key={"Image"+label}/>
                     </TouchableOpacity>
                 );
             })}

@@ -45,7 +45,7 @@ export default function ListsChoiceScreen ( {navigation, route} ) {
         <Text>{itemName}</Text>
       </View>
       {listsList.map((list) => (
-        <View >
+        <View key={list.uuid}>
           <FormButton buttonTitle={list.name}  key={"Button"+list.uuid} onPress={() => writeToDatabase(list.uuid,list.name)}/>
         </View>
       ))}
