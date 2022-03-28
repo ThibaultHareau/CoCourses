@@ -26,6 +26,7 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     getUser(user.uid)
+    getLists(user.uid)
   }, []);
 
   const handleNameChange=(textInput)=>{
