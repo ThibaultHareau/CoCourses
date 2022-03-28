@@ -39,7 +39,8 @@ export default function ListDetailScreen ( {navigation, route} ) {
     const { user, logout } = useContext(AuthContext);
     const listUid = route.params.listUid;
     const listName = route.params.listName;
-    // const userId = route.params.userId;
+    const listOwner = route.params.listOwner
+    const userId = route.params.userId;
   
     const handleNameChange=(textInput)=>{
       setName(textInput)
@@ -91,7 +92,6 @@ export default function ListDetailScreen ( {navigation, route} ) {
     }
 
     useEffect (() => {
-      console.log("hello")
       setDeletion(false)
       getListDetails(listUid)
     },[deletion]);
@@ -145,16 +145,20 @@ export default function ListDetailScreen ( {navigation, route} ) {
         }
         <View key={listUid}>
           <Text style={styles.listName} key={"Name"+listUid}>{listName}</Text>
-          <FormButton buttonTitle='Supprimer' key={"Delete"+listUid} onPress={() => handleListDelete(listUid)} key={"delete"+listUid.toString()}/>
-          <FormButton buttonTitle='Modifier' key={"Update"+listUid} onPress={() => setIsEdit(true)} key={"update"+listUid.toString()}/>
+          { (listOwner === userId)
+            ?<FormButton buttonTitle='Supprimer' key={"Delete"+listUid} onPress={() => handleListDelete(listUid)} key={"delete"+listUid}/>
+            : null
+          }
+          
+          <FormButton buttonTitle='Modifier' key={"Update"+listUid} onPress={() => setIsEdit(true)} key={"update"+listUid}/>
         </View>
       {itemList.map((item) => (
         <View style={(item['inCart']) ? styles.productIn : styles.productOut} key={item.uuid}>
-          <Text style={styles.listName} key={"Name"+(item.uuid).toString()}>{item.name}</Text>
-          <Text style={styles.listName} key={"Price"+(item.uuid).toString()}>{item.price+"€ "}</Text>
-          <Text style={styles.listName} key={item.uuid.toString()}>{"Quantité : "+item['quantity']}</Text>
-          <FormButton buttonTitle={(item['inCart']) ? "Je ne l'ai pas" : "Je l'ai"} onPress={() => handleInCartChange(!item['inCart'],item.uuid)} key={"Change"+(item.uuid).toString()}/>
-          <FormButton buttonTitle={"X"} onPress={() => handleDeleteItem(item.uuid)} key={"Delete"+(item.uuid).toString()}/>
+          <Text style={styles.listName} key={"Name"+(item.uuid)}>{item.name}</Text>
+          <Text style={styles.listName} key={"Price"+(item.uuid)}>{item.price+"€ "}</Text>
+          <Text style={styles.listName} key={item.uuid}>{"Quantité : "+item['quantity']}</Text>
+          <FormButton buttonTitle={(item['inCart']) ? "Je ne l'ai pas" : "Je l'ai"} onPress={() => handleInCartChange(!item['inCart'],item.uuid)} key={"Change"+item.uuid}/>
+          <FormButton buttonTitle={"X"} onPress={() => handleDeleteItem(item.uuid)} key={"Delete"+(item.uuid)}/>
         </View>
       ))}
       <View key="Membres">

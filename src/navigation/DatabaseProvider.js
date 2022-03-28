@@ -16,6 +16,8 @@ export const DatabaseProvider = ({ children }) => {
   const [listMembers, setListMembers] = useState([]);
   const [userToShare, setUserToShare] = useState([]);
   const [deletion, setDeletion] = useState(false);
+  const [shop, setShop] = useState(null);
+  const [shopsList, setShopsList] = useState([]);
 
   const getElement = (path,elementId,elementName,setState) => {
     database()
@@ -70,6 +72,8 @@ export const DatabaseProvider = ({ children }) => {
         listMembers,
         setDeletion,
         setUserToShare,
+        shop,
+        shopsList,
         userToShare,
         getUser : (useruid) => {
           database()
@@ -226,6 +230,30 @@ export const DatabaseProvider = ({ children }) => {
         },
         getUserByEmail : (email) => {
           getElement('/users/',email,'email',setUserToShare);
+        },
+        getShop : (shopId) => {
+          setShop(null)
+          database()
+            .ref('/shop/'+shopId)
+            .on('value', snapshot => {
+              let data = snapshot.val();
+              if (data !== null) {
+                setShop(data)
+              }
+            });
+        },
+        getShopsList : () => {
+          database()
+            .ref('/shop/')
+            .on('value', snapshot => {
+              setShopsList([])
+              let data = snapshot.val();
+              if (data !== null) {
+                Object.values(data).map((shop) => {
+                  setShopsList(oldArray => [...oldArray,shop])
+                })
+              }
+            });
         }
       }}
     >
