@@ -16,6 +16,7 @@ export default function ListDetailScreen ( {navigation, route} ) {
       addListMember,
       deleteItemInList, 
       deleteList, 
+      deletion,
       getItemsList, 
       getListDetails,
       getListMembers, 
@@ -23,6 +24,7 @@ export default function ListDetailScreen ( {navigation, route} ) {
       itemList, 
       listDetails,
       listMembers, 
+      setDeletion,
       setUserToShare,
       updateInCart , 
       updateListName,
@@ -85,7 +87,14 @@ export default function ListDetailScreen ( {navigation, route} ) {
 
     const handleDeleteItem = (itemId) => {
       deleteItemInList(listUid,itemId);
+      getListDetails(route.params.listUid);
     }
+
+    useEffect (() => {
+      console.log("hello")
+      setDeletion(false)
+      getListDetails(listUid)
+    },[deletion]);
 
     const handleShareList = (email) => {
       getUserByEmail(email)
