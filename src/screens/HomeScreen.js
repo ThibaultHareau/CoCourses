@@ -12,6 +12,7 @@ import { AuthContext } from '../navigation/AuthProvider';
 import { InShopContext } from '../navigation/InShopProvider';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 import ShopButton from '../components/atoms/ShopButton';
+import ListsLink from '../components/atoms/ListsLink';
 
 export default function HomeScreen({ navigation }) {
 
@@ -49,10 +50,11 @@ export default function HomeScreen({ navigation }) {
           "Bienvenue dans le magasin " + inShop
         }
       </Text> */}
-      <Text style={styles.title_3}>Vos listes</Text>
-      <View style={styles.button}>
+      {/* <Text style={styles.title_3}>Vos listes</Text> */}
+      <ListsLink onPress={() => navigation.navigate('Lists', { userId: user.uid })} />
+      {/* <View style={styles.button}>
         <FormButton buttonTitle='Listes' onPress={() => navigation.navigate('Lists', { userId: user.uid })} />
-      </View>
+      </View> */}
       <View style={styles.addList}>
         <FormInput
           value={name}
@@ -131,6 +133,6 @@ const styles = StyleSheet.create({
   },
   lists: {
     position: 'absolute',
-    top:hp('50%')
+    top:hp('40%')
   }
 });

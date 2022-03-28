@@ -8,6 +8,7 @@ import MainTemplate from '../components/templates/MainTemplate';
 import { Colors } from '../styles/index';
 
 import { DatabaseContext } from '../navigation/DatabaseProvider';
+import { AuthContext } from '../navigation/AuthProvider';
 
 export default function ListDetailScreen ( {navigation, route} ) {
 
@@ -33,6 +34,7 @@ export default function ListDetailScreen ( {navigation, route} ) {
     const [isEdit,setIsEdit] = useState(false);
     const [items,setItems] = useState({});
 
+    const { user, logout } = useContext(AuthContext);
     const listUid = route.params.listUid;
     const listName = route.params.listName;
     // const userId = route.params.userId;
@@ -67,7 +69,7 @@ export default function ListDetailScreen ( {navigation, route} ) {
     //delete
     const handleListDelete = async (listId) => {
       deleteList(listId)
-      navigation.navigate("Lists",{userId:userId});
+      navigation.navigate("Lists",{userId:user.uid});
     }
   
     //update
