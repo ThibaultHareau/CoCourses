@@ -13,10 +13,13 @@ import { DatabaseContext } from '../navigation/DatabaseProvider';
 export default function InOrOutScreen( {navigation} ) {
   
   const { inShop, setInShop } = useContext(InShopContext);
-  const { getShopsList, getShop, shop, shopsList } = useContext(DatabaseContext);
+  const { getShopsList, getShop, setShop, shop, shopsList } = useContext(DatabaseContext);
   
   //const inShopPress = () => {setInShop(1),navigation.navigate('Main')}; 
-  const outShopPress = () => {setInShop(-1),navigation.navigate('Main')};
+  const outShopPress = () => {
+    setShop(null);
+    navigation.navigate('Main');
+  };
 
   const shopButtonPress = (shopId) => {
     getShop(shopId);
