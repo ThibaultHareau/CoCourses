@@ -6,12 +6,14 @@ import FormInput from '../components/atoms/FormInput';
 import MainTemplate from '../components/templates/MainTemplate';
 
 import { DatabaseContext } from '../navigation/DatabaseProvider';
-//import { StorageContext } from '../navigation/StorageProvider';
+import { StorageContext } from '../navigation/StorageProvider';
+
+import { windowWidth, windowHeight } from "../styles/index";
 
 export default function ProductDetailScreen ( {navigation, route} ) {
   
     const { deleteItem, item, getItem, updateItem } = useContext(DatabaseContext);
-    //const { getImage, imageUrl } = useContext(StorageContext);
+    const { getImage, imageUrl } = useContext(StorageContext);
     
     const [text,setText] = useState();
     const [name,setName] = useState("");
@@ -35,9 +37,9 @@ export default function ProductDetailScreen ( {navigation, route} ) {
     //read
     useEffect(() => {
       getItem(productId)
-      //getImage(productId)
+      getImage(productId)
     },[]);
-  
+
     //delete
     const handleListDelete = async (list) => {
       deleteItem(list.uuid);
@@ -74,9 +76,10 @@ export default function ProductDetailScreen ( {navigation, route} ) {
             </View>
             : null
         }
+        {console.log(imageUrl)}
       {(item === null) ? <View></View> : item.map((list) => (
         <View key={list.uuid}>
-          {/*<Image source={imageUrl} />*/}
+          <Image style={{width:windowWidth,height:200}} source={{uri : imageUrl}} />
           <Text style={styles.listName} key={"Name"+list.uuid}>{list.name}</Text>
           <Text key={"Text"+list.uuid}>{list.text}</Text>
           <FormButton buttonTitle='Supprimer' onPress={() => handleListDelete(list)} key={"delete"+list.uuid}/>
