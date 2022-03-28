@@ -29,7 +29,7 @@ const AddListModal = () => {
   }
 
   const writeToDatabase = () => {
-    addList(name, user.uid, inShop);
+    addList(name, user.uid, inShop, userData.email);
     setName("");
     // alert("Liste créée avec succès");
     setModalVisible(false);
