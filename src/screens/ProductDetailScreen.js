@@ -6,12 +6,12 @@ import FormInput from '../components/atoms/FormInput';
 import MainTemplate from '../components/templates/MainTemplate';
 
 import { DatabaseContext } from '../navigation/DatabaseProvider';
-import { StorageContext } from '../navigation/StorageProvider';
+//import { StorageContext } from '../navigation/StorageProvider';
 
 export default function ProductDetailScreen ( {navigation, route} ) {
   
     const { deleteItem, item, getItem, updateItem } = useContext(DatabaseContext);
-    const { getImage, imageUrl } = useContext(StorageContext);
+    //const { getImage, imageUrl } = useContext(StorageContext);
     
     const [text,setText] = useState();
     const [name,setName] = useState("");
@@ -35,7 +35,7 @@ export default function ProductDetailScreen ( {navigation, route} ) {
     //read
     useEffect(() => {
       getItem(productId)
-      getImage(productId)
+      //getImage(productId)
     },[]);
   
     //delete

@@ -15,6 +15,7 @@ export const DatabaseProvider = ({ children }) => {
   const [item, setItem] = useState(null);
   const [listMembers, setListMembers] = useState([]);
   const [userToShare, setUserToShare] = useState([]);
+  const [deletion, setDeletion] = useState(false);
 
   const getElement = (path,elementId,elementName,setState) => {
     database()
@@ -61,11 +62,13 @@ export const DatabaseProvider = ({ children }) => {
       value={{
         userData,
         itemList,
+        deletion,
         departmentList,
         listsList,
         listDetails,
         item,
         listMembers,
+        setDeletion,
         setUserToShare,
         userToShare,
         getUser : (useruid) => {
@@ -219,6 +222,7 @@ export const DatabaseProvider = ({ children }) => {
         },
         deleteItemInList : async (listId,itemId) => {
           await database().ref('/lists/'+listId+'/itemsList/'+itemId).remove();
+          await setDeletion(true);
         },
         getUserByEmail : (email) => {
           getElement('/users/',email,'email',setUserToShare);
