@@ -8,12 +8,14 @@ import AddProductModal from '../components/molecules/AddProductModal';
 import MainTemplate from '../components/templates/MainTemplate';
 
 import { DatabaseContext } from '../navigation/DatabaseProvider';
-//import { StorageContext } from '../navigation/StorageProvider';
+import { StorageContext } from '../navigation/StorageProvider';
+
+import { windowWidth, windowHeight } from "../styles/index";
 
 export default function ProductDetailScreen ( {navigation, route} ) {
   
     const { deleteItem, item, getItem, updateItem } = useContext(DatabaseContext);
-    //const { getImage, imageUrl } = useContext(StorageContext);
+    const { getImage, imageUrl } = useContext(StorageContext);
     
     const [text,setText] = useState();
     const [name,setName] = useState("");
@@ -37,9 +39,9 @@ export default function ProductDetailScreen ( {navigation, route} ) {
     //read
     useEffect(() => {
       getItem(productId)
-      //getImage(productId)
+      getImage(productId)
     },[]);
-  
+
     //delete
     const handleListDelete = async (list) => {
       deleteItem(list.uuid);
@@ -77,14 +79,15 @@ export default function ProductDetailScreen ( {navigation, route} ) {
             : null
         }
       {(item === null) ? <View></View> : item.map((list) => (
-        <View key={list.uuid} style={styles.container}>
-          {/*<Image source={imageUrl} />*/}
+        <View key={list.uuid}>
+          {(imageUrl===null) ? null :<Image style={{width:windowWidth,height:200}} source={{uri : imageUrl}} />}
           <Text style={styles.listName} key={"Name"+list.uuid}>{list.name}</Text>
           <Text key={"Text"+list.uuid} style={styles.listDesc}>{list.text}</Text>
           {/* <FormButton buttonTitle='Supprimer' onPress={() => handleListDelete(list)} key={"delete"+list.uuid}/> */}
           {/* <FormButton buttonTitle='Modifier' onPress={() => setOnEdit(list)} key={"update"+list.uuid}/> */}
           {/* <FormButton buttonTitle='Ajouter' onPress={() => navigation.navigate("ListsChoice",{itemName:list.name,itemId:list.uuid,userId:userId,deptId:deptId})} key={"add"+list.uuid}/> */}
           {/* <PlusButton onPress={() => navigation.navigate("ListsChoice",{itemName:list.name,itemId:list.uuid,userId:userId,deptId:deptId})} key={"add"+list.uuid}/> */}
+          // <AddProductModal itemName={list.name} deptId={deptId} itemId={list.uuid} />
           <AddProductModal itemId={list.uuid} itemName={list.name} userId={userId} deptId={deptId} />
         </View>
       ))}
