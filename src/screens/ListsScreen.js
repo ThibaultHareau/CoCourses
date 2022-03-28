@@ -31,8 +31,8 @@ export default function ListsScreen ( {navigation, route} ) {
 
   //write
   const writeToDatabase = () => {
-    addList(name,user.uid,inShop,user.email);
-    alert("Liste crée avec succés");
+    addList(name,user.uid,inShop,user.email)
+    alert("Liste crée avec succés")
   }
 
   return (
@@ -44,7 +44,7 @@ export default function ListsScreen ( {navigation, route} ) {
           onChangeText={handleNameChange}
           style={styles.input}
         />
-        <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} />
+        <FormButton buttonTitle='Ajouter' onPress={() => writeToDatabase} />
       </View>
       {(listsList === null || listsList === undefined) ? null : 
       listsList.map((list) => (

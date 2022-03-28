@@ -92,7 +92,6 @@ export default function ListDetailScreen ( {navigation, route} ) {
     }
 
     useEffect (() => {
-      console.log("hello")
       setDeletion(false)
       getListDetails(listUid)
     },[deletion]);

@@ -13,7 +13,7 @@ export default function CatalogScreen ( {navigation, route} ) {
 
   const { inShop, setInShop } = useContext(InShopContext);
   const { user, logout } = useContext(AuthContext);
-  const { getUser, addDepartment, departmentList, getDepartments } = useContext(DatabaseContext);
+  const { getUser, addDepartment, departmentList, getDepartments, shop } = useContext(DatabaseContext);
 
   const [name,setName] = useState("");
 
@@ -25,16 +25,13 @@ export default function CatalogScreen ( {navigation, route} ) {
 
   //read
   useEffect(() => {
-    getDepartments(inShop)
-  },[]);
-
-  useEffect(() => {
     getUser(user.uid)
+    getDepartments(shop.shopId)
   },[]);
 
   //write
   const writeToDatabase = () => {
-    addDepartment(name,inShop);
+    addDepartment(name,shop.shopId);
     setName("");
     alert("Rayon crée avec succés");
   }

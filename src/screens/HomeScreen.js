@@ -20,6 +20,7 @@ export default function HomeScreen({ navigation }) {
   const { inShop } = useContext(InShopContext);
   const { userData, getUser } = useContext(DatabaseContext);
   const { addList, getLists, listsList } = useContext(DatabaseContext);
+  const { getShopsList, getShop, shop, shopsList } = useContext(DatabaseContext);
 
   const [lists, setLists] = useState([]);
   const [name,setName] = useState("");
@@ -27,14 +28,21 @@ export default function HomeScreen({ navigation }) {
   useEffect(() => {
     getUser(user.uid)
     getLists(user.uid)
+    getShopsList()
   }, []);
+
+  useEffect(() => {
+    if (shopsList.length > 0) {
+      getShop(shopsList[0]['shopId'])
+    }
+  },[shopsList])
 
   const handleNameChange=(textInput)=>{
     setName(textInput)
   }
 
   const writeToDatabase = () => {
-    addList(name,user.uid,inShop);
+    addList(name,user.uid,inShop,user.email);
     setName("");
     alert("Liste créée avec succès");
   }
@@ -44,7 +52,12 @@ export default function HomeScreen({ navigation }) {
       {/* <Text style={styles.text}>Bienvenue {userData===null ? "" : userData.firstName}</Text> */}
       <Text style={styles.title}>CoCourses</Text>
       <Text style={styles.title_2}>Votre magasin du moment</Text>
-      <ShopButton buttonTitle={'Magasin ' + inShop} />
+      { (shop !== null) 
+      ? 
+        <ShopButton buttonTitle={shop.name} onPress={() => console.log(shopsList)}/>
+      :
+        null
+      }
       {/* <Text style={styles.text}>
         {inShop === -1 ?
           "Vous êtes en mode hors magasin" :
@@ -69,7 +82,7 @@ export default function HomeScreen({ navigation }) {
       {listsList.map((list) => (
         <View key={list.uuid}>
           <Text style={styles.listName} key={'Name'+list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details"  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid,listName:list.name,userId:user.uid})}/>
+          <FormButton buttonTitle="Details"  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid,listName:list.name,userId:user.uid,listOwner:list.owner})}/>
         </View>
       ))}</View>
     </MainTemplate>
