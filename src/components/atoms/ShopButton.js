@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     top: hp('23%')
   },
   buttonText: {
-    right: wp('18%'),
+    marginLeft: wp('-15%'),
     fontSize: 23,
     fontWeight:'bold',
     color: Colors.WHITE
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     shadowColor: '#52006A',
   },
   buttonImage: {
-    left: wp('18%')
+    position:'absolute',
+    right: wp('5%')
   }
 });

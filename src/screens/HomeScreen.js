@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 
 import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
+import ListButton from '../components/atoms/ListButton';
 import MainTemplate from '../components/templates/MainTemplate';
 
 import { Colors } from '../styles/index';
@@ -45,7 +46,6 @@ export default function HomeScreen({ navigation, route }) {
   return (
     <MainTemplate>
       <AddListModal />
-      {/* <Text style={styles.text}>Bienvenue {userData===null ? "" : userData.firstName}</Text> */}
       <Text style={styles.title}>CoCourses</Text>
       <Text style={styles.title_2}>Votre magasin du moment</Text>
       { (shop !== null) 
@@ -54,18 +54,12 @@ export default function HomeScreen({ navigation, route }) {
       :
         <ShopButton buttonTitle="Mode hors magasin" onPress={() => navigation.navigate("InOrOut")}/>
       }
-      {/* <Text style={styles.text}>
-        {shop.shopId === -1 ?
-          "Vous êtes en mode hors magasin" :
-          "Bienvenue dans le magasin " + shop.name
-        }
-      </Text> */}
       <ListsLink onPress={() => navigation.navigate('Lists', { userId: userData.uid })} />
       <View style={styles.lists}>
       {listsList.map((list) => (
         <View key={list.uuid}>
-          <Text style={styles.listName} key={'Name'+list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details"  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid,listName:list.name,userId:userData.uid,listOwner:list.owner})}/>
+          {/* <Text style={styles.listName} key={'Name'+list.uuid}>{list.name}</Text> */}
+          <ListButton buttonTitle={list.name}  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid,listName:list.name,userId:userData.uid,listOwner:list.owner})}/>
         </View>
       ))}</View>
     </MainTemplate>
@@ -82,22 +76,22 @@ const styles = StyleSheet.create({
   },
   title: {
     position: 'absolute',
-    top: hp('5%'),
+    top: 50,
     color: Colors.ORANGE,
     fontWeight: "bold",
     fontSize: 31,
   },
   title_2: {
     position: 'absolute',
-    top: hp('15%'),
-    left: wp('10%'),
+    top: 110,
+    left: wp('5%'),
     color: Colors.DARK_GREY,
     fontWeight: "bold",
     fontSize: 27,
   },
   title_3: {
     position: 'absolute',
-    top: hp('-35%'),
+    // top: 300,
     left: wp('10%'),
     color: Colors.DARK_GREY,
     fontWeight: "bold",
@@ -132,6 +126,7 @@ const styles = StyleSheet.create({
   lists: {
     position: 'absolute',
     top:hp('40%'),
-    // zIndex:0
+    paddingBottom:10,
+    marginBottom:10,
   }
 });

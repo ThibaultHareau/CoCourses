@@ -8,17 +8,16 @@ import { uid } from 'uid';
 
 export const StorageProvider = ({ children }) => {
 
-  const [imageUrl,setImageUrl] = useState();
+  const [imageUrl,setImageUrl] = useState(null);
 
   return (
     <StorageContext.Provider
       value={{
         imageUrl,
         getImage : async (itemId) => {
+          setImageUrl(null);
           let imageRef = storage().ref('items/'+itemId+'.jpg');
           await imageRef.getDownloadURL().then((url) => {
-              //from url you can fetched the uploaded image easily
-              console.log(url);
               setImageUrl(url);
             })
             .catch((e) => console.log('getting downloadURL of image error => ', e));

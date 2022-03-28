@@ -3,10 +3,12 @@ import {Alert ,StyleSheet, Text, TextInput, TouchableOpacity ,View} from 'react-
 
 import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
+import DeptButton from '../components/atoms/DeptButton';
 import MainTemplate from '../components/templates/MainTemplate';
 
 import { AuthContext } from '../navigation/AuthProvider';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
+import { Colors } from '../styles';
 
 export default function CatalogScreen ( {navigation, route} ) {
 
@@ -38,20 +40,23 @@ export default function CatalogScreen ( {navigation, route} ) {
 
   return (
     <MainTemplate>
-      {(shop === null) 
+      {(shop === null)
       ? 
-         null
+       null
       :
-      <View>
-        <FormInput
-          value={name}
-          placeholderText="Nom du rayon"
-          onChangeText={handleNameChange}
-          style={styles.input}
-          key={"FormListName"}
-        />
-        <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} key={"AddListButton"}/>
+      <View style={styles.container}>
+        <Text style={styles.title}>Bienvenue au magasin {shop.name}</Text>
       </View>
+      // <View>
+      //   <FormInput
+      //     value={name}
+      //     placeholderText="Nom du rayon"
+      //     onChangeText={handleNameChange}
+      //     style={styles.input}
+      //     key={"FormListName"}
+      //   />
+      //   <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} key={"AddListButton"}/>
+      // </View>
       }
       {(shop === null) 
       ? 
@@ -63,8 +68,8 @@ export default function CatalogScreen ( {navigation, route} ) {
       :
         departmentList.map((list) => (
           <View key={list.uuid}>
-            <Text style={styles.listName} key={"Name"+list.uuid}>{list.name}</Text>
-            <FormButton buttonTitle="Details" onPress={() => navigation.navigate("Products",{deptId:list.uuid,userId:user.uid})} key={"Details"+list.uuid}/>
+            {/* <Text style={styles.listName} key={"Name"+list.uuid}>{list.name}</Text> */}
+            <DeptButton buttonTitle={list.name} onPress={() => navigation.navigate("Products",{deptId:list.uuid,userId:user.uid, deptName:list.name})} key={"Details"+list.uuid}/>
           </View>
         ))
       }
@@ -78,9 +83,9 @@ export default function CatalogScreen ( {navigation, route} ) {
       marginTop:20
     },
     container: {
-      flex: 1,
-      //justifyContent: 'center',
-      //alignItems: 'center',
+      // flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     input: {
       padding:10,
@@ -98,5 +103,13 @@ export default function CatalogScreen ( {navigation, route} ) {
     },
     listName: {
       fontSize: 28
-    }
+    },
+    title: {
+      position: 'absolute',
+      top:-170,
+      color: Colors.ORANGE,
+      fontWeight: "bold",
+      fontSize: 31,
+      textAlign:'center'
+    },
   });

@@ -3,6 +3,8 @@ import {Alert, Image,  StyleSheet, Text, TextInput, TouchableOpacity ,View} from
 
 import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
+import PlusButton from '../components/atoms/PlusButton';
+import AddProductModal from '../components/molecules/AddProductModal';
 import MainTemplate from '../components/templates/MainTemplate';
 
 import { DatabaseContext } from '../navigation/DatabaseProvider';
@@ -76,15 +78,16 @@ export default function ProductDetailScreen ( {navigation, route} ) {
             </View>
             : null
         }
-        {console.log(imageUrl)}
       {(item === null) ? <View></View> : item.map((list) => (
         <View key={list.uuid}>
-          <Image style={{width:windowWidth,height:200}} source={{uri : imageUrl}} />
+          {(imageUrl===null) ? null :<Image style={{width:windowWidth,height:200}} source={{uri : imageUrl}} />}
           <Text style={styles.listName} key={"Name"+list.uuid}>{list.name}</Text>
-          <Text key={"Text"+list.uuid}>{list.text}</Text>
-          <FormButton buttonTitle='Supprimer' onPress={() => handleListDelete(list)} key={"delete"+list.uuid}/>
-          <FormButton buttonTitle='Modifier' onPress={() => setOnEdit(list)} key={"update"+list.uuid}/>
-          <FormButton buttonTitle='Ajouter' onPress={() => navigation.navigate("ListsChoice",{itemName:list.name,itemId:list.uuid,userId:userId,deptId:deptId})} key={"add"+list.uuid}/>
+          <Text key={"Text"+list.uuid} style={styles.listDesc}>{list.text}</Text>
+          {/* <FormButton buttonTitle='Supprimer' onPress={() => handleListDelete(list)} key={"delete"+list.uuid}/> */}
+          {/* <FormButton buttonTitle='Modifier' onPress={() => setOnEdit(list)} key={"update"+list.uuid}/> */}
+          {/* <FormButton buttonTitle='Ajouter' onPress={() => navigation.navigate("ListsChoice",{itemName:list.name,itemId:list.uuid,userId:userId,deptId:deptId})} key={"add"+list.uuid}/> */}
+          {/* <PlusButton onPress={() => navigation.navigate("ListsChoice",{itemName:list.name,itemId:list.uuid,userId:userId,deptId:deptId})} key={"add"+list.uuid}/> */}
+          <AddProductModal itemName={list.name} deptId={deptId} itemId={list.uuid} />
         </View>
       ))}
     </MainTemplate>
@@ -98,8 +101,9 @@ export default function ProductDetailScreen ( {navigation, route} ) {
     },
     container: {
       flex: 1,
-      //justifyContent: 'center',
-      //alignItems: 'center',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex:0
     },
     input: {
       padding:10,
@@ -116,6 +120,14 @@ export default function ProductDetailScreen ( {navigation, route} ) {
       borderRadius: 5
     },
     listName: {
-      fontSize: 28
+      fontSize: 28,
+      top:50
+    },
+    listDesc: {
+      top:70
+    },
+    containerModal: {
+      position:'absolute',
+      zIndex:2
     }
   });
