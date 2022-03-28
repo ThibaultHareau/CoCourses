@@ -60,25 +60,7 @@ export default function HomeScreen({ navigation, route }) {
           "Bienvenue dans le magasin " + shop.name
         }
       </Text> */}
-<<<<<<< HEAD
-      <ListsLink onPress={() => navigation.navigate('Lists', { userId: user.uid })} />
-      {/* <View style={styles.addList}>
-=======
-      {/* <Text style={styles.title_3}>Vos listes</Text> */}
       <ListsLink onPress={() => navigation.navigate('Lists', { userId: userData.uid })} />
-      {/* <View style={styles.button}>
-        <FormButton buttonTitle='Listes' onPress={() => navigation.navigate('Lists', { userId: user.uid })} />
-      </View> */}
-      <View style={styles.addList}>
->>>>>>> 2958f38722cc0dc8db512fbf0a061907e9581d95
-        <FormInput
-          value={name}
-          placeholderText="Nom de la liste"
-          onChangeText={handleNameChange}
-          style={styles.input}
-        />
-        <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} />
-      </View> */}
       <View style={styles.lists}>
       {listsList.map((list) => (
         <View key={list.uuid}>
