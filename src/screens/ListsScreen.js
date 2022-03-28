@@ -50,11 +50,7 @@ export default function ListsScreen ( {navigation, route} ) {
       listsList.map((list) => (
         <View key={list.uuid}>
           <Text style={styles.listName} key={'Name'+list.uuid}>{list.name}</Text>
-<<<<<<< HEAD
           <FormButton buttonTitle="Details"  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid,listName:list.name,userId:userId,listOwner:list.owner})}/>
-=======
-          <FormButton buttonTitle="Details"  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid,listName:list.name,userId:user.uid})}/>
->>>>>>> 3eeacf9c636783f4101d897aff3a7326cf42d422
         </View>
       ))}
     </MainTemplate>

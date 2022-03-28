@@ -39,12 +39,8 @@ export default function ListDetailScreen ( {navigation, route} ) {
     const { user, logout } = useContext(AuthContext);
     const listUid = route.params.listUid;
     const listName = route.params.listName;
-<<<<<<< HEAD
     const listOwner = route.params.listOwner
     const userId = route.params.userId;
-=======
-    // const userId = route.params.userId;
->>>>>>> 3eeacf9c636783f4101d897aff3a7326cf42d422
   
     const handleNameChange=(textInput)=>{
       setName(textInput)
