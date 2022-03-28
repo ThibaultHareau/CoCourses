@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Colors, Mixins, Typography } from '../../styles/index';
 
-export default function ChoiceButton({ buttonTitle, ...rest }) {
+export default function ListButton({ buttonTitle, ...rest }) {
   return (
     <TouchableOpacity style={styles.buttonContainer} {...rest}>
       <Text style={styles.buttonText}>{buttonTitle}</Text>
@@ -12,18 +12,19 @@ export default function ChoiceButton({ buttonTitle, ...rest }) {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    width: Mixins.windowWidth / 2,
-    height: Mixins.windowHeight / 15,
-    backgroundColor: Colors.PRIMARY,
+    width: Mixins.windowWidth / 1.4,
+    height: Mixins.windowHeight / 13,
+    backgroundColor: Colors.WHITE,
     padding: 0.1*(Mixins.windowHeight / 15),
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
-    marginTop:10
+    elevation:2,
+    marginBottom:10,
   },
   buttonText: {
-    fontSize: 15,
-    color: Colors.BLACK,
-    textAlign:'center'
+    fontSize: 20,
+    fontWeight:'bold',
+    color: Colors.DARK_GREY
   }
 });

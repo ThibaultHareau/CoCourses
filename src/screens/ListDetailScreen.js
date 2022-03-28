@@ -4,6 +4,7 @@ import {Alert ,StyleSheet, Text, TextInput, TouchableOpacity ,View} from 'react-
 import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
 import MainTemplate from '../components/templates/MainTemplate';
+import MembersModal from '../components/molecules/MembersModal';
 
 import { Colors } from '../styles/index';
 
@@ -72,7 +73,7 @@ export default function ListDetailScreen ( {navigation, route} ) {
     //delete
     const handleListDelete = async (listId) => {
       deleteList(listId)
-      navigation.navigate("Lists",{userId:user.uid});
+      navigation.navigate("Main",{userId:user.uid});
     }
   
     //update
@@ -146,11 +147,11 @@ export default function ListDetailScreen ( {navigation, route} ) {
         <View key={listUid}>
           <Text style={styles.listName} key={"Name"+listUid}>{listName}</Text>
           { (listOwner === userId)
-            ?<FormButton buttonTitle='Supprimer' key={"Delete"+listUid} onPress={() => handleListDelete(listUid)} key={"delete"+listUid}/>
+            ?<FormButton buttonTitle='Supprimer' key={"Delete"+listUid} onPress={() => handleListDelete(listUid)} />
             : null
           }
           
-          <FormButton buttonTitle='Modifier' key={"Update"+listUid} onPress={() => setIsEdit(true)} key={"update"+listUid}/>
+          <FormButton buttonTitle='Modifier' key={"Update"+listUid} onPress={() => setIsEdit(true)} />
         </View>
       {itemList.map((item) => (
         <View style={(item['inCart']) ? styles.productIn : styles.productOut} key={item.uuid}>
@@ -179,6 +180,7 @@ export default function ListDetailScreen ( {navigation, route} ) {
           />
         <FormButton buttonTitle={"Partager"} onPress={() => handleShareList(email)} key={"ShareButton"}/>
       </View>
+      {/* <MembersModal listUid={listUid} listName={listName} userId={userId} listOwner={listOwner} /> */}
     </MainTemplate>
   );
 }
@@ -192,6 +194,7 @@ export default function ListDetailScreen ( {navigation, route} ) {
       flex: 1,
       //justifyContent: 'center',
       //alignItems: 'center',
+      gap:10
     },
     input: {
       padding:10,

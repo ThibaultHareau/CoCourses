@@ -1,5 +1,5 @@
-import React, {Components, useContext, useState, useEffect} from 'react';
-import {Alert, Image, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity ,View} from 'react-native'; 
+import React, { Components, useContext, useState, useEffect } from 'react';
+import { Alert, Image, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 /* Upload images
 import {launchImageLibrary} from 'react-native-image-picker';
@@ -9,18 +9,19 @@ import * as Progress from 'react-native-progress';
 import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
 import MainTemplate from '../components/templates/MainTemplate';
+import DeptButton from '../components/atoms/DeptButton';
 
 
 //import storage from '@react-native-firebase/storage';
 
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 
-export default function ProductScreen ( {navigation, route} ) {
+export default function ProductScreen({ navigation, route }) {
 
   const { addItem, getItems, itemList } = useContext(DatabaseContext);
 
-  const [name,setName] = useState("");
-  const [price,setPrice] = useState(null);
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState(null);
 
   /*
   //Image upload
@@ -31,6 +32,7 @@ export default function ProductScreen ( {navigation, route} ) {
 
   const deptId = route.params.deptId;
   const userId = route.params.userId;
+  const deptName = route.params.deptName;
 
   /*
   const selectImage = () => {
@@ -86,20 +88,20 @@ export default function ProductScreen ( {navigation, route} ) {
   };
   */
 
-  const handleNameChange=(textInput)=>{
+  const handleNameChange = (textInput) => {
     setName(textInput)
   }
-  const handlePriceChange=(priceInput)=>{
+  const handlePriceChange = (priceInput) => {
     setPrice(parseFloat(priceInput))
   }
 
   //read
   useEffect(() => {
     getItems(deptId)
-  },[]);
+  }, []);
 
   const writeToDatabase = () => {
-    addItem(name,price,deptId);
+    addItem(name, price, deptId);
     alert("Produit crée avec succès");
     setName("");
     setPrice(null);
@@ -107,8 +109,8 @@ export default function ProductScreen ( {navigation, route} ) {
 
   return (
     <MainTemplate>
-      <View>
-        <FormInput
+      {/* <View> */}
+      {/* <FormInput
           value={name}
           placeholderText="Nom du produit"
           onChangeText={handleNameChange}
@@ -124,12 +126,13 @@ export default function ProductScreen ( {navigation, route} ) {
           keyboardType="numeric"
           key={"Price"}
         />
-        <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} />
-      </View>
+        <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} /> */}
+      <Text style={styles.listName}>Vous êtes dans le rayon {deptName}</Text>
+      {/* </View> */}
       {itemList.map((list) => (
         <View key={list.uuid}>
-          <Text style={styles.listName} key={'Name'+list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("ProductDetails",{deptId:deptId, productId:list.uuid,userId:userId})} key={"Details"+list.uuid}/>
+          {/* <Text style={styles.listName} key={'Name'+list.uuid}>{list.name}</Text> */}
+          <DeptButton buttonTitle={list.name} onPress={() => navigation.navigate("ProductDetails", { deptId: deptId, productId: list.uuid, userId: userId })} key={"Details" + list.uuid} />
         </View>
       ))}
       {/*<TouchableOpacity onPress={selectImage}>
@@ -152,32 +155,35 @@ export default function ProductScreen ( {navigation, route} ) {
     </MainTemplate>
   );
 }
-  
-  const styles = StyleSheet.create({
-    button: {
-      alignItems: 'center',
-      marginTop:20
-    },
-    container: {
-      flex: 1,
-      //justifyContent: 'center',
-      //alignItems: 'center',
-    },
-    input: {
-      padding:10,
-      borderWidth:1,
-      borderColor:'#CCC',
-      width:'90%',
-      marginBottom:1,
-      borderRadius:5
-    },
-    linearGradient: {
-      flex: 1,
-      paddingLeft: 15,
-      paddingRight: 15,
-      borderRadius: 5
-    },
-    listName: {
-      fontSize: 28
-    }
-  });
+
+const styles = StyleSheet.create({
+  button: {
+    alignItems: 'center',
+    marginTop: 20
+  },
+  container: {
+    // flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+  },
+  input: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#CCC',
+    width: '90%',
+    marginBottom: 1,
+    borderRadius: 5
+  },
+  linearGradient: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 5
+  },
+  listName: {
+    fontSize: 28,
+    // top: 0,
+    marginBottom: 40,
+    textAlign: 'center'
+  }
+});

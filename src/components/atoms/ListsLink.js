@@ -16,8 +16,8 @@ export default function SignInLink({ onPress }) {
 const styles = StyleSheet.create({
   signInLink: {
     position: 'absolute',
-    bottom: hp('50%'),
-    right: wp('10%'),
+    bottom:370,
+    right: wp('11%'),
     color: Colors.DARK_GREY,
     fontWeight: "bold",
     fontSize: 27,
