@@ -18,7 +18,7 @@ export default function ListsScreen ( {navigation, route} ) {
   const [name,setName] = useState("");
   const [lists, setLists] = useState([]);
 
-  const userId = route.params.userId;
+  // const userId = route.params.userId;
 
   const handleNameChange=(textInput)=>{
     setName(textInput)
@@ -50,7 +50,7 @@ export default function ListsScreen ( {navigation, route} ) {
       listsList.map((list) => (
         <View key={list.uuid}>
           <Text style={styles.listName} key={'Name'+list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details"  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid,listName:list.name,userId:userId})}/>
+          <FormButton buttonTitle="Details"  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid,listName:list.name,userId:user.uid})}/>
         </View>
       ))}
     </MainTemplate>

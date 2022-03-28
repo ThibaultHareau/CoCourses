@@ -1,21 +1,25 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Colors, Mixins, Typography } from '../../styles/index';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default function SignInLink({ onPress }) {
   return (
     <TouchableOpacity
         onPress={onPress}
     >
-        <Text style={styles.signInLink}>Se créer un compte</Text>
+        <Text style={styles.signInLink}>Vos listes</Text>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   signInLink: {
-    fontSize: 20,
-    fontStyle: 'italic',
-    color: Colors.WHITE
+    position: 'absolute',
+    bottom: hp('6%'),
+    right: wp('10%'),
+    color: Colors.DARK_GREY,
+    fontWeight: "bold",
+    fontSize: 27,
   }
 });
