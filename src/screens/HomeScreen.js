@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Alert, View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
@@ -13,6 +13,7 @@ import { DatabaseContext } from '../navigation/DatabaseProvider';
 
 import ShopButton from '../components/atoms/ShopButton';
 import ListsLink from '../components/atoms/ListsLink';
+import AddListModal from '../components/molecules/AddListModal';
 
 export default function HomeScreen({ navigation, route }) {
 
@@ -43,6 +44,7 @@ export default function HomeScreen({ navigation, route }) {
 
   return (
     <MainTemplate>
+      <AddListModal />
       {/* <Text style={styles.text}>Bienvenue {userData===null ? "" : userData.firstName}</Text> */}
       <Text style={styles.title}>CoCourses</Text>
       <Text style={styles.title_2}>Votre magasin du moment</Text>
@@ -58,20 +60,7 @@ export default function HomeScreen({ navigation, route }) {
           "Bienvenue dans le magasin " + shop.name
         }
       </Text> */}
-      {/* <Text style={styles.title_3}>Vos listes</Text> */}
       <ListsLink onPress={() => navigation.navigate('Lists', { userId: userData.uid })} />
-      {/* <View style={styles.button}>
-        <FormButton buttonTitle='Listes' onPress={() => navigation.navigate('Lists', { userId: user.uid })} />
-      </View> */}
-      <View style={styles.addList}>
-        <FormInput
-          value={name}
-          placeholderText="Nom de la liste"
-          onChangeText={handleNameChange}
-          style={styles.input}
-        />
-        <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} />
-      </View>
       <View style={styles.lists}>
       {listsList.map((list) => (
         <View key={list.uuid}>
@@ -108,11 +97,12 @@ const styles = StyleSheet.create({
   },
   title_3: {
     position: 'absolute',
-    top: hp('35%'),
+    top: hp('-35%'),
     left: wp('10%'),
     color: Colors.DARK_GREY,
     fontWeight: "bold",
     fontSize: 27,
+    zIndex:0
   },
   text: {
     color: Colors.DARK_GREY,
@@ -141,6 +131,7 @@ const styles = StyleSheet.create({
   },
   lists: {
     position: 'absolute',
-    top:hp('40%')
+    top:hp('40%'),
+    // zIndex:0
   }
 });
