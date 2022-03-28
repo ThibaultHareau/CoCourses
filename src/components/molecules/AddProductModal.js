@@ -2,38 +2,44 @@ import React, { Component, useContext, useEffect, useState } from 'react';
 import { Image, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-import PlusButton from "../atoms/PlusButton";
 import { AuthContext } from '../../navigation/AuthProvider';
 import { InShopContext } from '../../navigation/InShopProvider';
 import { DatabaseContext } from '../../navigation/DatabaseProvider';
 import FormInput from "../atoms/FormInput";
 import FormButton from "../atoms/FormButton";
+import PlusButton from "../atoms/PlusButton";
 import ListButton from '../atoms/ListButton';
 import { Colors } from '../../styles';
 
-const AddListModal = () => {
+const AddProductModal = ({itemName, itemId, deptId}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { user, logout } = useContext(AuthContext);
-  const { inShop } = useContext(InShopContext);
-  const { userData, getUser } = useContext(DatabaseContext);
-  const { addList, getLists, listsList } = useContext(DatabaseContext);
+  const { inShop, setInShop } = useContext(InShopContext);
+  const { user } = useContext(AuthContext);
+  const { addItemToList, getLists, listsList } = useContext(DatabaseContext);
 
+  const [name,setName] = useState("");
   const [lists, setLists] = useState([]);
-  const [name, setName] = useState("");
 
-  useEffect(() => {
-    getUser(user.uid)
-  }, []);
+  // const userId = route.params.userId;
+  // const itemName = route.params.itemName;
+  // const itemId = route.params.itemId;
+  // const deptId = route.params.deptId;
 
-  const handleNameChange = (textInput) => {
+  const handleNameChange=(textInput)=>{
     setName(textInput)
   }
 
-  const writeToDatabase = () => {
-    addList(name, user.uid, inShop);
-    setName("");
-    // alert("Liste créée avec succès");
+  //read
+  useEffect(() => {
+    getLists(user.uid)
+  },[]);
+
+  //write
+  const writeToDatabase = (listId,listName) => {
+    addItemToList(listId,itemId,1);
+    alert("Ajout de : "+ itemName+" dans "+listName);
+    // navigation.navigate("ProductDetails",{deptId:deptId, productId:itemId,userId:user.uid})
     setModalVisible(false);
   }
 
@@ -47,16 +53,13 @@ const AddListModal = () => {
           setModalVisible(!modalVisible);
         }}
       >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <FormInput
-              value={name}
-              placeholderText="Nom de la liste"
-              onChangeText={handleNameChange}
-              style={styles.input}
-            />
-            <ListButton buttonTitle='Ajouter' onPress={writeToDatabase} />
+        <View style={styles.modalView}>
+          <Text style={styles.textStyle}>{itemName}</Text>
+        {listsList.map((list) => (
+          <View key={list.uuid} style={styles.list}>
+            <ListButton buttonTitle={list.name} key={"Button" + list.uuid} onPress={() => writeToDatabase(list.uuid, list.name)} />
           </View>
+        ))}
         </View>
       </Modal>
       <PlusButton style={styles.plusButton} onPress={() => setModalVisible(true)} />
@@ -108,6 +111,8 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+    fontSize:30,
+    marginBottom:10,
     zIndex: 2
   },
   modalText: {
@@ -116,21 +121,23 @@ const styles = StyleSheet.create({
     zIndex: 2
   },
   plusButton: {
-    position: 'absolute',
-    bottom: hp('-4%'),
-    left: wp('25%'),
+    // position: 'absolute',
+    // bottom: 50,
+    // left: wp('25%'),
     zIndex: 2
   },
   input: {
-    padding:10,
-    borderWidth:1,
-    borderColor:'#CCC',
-    // backgroundColor:Colors.WHITE,
-    width:'90%',
-    marginBottom:20,
-    marginTop:10,
-    borderRadius:5
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#CCC',
+    width: '90%',
+    marginBottom: 1,
+    borderRadius: 5
+  },
+  list: {
+    justifyContent:'center',
+    alignItems:'center'
   }
 });
 
-export default AddListModal;
+export default AddProductModal;

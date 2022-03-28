@@ -36,7 +36,6 @@ export default function InOrOutScreen( {navigation} ) {
         {shopsList.map((shopData) => (
           <ChoiceButton buttonTitle={shopData.name} onPress={() => shopButtonPress(shopData.shopId)} key={"Button"+shopData.shopId}/>
         ))}
-        
       </View>
 
       <View style={styles.button}>
@@ -55,8 +54,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    //justifyContent: 'center',
-    //alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     color: Colors.DARK_GREY,
