@@ -232,9 +232,9 @@ export const DatabaseProvider = ({ children }) => {
           getElement('/users/',email,'email',setUserToShare);
         },
         getShop : (shopId) => {
-          let shopList = [];
+          setShop(null)
           database()
-            .ref('/shop/0fde8aefae2')
+            .ref('/shop/'+shopId)
             .on('value', snapshot => {
               let data = snapshot.val();
               if (data !== null) {

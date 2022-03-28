@@ -6,13 +6,11 @@ import FormInput from '../components/atoms/FormInput';
 import MainTemplate from '../components/templates/MainTemplate';
 
 import { AuthContext } from '../navigation/AuthProvider';
-import { InShopContext } from '../navigation/InShopProvider';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 
 export default function CatalogScreen ( {navigation, route} ) {
 
-  const { inShop, setInShop } = useContext(InShopContext);
-  const { user, logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { getUser, addDepartment, departmentList, getDepartments, shop } = useContext(DatabaseContext);
 
   const [name,setName] = useState("");
@@ -26,7 +24,9 @@ export default function CatalogScreen ( {navigation, route} ) {
   //read
   useEffect(() => {
     getUser(user.uid)
-    getDepartments(shop.shopId)
+    if (shop !== null) {
+      getDepartments(shop.shopId)
+    }
   },[]);
 
   //write
@@ -38,6 +38,10 @@ export default function CatalogScreen ( {navigation, route} ) {
 
   return (
     <MainTemplate>
+      {(shop === null) 
+      ? 
+         null
+      :
       <View>
         <FormInput
           value={name}
@@ -48,12 +52,22 @@ export default function CatalogScreen ( {navigation, route} ) {
         />
         <FormButton buttonTitle='Ajouter' onPress={writeToDatabase} key={"AddListButton"}/>
       </View>
-      {departmentList.map((list) => (
-        <View key={list.uuid}>
-          <Text style={styles.listName} key={"Name"+list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details" onPress={() => navigation.navigate("Products",{deptId:list.uuid,userId:user.uid})} key={"Details"+list.uuid}/>
+      }
+      {(shop === null) 
+      ? 
+        <View>
+          <Text>Mode hors magasin"</Text>
+          <FormButton buttonTitle="Choisir un magasin" onPress={() => navigation.navigate("InOrOut")}/>
         </View>
-      ))}
+      
+      :
+        departmentList.map((list) => (
+          <View key={list.uuid}>
+            <Text style={styles.listName} key={"Name"+list.uuid}>{list.name}</Text>
+            <FormButton buttonTitle="Details" onPress={() => navigation.navigate("Products",{deptId:list.uuid,userId:user.uid})} key={"Details"+list.uuid}/>
+          </View>
+        ))
+      }
     </MainTemplate>
   );
 }

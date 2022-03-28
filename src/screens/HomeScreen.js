@@ -9,15 +9,14 @@ import { Colors } from '../styles/index';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 import { AuthContext } from '../navigation/AuthProvider';
-import { InShopContext } from '../navigation/InShopProvider';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
+
 import ShopButton from '../components/atoms/ShopButton';
 import ListsLink from '../components/atoms/ListsLink';
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
 
-  const { user, logout } = useContext(AuthContext);
-  const { inShop } = useContext(InShopContext);
+  const { user } = useContext(AuthContext);
   const { userData, getUser } = useContext(DatabaseContext);
   const { addList, getLists, listsList } = useContext(DatabaseContext);
   const { getShopsList, getShop, shop, shopsList } = useContext(DatabaseContext);
@@ -25,24 +24,19 @@ export default function HomeScreen({ navigation }) {
   const [lists, setLists] = useState([]);
   const [name,setName] = useState("");
 
+  //const shopId = route.params.shopId;
+
   useEffect(() => {
     getUser(user.uid)
     getLists(user.uid)
-    getShopsList()
   }, []);
-
-  useEffect(() => {
-    if (shopsList.length > 0) {
-      getShop(shopsList[0]['shopId'])
-    }
-  },[shopsList])
 
   const handleNameChange=(textInput)=>{
     setName(textInput)
   }
 
   const writeToDatabase = () => {
-    addList(name,user.uid,inShop,user.email);
+    addList(name,userData.uid,shop.shopId,userData.email);
     setName("");
     alert("Liste créée avec succès");
   }
@@ -54,18 +48,18 @@ export default function HomeScreen({ navigation }) {
       <Text style={styles.title_2}>Votre magasin du moment</Text>
       { (shop !== null) 
       ? 
-        <ShopButton buttonTitle={shop.name} onPress={() => console.log(shopsList)}/>
+        <ShopButton buttonTitle={shop.name} onPress={() => navigation.navigate("InOrOut")}/>
       :
-        null
+        <ShopButton buttonTitle="Mode hors magasin" onPress={() => navigation.navigate("InOrOut")}/>
       }
       {/* <Text style={styles.text}>
-        {inShop === -1 ?
+        {shop.shopId === -1 ?
           "Vous êtes en mode hors magasin" :
-          "Bienvenue dans le magasin " + inShop
+          "Bienvenue dans le magasin " + shop.name
         }
       </Text> */}
       {/* <Text style={styles.title_3}>Vos listes</Text> */}
-      <ListsLink onPress={() => navigation.navigate('Lists', { userId: user.uid })} />
+      <ListsLink onPress={() => navigation.navigate('Lists', { userId: userData.uid })} />
       {/* <View style={styles.button}>
         <FormButton buttonTitle='Listes' onPress={() => navigation.navigate('Lists', { userId: user.uid })} />
       </View> */}
@@ -82,7 +76,7 @@ export default function HomeScreen({ navigation }) {
       {listsList.map((list) => (
         <View key={list.uuid}>
           <Text style={styles.listName} key={'Name'+list.uuid}>{list.name}</Text>
-          <FormButton buttonTitle="Details"  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid,listName:list.name,userId:user.uid,listOwner:list.owner})}/>
+          <FormButton buttonTitle="Details"  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid,listName:list.name,userId:userData.uid,listOwner:list.owner})}/>
         </View>
       ))}</View>
     </MainTemplate>
