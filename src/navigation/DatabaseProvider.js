@@ -71,6 +71,7 @@ export const DatabaseProvider = ({ children }) => {
         item,
         listMembers,
         setDeletion,
+        setShop,
         setUserToShare,
         shop,
         shopsList,
