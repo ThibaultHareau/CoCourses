@@ -3,7 +3,6 @@ import { Image, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity } fro
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 import { AuthContext } from '../../navigation/AuthProvider';
-import { InShopContext } from '../../navigation/InShopProvider';
 import { DatabaseContext } from '../../navigation/DatabaseProvider';
 import FormInput from "../atoms/FormInput";
 import FormButton from "../atoms/FormButton";
@@ -14,9 +13,9 @@ import { Colors } from '../../styles';
 const AddProductModal = ({itemName, itemId, deptId}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { inShop, setInShop } = useContext(InShopContext);
   const { user } = useContext(AuthContext);
   const { addItemToList, getLists, listsList } = useContext(DatabaseContext);
+  const { shop } = useContext(DatabaseContext);
 
   const [name,setName] = useState("");
   const [lists, setLists] = useState([]);

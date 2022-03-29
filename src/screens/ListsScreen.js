@@ -6,14 +6,13 @@ import FormInput from '../components/atoms/FormInput';
 import MainTemplate from '../components/templates/MainTemplate';
 
 import { AuthContext } from '../navigation/AuthProvider';
-import { InShopContext } from '../navigation/InShopProvider';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 
 export default function ListsScreen ( {navigation, route} ) {
 
-  const { inShop, setInShop } = useContext(InShopContext);
   const { user, logout } = useContext(AuthContext);
   const { addList, getLists, listsList } = useContext(DatabaseContext);
+  const { shop } = useContext(DatabaseContext);
 
   const [name,setName] = useState("");
   const [lists, setLists] = useState([]);
@@ -31,7 +30,7 @@ export default function ListsScreen ( {navigation, route} ) {
 
   //write
   const writeToDatabase = () => {
-    addList(name,user.uid,inShop,user.email)
+    addList(name,user.uid,shop.shopId,user.email)
     alert("Liste crée avec succés")
   }
 

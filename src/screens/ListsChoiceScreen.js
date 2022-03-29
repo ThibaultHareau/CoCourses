@@ -6,12 +6,10 @@ import FormInput from '../components/atoms/FormInput';
 import MainTemplate from '../components/templates/MainTemplate';
 
 import { AuthContext } from '../navigation/AuthProvider';
-import { InShopContext } from '../navigation/InShopProvider';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 
 export default function ListsChoiceScreen ( {navigation, route} ) {
 
-  const { inShop, setInShop } = useContext(InShopContext);
   const { user } = useContext(AuthContext);
   const { addItemToList, getLists, listsList } = useContext(DatabaseContext);
 

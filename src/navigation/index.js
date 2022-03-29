@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { AuthProvider } from './AuthProvider';
-import { InShopProvider } from './InShopProvider';
 import { DatabaseProvider } from './DatabaseProvider';
 import { StorageProvider } from './StorageProvider';
 
@@ -12,9 +11,7 @@ export default function Providers() {
     <AuthProvider>
       <DatabaseProvider>
         <StorageProvider>
-          <InShopProvider>
             <Routes />
-          </InShopProvider>
         </StorageProvider>
       </DatabaseProvider>
     </AuthProvider>
