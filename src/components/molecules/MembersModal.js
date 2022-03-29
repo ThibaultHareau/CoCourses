@@ -73,7 +73,6 @@ const MembersModal = ({listUid, listName, listOwner, userId}) => {
       console.log(user)
       if (member.userId === user.uid) {
         alreadyMember = true
-
       }
     });
     if (alreadyMember) {

@@ -173,7 +173,16 @@ export const DatabaseProvider = ({ children }) => {
           getElement('/department/',shopId,"shopId",setDepartmentList)
         },
         getItem : (itemId) => {
-          getElement('/items/',itemId,'uuid',setItem)
+          setItem(null)
+          database()
+            .ref('/items/'+itemId)
+            .on('value', snapshot => {
+              let data = snapshot.val();
+              if (data !== null) {
+                setItem(data)
+                console.log(data)
+              }
+            });
         },
         getItems : (deptUid) => {
           getElement('/items/',deptUid,"deptUid",setItemList)
