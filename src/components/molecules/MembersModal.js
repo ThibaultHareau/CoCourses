@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Modal, StyleSheet, Text, View } from "react-native";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 import { DatabaseContext } from '../../navigation/DatabaseProvider';
 import { Colors } from '../../styles';
 import MembersButton from '../atoms/MembersButton';
 import FormInput from '../atoms/FormInput';
-import ListButton from '../atoms/ListButton';
+import ListButton from '../atoms/BasicButton';
 
 const MembersModal = ({ listUid }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -137,6 +138,9 @@ const styles = StyleSheet.create({
     zIndex: 2
   },
   membersButton: {
+    position:'absolute',
+    left:wp('30%'),
+    bottom:520,
     zIndex: 2
   },
   input: {
@@ -144,7 +148,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#CCC',
     // width: '90%',
-    // backgroundColor:Colors.WHITE,
+    backgroundColor:Colors.DARK_GREEN,
     borderRadius: 5,
     marginBottom: 20,
     marginTop: 25,

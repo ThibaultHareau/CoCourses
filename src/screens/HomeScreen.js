@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 
 import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
-import ListButton from '../components/atoms/ListButton';
+import ListButton from '../components/atoms/BasicButton';
 import MainTemplate from '../components/templates/MainTemplate';
 
 import { Colors } from '../styles/index';
@@ -24,7 +24,7 @@ export default function HomeScreen({ navigation, route }) {
   const { getShopsList, getShop, shop, shopsList } = useContext(DatabaseContext);
 
   const [lists, setLists] = useState([]);
-  const [name,setName] = useState("");
+  const [name, setName] = useState("");
 
   //const shopId = route.params.shopId;
 
@@ -32,12 +32,12 @@ export default function HomeScreen({ navigation, route }) {
     getLists(user.uid)
   }, []);
 
-  const handleNameChange=(textInput)=>{
+  const handleNameChange = (textInput) => {
     setName(textInput)
   }
 
   const writeToDatabase = () => {
-    addList(name,userData.uid,shop.shopId,userData.email);
+    addList(name, userData.uid, shop.shopId, userData.email);
     setName("");
     alert("Liste créée avec succès");
   }
@@ -47,20 +47,25 @@ export default function HomeScreen({ navigation, route }) {
       <AddListModal />
       <Text style={styles.title}>CoCourses</Text>
       <Text style={styles.title_2}>Votre magasin du moment</Text>
-      { (shop !== null) 
-      ? 
-        <ShopButton buttonTitle={shop.name} onPress={() => navigation.navigate("InOrOut")}/>
-      :
-        <ShopButton buttonTitle="Mode hors magasin" onPress={() => navigation.navigate("InOrOut")}/>
+      {(shop !== null)
+        ?
+        <ShopButton buttonTitle={shop.name} onPress={() => navigation.navigate("InOrOut")} />
+        :
+        <ShopButton buttonTitle="Mode hors magasin" onPress={() => navigation.navigate("InOrOut")} />
       }
-      <ListsLink onPress={() => navigation.navigate('Lists', { userId: userData.uid })} />
-      <View style={styles.lists}>
-      {listsList.map((list) => (
-        <View key={list.uuid}>
-          {/* <Text style={styles.listName} key={'Name'+list.uuid}>{list.name}</Text> */}
-          <ListButton buttonTitle={list.name}  key={"Button"+list.uuid} onPress={() => navigation.navigate("ListDetails",{listUid:list.uuid,listName:list.name,userId:userData.uid,listOwner:list.owner})}/>
-        </View>
-      ))}</View>
+      <Text style={styles.title_3}>Vos listes</Text>
+      <SafeAreaView style={styles.container}>
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.lists}>
+            {/* listsList.length */}
+            {listsList.map((list) => (
+              <View key={list.uuid}>
+                {/* <Text style={styles.listName} key={'Name'+list.uuid}>{list.name}</Text> */}
+                <ListButton buttonTitle={list.name} key={"Button" + list.uuid} onPress={() => navigation.navigate("ListDetails", { listUid: list.uuid, listName: list.name, userId: userData.uid, listOwner: list.owner })} />
+              </View>
+            ))}</View>
+        </ScrollView>
+      </SafeAreaView>
     </MainTemplate>
   );
 }
@@ -72,6 +77,12 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+    zIndex:0
+    // top:350
   },
   title: {
     position: 'absolute',
@@ -90,12 +101,12 @@ const styles = StyleSheet.create({
   },
   title_3: {
     position: 'absolute',
-    // top: 300,
+    top: 250,
     left: wp('10%'),
     color: Colors.DARK_GREY,
     fontWeight: "bold",
     fontSize: 27,
-    zIndex:0
+    zIndex: 0
   },
   text: {
     color: Colors.DARK_GREY,
@@ -104,12 +115,12 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
   input: {
-    padding:10,
-    borderWidth:1,
-    borderColor:'#CCC',
-    width:'90%',
-    marginBottom:1,
-    borderRadius:5
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#CCC',
+    width: '90%',
+    marginBottom: 1,
+    borderRadius: 5
   },
   listName: {
     fontSize: 28
@@ -119,13 +130,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     bottom: hp('3%'),
     right: wp('5%'),
-    zIndex:1,
-    elevation:1
+    zIndex: 1,
+    elevation: 1
   },
   lists: {
-    position: 'absolute',
-    top:hp('40%'),
-    paddingBottom:10,
-    marginBottom:10,
+    // position: 'absolute',
+    // top: hp('40%'),
+    paddingBottom: 10,
+    marginBottom: 10,
+  },
+  scrollView: {
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
+    // position:'absolute'
   }
 });
