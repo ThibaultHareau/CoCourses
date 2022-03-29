@@ -11,7 +11,7 @@ import { Colors } from '../styles/index';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 import { AuthContext } from '../navigation/AuthProvider';
 
-export default function ListDetailScreen ( {navigation, route} ) {
+export default function ListDetailScreen ({ navigation, route }) {
 
     const { 
       addListMember,
@@ -162,7 +162,7 @@ export default function ListDetailScreen ( {navigation, route} ) {
           <FormButton buttonTitle={"X"} onPress={() => handleDeleteItem(item.uuid)} key={"Delete"+(item.uuid)}/>
         </View>
       ))}
-      <View key="Membres">
+      {/* <View key="Membres">
         <Text>Membres de la liste</Text>
       </View>
       {listMembers.map((member) => (
@@ -179,8 +179,8 @@ export default function ListDetailScreen ( {navigation, route} ) {
           key="AddUserByEmail"
           />
         <FormButton buttonTitle={"Partager"} onPress={() => handleShareList(email)} key={"ShareButton"}/>
-      </View>
-      {/* <MembersModal listUid={listUid} listName={listName} userId={userId} listOwner={listOwner} /> */}
+      </View> */}
+      <MembersModal listUid={listUid} listName={listName} userId={userId} listOwner={listOwner} />
     </MainTemplate>
   );
 }
@@ -192,8 +192,6 @@ export default function ListDetailScreen ( {navigation, route} ) {
     },
     container: {
       flex: 1,
-      //justifyContent: 'center',
-      //alignItems: 'center',
       gap:10
     },
     input: {

@@ -1,16 +1,15 @@
-import React, {Components, useContext, useState, useEffect} from 'react';
-import {Alert, Image,  StyleSheet, Text, TextInput, TouchableOpacity ,View} from 'react-native'; 
+import React, { useContext, useState, useEffect } from 'react';
+import { Image,  StyleSheet, Text, View } from 'react-native'; 
 
 import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
-import PlusButton from '../components/atoms/PlusButton';
 import AddProductModal from '../components/molecules/AddProductModal';
 import MainTemplate from '../components/templates/MainTemplate';
 
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 import { StorageContext } from '../navigation/StorageProvider';
 
-import { windowWidth, windowHeight } from "../styles/index";
+import { windowWidth } from "../styles/index";
 
 export default function ProductDetailScreen ( {navigation, route} ) {
   
@@ -85,10 +84,7 @@ export default function ProductDetailScreen ( {navigation, route} ) {
           <Text key={"Text"+list.uuid} style={styles.listDesc}>{list.text}</Text>
           {/* <FormButton buttonTitle='Supprimer' onPress={() => handleListDelete(list)} key={"delete"+list.uuid}/> */}
           {/* <FormButton buttonTitle='Modifier' onPress={() => setOnEdit(list)} key={"update"+list.uuid}/> */}
-          {/* <FormButton buttonTitle='Ajouter' onPress={() => navigation.navigate("ListsChoice",{itemName:list.name,itemId:list.uuid,userId:userId,deptId:deptId})} key={"add"+list.uuid}/> */}
-          {/* <PlusButton onPress={() => navigation.navigate("ListsChoice",{itemName:list.name,itemId:list.uuid,userId:userId,deptId:deptId})} key={"add"+list.uuid}/> */}
-          {/* <AddProductModal itemName={list.name} deptId={deptId} itemId={list.uuid} />}*/}
-          <AddProductModal itemId={list.uuid} itemName={list.name} userId={userId} deptId={deptId} />
+          <AddProductModal itemId={list.uuid} itemName={list.name} userId={userId} />
         </View>
       ))}
     </MainTemplate>
