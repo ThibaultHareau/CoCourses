@@ -3,34 +3,22 @@ import {Alert ,StyleSheet, Text, TextInput, TouchableOpacity ,View} from 'react-
 
 import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
-import MainTemplate from '../components/templates/MainTemplate';
 import MembersModal from '../components/molecules/MembersModal';
+import MainTemplate from '../components/templates/MainTemplate';
 
 import { Colors } from '../styles/index';
 
-import { DatabaseContext } from '../navigation/DatabaseProvider';
 import { AuthContext } from '../navigation/AuthProvider';
+import { DatabaseContext } from '../navigation/DatabaseProvider';
 
 export default function ListDetailScreen ({ navigation, route }) {
 
-    const { 
-      addListMember,
-      deleteItemInList, 
-      deleteList, 
-      deletion,
-      getItemsList, 
-      getListDetails,
-      getListMembers, 
-      getUserByEmail,
-      itemList, 
-      listDetails,
-      listMembers, 
-      setDeletion,
-      setUserToShare,
-      updateInCart , 
-      updateListName,
-      userData,
-      userToShare    } = useContext(DatabaseContext);
+    const { addListMember, getListMembers, listMembers } = useContext(DatabaseContext);
+    const { deleteItemInList, getItemsList, itemList } = useContext(DatabaseContext);
+    const { deleteList, getListDetails, listDetails, updateInCart , updateListName} = useContext(DatabaseContext);
+    const { deletion, setDeletion } = useContext(DatabaseContext);
+    const { getUserByEmail, setUserToShare, userToShare } = useContext(DatabaseContext);
+    const { userData } = useContext(DatabaseContext);
     
     const [name,setName] = useState("");
     const [email,setEmail] = useState("");
@@ -103,13 +91,9 @@ export default function ListDetailScreen ({ navigation, route }) {
 
     const checkIfUserIsNew = (user) => {
       let alreadyMember = false
-      getListMembers(listUid)
       listMembers.map((member) => {
-        console.log(member)
-        console.log(user)
         if (member.userId===user.uid) {
           alreadyMember=true
-
         }
       });
       if (alreadyMember) {
