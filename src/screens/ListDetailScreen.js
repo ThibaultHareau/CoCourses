@@ -98,8 +98,8 @@ export default function ListDetailScreen({ navigation, route }) {
     <MainTemplate>
       <ModifyListModal navigation={navigation} listUid={listUid} listName={listName} listOwner={listOwner} userId={userId} />
       {/* <Text style={styles.text}>{count} / {itemList.length}</Text> */}
-      <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.scrollView}>
+      {/* <SafeAreaView style={styles.container}>
+        <ScrollView style={styles.scrollView}> */}
         <View>
           {itemList.map((item) => (
             <View style={styles.item}>
@@ -107,8 +107,8 @@ export default function ListDetailScreen({ navigation, route }) {
               <CrossButton onPress={() => handleDeleteItem(item.uuid)} />
           </View>))}
           </View>
-        </ScrollView>
-      </SafeAreaView>
+        {/* </ScrollView>
+      </SafeAreaView> */}
       <MembersModal listUid={listUid} />
     </MainTemplate>
   );
