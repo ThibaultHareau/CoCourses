@@ -87,7 +87,7 @@ export default function ProductDetailScreen ( {navigation, route} ) {
           {/* <FormButton buttonTitle='Modifier' onPress={() => setOnEdit(list)} key={"update"+list.uuid}/> */}
           {/* <FormButton buttonTitle='Ajouter' onPress={() => navigation.navigate("ListsChoice",{itemName:list.name,itemId:list.uuid,userId:userId,deptId:deptId})} key={"add"+list.uuid}/> */}
           {/* <PlusButton onPress={() => navigation.navigate("ListsChoice",{itemName:list.name,itemId:list.uuid,userId:userId,deptId:deptId})} key={"add"+list.uuid}/> */}
-          // <AddProductModal itemName={list.name} deptId={deptId} itemId={list.uuid} />
+          {/* <AddProductModal itemName={list.name} deptId={deptId} itemId={list.uuid} />}*/}
           <AddProductModal itemId={list.uuid} itemName={list.name} userId={userId} deptId={deptId} />
         </View>
       ))}

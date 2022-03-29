@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+import NavBar from '../components/molecules/NavBar';
+
 import HomeScreen from '../screens/HomeScreen';
 import ListsScreen from '../screens/ListsScreen';
 import ListsChoiceScreen from '../screens/ListsChoiceScreen';
@@ -11,9 +16,7 @@ import ProductDetailScreen from '../screens/ProductDetailScreen';
 import ProductScreen from '../screens/ProductScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ScanScreen from '../screens/ScanScreen';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import NavBar from '../components/molecules/NavBar';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 import { Colors } from '../styles/index';
 
 const Stack = createStackNavigator();

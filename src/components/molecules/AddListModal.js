@@ -2,22 +2,23 @@ import React, { Component, useContext, useEffect, useState } from 'react';
 import { Image, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-import PlusButton from "../atoms/PlusButton";
-import { AuthContext } from '../../navigation/AuthProvider';
-import { InShopContext } from '../../navigation/InShopProvider';
-import { DatabaseContext } from '../../navigation/DatabaseProvider';
-import FormInput from "../atoms/FormInput";
 import FormButton from "../atoms/FormButton";
+import FormInput from "../atoms/FormInput";
 import ListButton from '../atoms/ListButton';
+import PlusButton from "../atoms/PlusButton";
+
+import { AuthContext } from '../../navigation/AuthProvider';
+import { DatabaseContext } from '../../navigation/DatabaseProvider';
+
 import { Colors } from '../../styles';
 
 const AddListModal = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const { user, logout } = useContext(AuthContext);
-  const { inShop } = useContext(InShopContext);
   const { userData, getUser } = useContext(DatabaseContext);
   const { addList, getLists, listsList } = useContext(DatabaseContext);
+  const { shop } = useContext(DatabaseContext);
 
   const [lists, setLists] = useState([]);
   const [name, setName] = useState("");
@@ -31,7 +32,7 @@ const AddListModal = () => {
   }
 
   const writeToDatabase = () => {
-    addList(name, user.uid, inShop, userData.email);
+    addList(name, user.uid, shop.shopId, userData.email);
     setName("");
     // alert("Liste créée avec succès");
     setModalVisible(false);

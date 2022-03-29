@@ -2,20 +2,23 @@ import React, { useState, useContext , useEffect} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 import ChoiceButton from '../components/atoms/ChoiceButton';
-import InOrOut from '../components/molecules/InOrOut';
 import MainTemplate from '../components/templates/MainTemplate';
 
 import { Colors } from '../styles/index';
 
-import { InShopContext } from '../navigation/InShopProvider';
+import { AuthContext } from '../navigation/AuthProvider';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 
 export default function InOrOutScreen( {navigation} ) {
-  
-  const { inShop, setInShop } = useContext(InShopContext);
+
+  const { user } = useContext(AuthContext);
   const { getShopsList, getShop, setShop, shop, shopsList } = useContext(DatabaseContext);
+  const { getUser } = useContext(DatabaseContext);
   
-  //const inShopPress = () => {setInShop(1),navigation.navigate('Main')}; 
+  useEffect(() => {
+    getUser(user.uid)
+  }, []);
+
   const outShopPress = () => {
     setShop(null);
     navigation.navigate('Main');

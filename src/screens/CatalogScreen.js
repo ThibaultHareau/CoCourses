@@ -8,24 +8,23 @@ import MainTemplate from '../components/templates/MainTemplate';
 
 import { AuthContext } from '../navigation/AuthProvider';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
+
 import { Colors } from '../styles';
 
-export default function CatalogScreen ( {navigation, route} ) {
+export default function CatalogScreen ( { navigation } ) {
 
-  const { user } = useContext(AuthContext);
-  const { getUser, addDepartment, departmentList, getDepartments, shop } = useContext(DatabaseContext);
+  //const { user } = useContext(AuthContext); // Données sur l'utilisateur (liées à la connexion)
+  const { userData } = useContext(DatabaseContext); // Données utilisateur 
+  const { addDepartment, departmentList, getDepartments } = useContext(DatabaseContext); // Données sur les rayons d'un magasin
+  const { shop } = useContext(DatabaseContext); // Données sur le magasin actuel
 
-  const [name,setName] = useState("");
+  // const [name,setName] = useState("");  // Pour gérer l'affichage du formulaire d'entrée de nom d'un nouveau rayon
+  //const handleNameChange=(textInput)=>{
+  //  setName(textInput)
+  //}
 
-  // const userId = route.params.userId;
-
-  const handleNameChange=(textInput)=>{
-    setName(textInput)
-  }
-
-  //read
+  //Charge les données des rayons du magasin (si mode magasin)
   useEffect(() => {
-    getUser(user.uid)
     if (shop !== null) {
       getDepartments(shop.shopId)
     }
@@ -69,7 +68,7 @@ export default function CatalogScreen ( {navigation, route} ) {
         departmentList.map((list) => (
           <View key={list.uuid}>
             {/* <Text style={styles.listName} key={"Name"+list.uuid}>{list.name}</Text> */}
-            <DeptButton buttonTitle={list.name} onPress={() => navigation.navigate("Products",{deptId:list.uuid,userId:user.uid, deptName:list.name})} key={"Details"+list.uuid}/>
+            <DeptButton buttonTitle={list.name} onPress={() => navigation.navigate("Products",{deptId:list.uuid,userId:userData.uid, deptName:list.name})} key={"Details"+list.uuid}/>
           </View>
         ))
       }

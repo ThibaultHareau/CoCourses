@@ -19,7 +19,7 @@ import AddListModal from '../components/molecules/AddListModal';
 export default function HomeScreen({ navigation, route }) {
 
   const { user } = useContext(AuthContext);
-  const { userData, getUser } = useContext(DatabaseContext);
+  const { userData } = useContext(DatabaseContext);
   const { addList, getLists, listsList } = useContext(DatabaseContext);
   const { getShopsList, getShop, shop, shopsList } = useContext(DatabaseContext);
 
@@ -29,7 +29,6 @@ export default function HomeScreen({ navigation, route }) {
   //const shopId = route.params.shopId;
 
   useEffect(() => {
-    getUser(user.uid)
     getLists(user.uid)
   }, []);
 
