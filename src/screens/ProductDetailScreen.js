@@ -38,7 +38,7 @@ export default function ProductDetailScreen ( {navigation, route} ) {
     //read
     useEffect(() => {
       getItem(productId)
-      getImage(productId)
+      getImage(productId,'/items/')
     },[]);
 
     //delete

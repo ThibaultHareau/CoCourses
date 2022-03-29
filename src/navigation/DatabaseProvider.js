@@ -180,7 +180,6 @@ export const DatabaseProvider = ({ children }) => {
               let data = snapshot.val();
               if (data !== null) {
                 setItem(data)
-                console.log(data)
               }
             });
         },

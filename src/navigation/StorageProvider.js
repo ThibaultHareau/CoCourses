@@ -14,9 +14,9 @@ export const StorageProvider = ({ children }) => {
     <StorageContext.Provider
       value={{
         imageUrl,
-        getImage : async (itemId) => {
+        getImage : async (elementId,path) => {
           setImageUrl(null);
-          let imageRef = storage().ref('items/'+itemId+'.jpg');
+          let imageRef = storage().ref(path+elementId+'.jpg');
           await imageRef.getDownloadURL().then((url) => {
               setImageUrl(url);
             })

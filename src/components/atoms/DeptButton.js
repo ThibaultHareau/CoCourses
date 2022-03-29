@@ -1,8 +1,10 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+
 import { Colors, Mixins, Typography } from '../../styles/index';
 
 export default function ListButton({ buttonTitle, ...rest }) {
+  
   return (
     <TouchableOpacity style={styles.buttonContainer} {...rest}>
       <Text style={styles.buttonText}>{buttonTitle}</Text>

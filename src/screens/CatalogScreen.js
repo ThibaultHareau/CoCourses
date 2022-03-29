@@ -65,10 +65,9 @@ export default function CatalogScreen ( { navigation } ) {
         </View>
       
       :
-        departmentList.map((list) => (
-          <View key={list.uuid}>
-            {/* <Text style={styles.listName} key={"Name"+list.uuid}>{list.name}</Text> */}
-            <DeptButton buttonTitle={list.name} onPress={() => navigation.navigate("Products",{deptId:list.uuid,userId:userData.uid, deptName:list.name})} key={"Details"+list.uuid}/>
+        departmentList.map((dept) => (
+          <View key={dept.uuid}>
+              <DeptButton buttonTitle={dept.name} deptId={dept.uuid} onPress={() => navigation.navigate("Products",{deptId:dept.uuid,userId:userData.uid, deptName:dept.name})} key={"Details"+dept.uuid}/>
           </View>
         ))
       }
