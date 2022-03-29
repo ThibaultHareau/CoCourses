@@ -1,16 +1,13 @@
-import React, { Component, useContext, useEffect, useState } from 'react';
-import { Image, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity } from "react-native";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import React, { useContext, useEffect, useState } from 'react';
+import { Modal, StyleSheet, Text, View } from "react-native";
 
 import { AuthContext } from '../../navigation/AuthProvider';
 import { DatabaseContext } from '../../navigation/DatabaseProvider';
-import FormInput from "../atoms/FormInput";
-import FormButton from "../atoms/FormButton";
 import PlusButton from "../atoms/PlusButton";
 import ListButton from '../atoms/ListButton';
 import { Colors } from '../../styles';
 
-const AddProductModal = ({itemName, itemId, deptId}) => {
+const AddProductModal = ({itemName, itemId}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const { user } = useContext(AuthContext);

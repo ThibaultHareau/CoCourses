@@ -1,9 +1,8 @@
-import React, {Components, useContext, useState, useEffect} from 'react';
-import {Alert, Image,  StyleSheet, Text, TextInput, TouchableOpacity ,View} from 'react-native'; 
+import React, { useContext, useState, useEffect } from 'react';
+import { Image,  StyleSheet, Text, View } from 'react-native'; 
 
 import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
-import PlusButton from '../components/atoms/PlusButton';
 import AddProductModal from '../components/molecules/AddProductModal';
 import MainTemplate from '../components/templates/MainTemplate';
 

@@ -11,21 +11,18 @@ import { Colors } from '../styles/index';
 import { AuthContext } from '../navigation/AuthProvider';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 
-export default function ListDetailScreen ( {navigation, route} ) {
+export default function ListDetailScreen ({ navigation, route }) {
 
-    const { addListMember, getListMembers, listMembers } = useContext(DatabaseContext);
     const { deleteItemInList, getItemsList, itemList } = useContext(DatabaseContext);
     const { deleteList, getListDetails, listDetails, updateInCart , updateListName} = useContext(DatabaseContext);
     const { deletion, setDeletion } = useContext(DatabaseContext);
-    const { getUserByEmail, setUserToShare, userToShare } = useContext(DatabaseContext);
-    const { userData } = useContext(DatabaseContext);
+    // const { userData } = useContext(DatabaseContext);
     
     const [name,setName] = useState("");
-    const [email,setEmail] = useState("");
     const [isEdit,setIsEdit] = useState(false);
     const [items,setItems] = useState({});
 
-    const { user, logout } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const listUid = route.params.listUid;
     const listName = route.params.listName;
     const listOwner = route.params.listOwner
@@ -33,9 +30,6 @@ export default function ListDetailScreen ( {navigation, route} ) {
   
     const handleNameChange=(textInput)=>{
       setName(textInput)
-    }
-    const handleEmailChange=(textInput)=>{
-      setEmail(textInput)
     }
 
     const getItems=()=>{
@@ -47,7 +41,6 @@ export default function ListDetailScreen ( {navigation, route} ) {
     //read
     useEffect(() => {
       getListDetails(route.params.listUid)
-      getListMembers(route.params.listUid)
     },[]);
 
     useEffect(() => {
@@ -85,32 +78,6 @@ export default function ListDetailScreen ( {navigation, route} ) {
       getListDetails(listUid)
     },[deletion]);
 
-    const handleShareList = (email) => {
-      getUserByEmail(email)
-    }
-
-    const checkIfUserIsNew = (user) => {
-      let alreadyMember = false
-      listMembers.map((member) => {
-        if (member.userId===user.uid) {
-          alreadyMember=true
-        }
-      });
-      if (alreadyMember) {
-        alert("Cette personne est déjà dans la liste")
-      }
-      else {
-        addListMember(listUid,user.uid,user.email)
-        alert("Ajout de "+user.email)
-      }
-      setUserToShare([])
-    }
-
-    useEffect (() => {
-      if (userToShare.length !==0) {checkIfUserIsNew(userToShare[0])}
-      else {(email !== '') ? alert("Cette adresse mail n'est pas enregistrée") : null}
-    }, [userToShare])
-
   return (
     <MainTemplate>
         {isEdit ?
@@ -146,25 +113,7 @@ export default function ListDetailScreen ( {navigation, route} ) {
           <FormButton buttonTitle={"X"} onPress={() => handleDeleteItem(item.uuid)} key={"Delete"+(item.uuid)}/>
         </View>
       ))}
-      <View key="Membres">
-        <Text>Membres de la liste</Text>
-      </View>
-      {listMembers.map((member) => (
-        <View key={member.userId}>
-          <Text style={styles.listName} key={"Id"+member.userId}>{member.email}</Text>
-        </View>
-      ))}
-      <View>
-        <FormInput
-          value={email}
-          placeholderText="Email de votre ami"
-          onChangeText={handleEmailChange}
-          style={styles.input}
-          key="AddUserByEmail"
-          />
-        <FormButton buttonTitle={"Partager"} onPress={() => handleShareList(email)} key={"ShareButton"}/>
-      </View>
-      {/* <MembersModal listUid={listUid} listName={listName} userId={userId} listOwner={listOwner} /> */}
+      <MembersModal listUid={listUid} />
     </MainTemplate>
   );
 }
@@ -176,8 +125,6 @@ export default function ListDetailScreen ( {navigation, route} ) {
     },
     container: {
       flex: 1,
-      //justifyContent: 'center',
-      //alignItems: 'center',
       gap:10
     },
     input: {

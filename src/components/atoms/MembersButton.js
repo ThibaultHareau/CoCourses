@@ -1,6 +1,5 @@
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { Colors, Mixins, Typography } from '../../styles/index';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default function PlusButton({ ...rest }) {
@@ -13,7 +12,7 @@ export default function PlusButton({ ...rest }) {
   
   const styles = StyleSheet.create({
       icon: {
-        width: wp('20%'),
+        width: wp('10%'),
         resizeMode:'contain'
       }
   });
