@@ -4,7 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 import FormButton from "../atoms/FormButton";
 import FormInput from "../atoms/FormInput";
-import ListButton from '../atoms/ListButton';
+import ListButton from '../atoms/BasicButton';
 import PlusButton from "../atoms/PlusButton";
 
 import { AuthContext } from '../../navigation/AuthProvider';
@@ -70,12 +70,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    // marginTop: 22,
     zIndex: 2
   },
   modalView: {
     margin: 30,
-    top:50,
+    // top:50,
     backgroundColor: Colors.PRIMARY,
     borderRadius: 20,
     padding: 15,
@@ -91,20 +91,20 @@ const styles = StyleSheet.create({
     elevation: 5,
     zIndex: 2
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-    zIndex: 2
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-    zIndex: 2
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-    zIndex: 2
-  },
+  // button: {
+  //   borderRadius: 20,
+  //   padding: 10,
+  //   elevation: 2,
+  //   zIndex: 2
+  // },
+  // buttonOpen: {
+  //   backgroundColor: "#F194FF",
+  //   zIndex: 2
+  // },
+  // buttonClose: {
+  //   backgroundColor: "#2196F3",
+  //   zIndex: 2
+  // },
   textStyle: {
     color: "white",
     fontWeight: "bold",
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   plusButton: {
     position: 'absolute',
-    bottom: hp('-4%'),
+    bottom: hp('-48%'),
     left: wp('25%'),
     zIndex: 2
   },
@@ -126,8 +126,8 @@ const styles = StyleSheet.create({
     padding:10,
     borderWidth:1,
     borderColor:'#CCC',
-    // backgroundColor:Colors.WHITE,
-    width:'90%',
+    backgroundColor:Colors.DARK_GREEN,
+    // width:'90%',
     marginBottom:20,
     marginTop:10,
     borderRadius:5

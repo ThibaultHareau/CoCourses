@@ -32,12 +32,13 @@ function StackHomeScreen() {
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
-      }
+      },
+      headerBackImageSource:"../assets/images/BackArrow.png",
     }}>
       <StackHome.Screen name='Home' component={HomeScreen} options={{ header: () => null }} />
-      <StackHome.Screen name='Lists' component={ListsScreen} />
-      <StackHome.Screen name='ListsChoice' component={ListsChoiceScreen} />
-      <StackHome.Screen name='ListDetails' component={ListDetailScreen} />
+      {/* <StackHome.Screen name='Lists' component={ListsScreen} />
+      <StackHome.Screen name='ListsChoice' component={ListsChoiceScreen} /> */}
+      <StackHome.Screen name='ListDetails' component={ListDetailScreen} options={({ route }) => ({ title: route.params.listName })} />
     </StackHome.Navigator>
   )
 }
@@ -49,11 +50,12 @@ function StackCatalogScreen() {
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
-      }
+      },
+      headerBackImageSource:'../assets/images/BackArrow.png',
     }}>
       <StackCatalog.Screen name='Catalog' component={CatalogScreen} options={{ header: () => null }} />
-      <StackCatalog.Screen name='ProductDetails' component={ProductDetailScreen} />
-      <StackCatalog.Screen name='Products' component={ProductScreen} />
+      <StackCatalog.Screen name='ProductDetails' component={ProductDetailScreen} options={({ route }) => ({ title: route.params.productName })} />
+      <StackCatalog.Screen name='Products' component={ProductScreen} options={({ route }) => ({ title: route.params.deptName })} />
     </StackCatalog.Navigator>
   )
 }
@@ -91,5 +93,8 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#F7E7D5'
-  }
+  },
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
 })
