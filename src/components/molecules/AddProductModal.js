@@ -4,7 +4,7 @@ import { Modal, StyleSheet, Text, View } from "react-native";
 import { AuthContext } from '../../navigation/AuthProvider';
 import { DatabaseContext } from '../../navigation/DatabaseProvider';
 import PlusButton from "../atoms/PlusButton";
-import ListButton from '../atoms/ListButton';
+import BasicButton from '../atoms/BasicButton';
 import { Colors } from '../../styles';
 
 const AddProductModal = ({itemName, itemId}) => {
@@ -16,11 +16,6 @@ const AddProductModal = ({itemName, itemId}) => {
 
   const [name,setName] = useState("");
   const [lists, setLists] = useState([]);
-
-  // const userId = route.params.userId;
-  // const itemName = route.params.itemName;
-  // const itemId = route.params.itemId;
-  // const deptId = route.params.deptId;
 
   const handleNameChange=(textInput)=>{
     setName(textInput)
@@ -35,7 +30,6 @@ const AddProductModal = ({itemName, itemId}) => {
   const writeToDatabase = (listId,listName) => {
     addItemToList(listId,itemId,1);
     alert("Ajout de : "+ itemName+" dans "+listName);
-    // navigation.navigate("ProductDetails",{deptId:deptId, productId:itemId,userId:user.uid})
     setModalVisible(false);
   }
 
@@ -53,7 +47,7 @@ const AddProductModal = ({itemName, itemId}) => {
           <Text style={styles.textStyle}>{itemName}</Text>
         {listsList.map((list) => (
           <View key={list.uuid} style={styles.list}>
-            <ListButton buttonTitle={list.name} key={"Button" + list.uuid} onPress={() => writeToDatabase(list.uuid, list.name)} />
+            <BasicButton buttonTitle={list.name} key={"Button" + list.uuid} onPress={() => writeToDatabase(list.uuid, list.name)} />
           </View>
         ))}
         </View>
@@ -117,9 +111,6 @@ const styles = StyleSheet.create({
     zIndex: 2
   },
   plusButton: {
-    // position: 'absolute',
-    // bottom: 50,
-    // left: wp('25%'),
     zIndex: 2
   },
   input: {

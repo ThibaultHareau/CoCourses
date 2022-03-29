@@ -2,29 +2,32 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Colors, Mixins, Typography } from '../../styles/index';
 
-export default function DeptButton({ buttonTitle, ...rest }) {
+export default function CrossButton({ ...rest }) {
   return (
     <TouchableOpacity style={styles.buttonContainer} {...rest}>
-      <Text style={styles.buttonText}>{buttonTitle}</Text>
+      <Text style={styles.buttonText}>x</Text>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    width: Mixins.windowWidth / 1.4,
-    height: Mixins.windowHeight / 13,
-    backgroundColor: Colors.WHITE,
-    padding: 0.1*(Mixins.windowHeight / 15),
+    width: Mixins.windowWidth / 7,
+    height: Mixins.windowHeight / 14,
+    backgroundColor: Colors.RED,
+    // padding: 0.1*(Mixins.windowHeight / 20),
     alignItems: 'center',
+    alignContent: 'center',
     justifyContent: 'center',
-    borderRadius: 8,
+    borderRadius: 30,
     elevation:2,
     marginBottom:10,
+    marginLeft:5
   },
   buttonText: {
-    fontSize: 20,
-    fontWeight:'bold',
-    color: Colors.DARK_GREY
+    fontSize: 30,
+    // fontWeight:'bold',
+    color: Colors.DARK_GREY,
+    marginBottom:8
   }
 });
