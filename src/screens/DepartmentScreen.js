@@ -3,7 +3,7 @@ import { Alert, Image, Platform, SafeAreaView, StyleSheet, Text, TextInput, Touc
 
 import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
-import DeptButton from '../components/atoms/DeptButton';
+import ProductButton from '../components/atoms/ProductButton';
 import MainTemplate from '../components/templates/MainTemplate';
 
 import { DatabaseContext } from '../navigation/DatabaseProvider';
@@ -65,7 +65,7 @@ export default function DepartmentScreen({ navigation, route }) {
       {itemList.map((list) => (
         <View key={list.uuid}>
           {/* <Text style={styles.listName} key={'Name'+list.uuid}>{list.name}</Text> */}
-          <DeptButton buttonTitle={list.name} onPress={() => navigation.navigate("ProductDetails", { deptId: deptId, productId: list.uuid, userId: userData.uid, productName:list.name })} key={"Details" + list.uuid} />
+          <ProductButton buttonTitle={list.name} onPress={() => navigation.navigate("ProductDetails", { deptId: deptId, productId: list.uuid, userId: userData.uid, productName:list.name })} key={"Details" + list.uuid} />
         </View>
       ))}
     </MainTemplate>

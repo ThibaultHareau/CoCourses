@@ -18,7 +18,8 @@ export const StorageProvider = ({ children }) => {
           setImageUrl(null);
           let imageRef = storage().ref(path+elementId+'.jpg');
           await imageRef.getDownloadURL().then((url) => {
-              setImageUrl(url);
+              console.log(url);
+              setImageUrl(url)
             })
             .catch((e) => console.log('getting downloadURL of image error => ', e));
         }
