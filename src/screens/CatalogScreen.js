@@ -9,7 +9,7 @@ import MainTemplate from '../components/templates/MainTemplate';
 import { AuthContext } from '../navigation/AuthProvider';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 
-import { Colors } from '../styles';
+import { Colors, Mixins } from '../styles/index';
 
 export default function CatalogScreen ( { navigation } ) {
 
@@ -59,31 +59,49 @@ export default function CatalogScreen ( { navigation } ) {
       }
       {(shop === null) 
       ? 
-        <View>
-          <Text>Mode hors magasin"</Text>
+        <View style={styles.container}>
+          <Text style={styles.title}>Mode hors magasin"</Text>
           <FormButton buttonTitle="Choisir un magasin" onPress={() => navigation.navigate("InOrOut")}/>
         </View>
       
       :
-        departmentList.map((dept) => (
-          <View key={dept.uuid}>
-              <DeptButton buttonTitle={dept.name} deptId={dept.uuid} onPress={() => navigation.navigate("Products",{deptId:dept.uuid,userId:userData.uid, deptName:dept.name})} key={"Details"+dept.uuid}/>
+        <View key="DepartmentsZone" style={styles.departmentBlock}>
+        {departmentList.map((dept) => (
+          <View key={dept.uuid} style={styles.buttonContainer}>
+              <DeptButton style={styles.departmentTile} buttonTitle={dept.name} imageUrl={dept.imageUrl} onPress={() => navigation.navigate("Products",{deptId:dept.uuid,userId:userData.uid, deptName:dept.name})} key={"Details"+dept.uuid}/>
           </View>
-        ))
+        ))}
+        </View>
       }
     </MainTemplate>
   );
 }
   
   const styles = StyleSheet.create({
-    button: {
-      alignItems: 'center',
-      marginTop:20
+    buttonContainer: {
+      width:13*Mixins.windowWidth/30,
+      marginLeft:Mixins.windowWidth/30,
+      marginRight:Mixins.windowWidth/30,
+      marginBottom:Mixins.windowHeight/50,
+      backgroundColor:Colors.WHITE,
+      borderColor: "rgba(0,0,0,0.3)",
+      borderWidth:1,
+      borderRadius:5
     },
     container: {
-      // flex: 1,
+      marginTop:Mixins.windowHeight/20,
+      height:Mixins.windowHeight/6,
+      width:Mixins.windowWidth,
       justifyContent: 'center',
-      alignItems: 'center',
+      alignItems: 'center'
+    },
+    departmentBlock: {
+      width:Mixins.windowWidth,
+      flex: 1,
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      alignItems: 'flex-start',
+      marginTop:Mixins.windowHeight/80
     },
     input: {
       padding:10,
@@ -103,8 +121,6 @@ export default function CatalogScreen ( { navigation } ) {
       fontSize: 28
     },
     title: {
-      position: 'absolute',
-      top:-170,
       color: Colors.ORANGE,
       fontWeight: "bold",
       fontSize: 31,

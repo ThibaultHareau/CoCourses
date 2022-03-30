@@ -6,13 +6,14 @@ import FormInput from '../components/atoms/FormInput';
 import DeptButton from '../components/atoms/DeptButton';
 import MainTemplate from '../components/templates/MainTemplate';
 
-
 import { DatabaseContext } from '../navigation/DatabaseProvider';
+import { StorageContext } from '../navigation/StorageProvider';
 
-export default function ProductScreen({ navigation, route }) {
+export default function DepartmentScreen({ navigation, route }) {
 
   const { /*addItem,*/ getItems, itemList } = useContext(DatabaseContext); // Données sur les produits d'un rayon
   const { userData } = useContext(DatabaseContext); // Données utilisateur 
+  const { getImage } = useContext(StorageContext); // Données utilisateur 
 
   // const [name, setName] = useState(""); // Formulaire pour créer un produit
   // const handleNameChange = (textInput) => {

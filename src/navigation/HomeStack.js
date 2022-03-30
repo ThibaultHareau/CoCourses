@@ -13,7 +13,7 @@ import InOrOutScreen from '../screens/InOrOutScreen';
 import ListDetailScreen from '../screens/ListDetailScreen';
 import CatalogScreen from '../screens/CatalogScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
-import ProductScreen from '../screens/ProductScreen';
+import DepartmentScreen from '../screens/DepartmentScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ScanScreen from '../screens/ScanScreen';
 
@@ -55,7 +55,7 @@ function StackCatalogScreen() {
     }}>
       <StackCatalog.Screen name='Catalog' component={CatalogScreen} options={{ header: () => null }} />
       <StackCatalog.Screen name='ProductDetails' component={ProductDetailScreen} options={({ route }) => ({ title: route.params.productName })} />
-      <StackCatalog.Screen name='Products' component={ProductScreen} options={({ route }) => ({ title: route.params.deptName })} />
+      <StackCatalog.Screen name='Products' component={DepartmentScreen} options={({ route }) => ({ title: route.params.deptName })} />
     </StackCatalog.Navigator>
   )
 }
