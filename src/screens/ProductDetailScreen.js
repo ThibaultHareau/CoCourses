@@ -9,7 +9,7 @@ import MainTemplate from '../components/templates/MainTemplate';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 import { StorageContext } from '../navigation/StorageProvider';
 
-import { Colors, windowWidth, windowHeight } from "../styles/index";
+import { Colors, Mixins, Spacing, windowWidth, windowHeight } from "../styles/index";
 
 export default function ProductDetailScreen ( {navigation, route} ) {
   
@@ -79,15 +79,15 @@ export default function ProductDetailScreen ( {navigation, route} ) {
       */}
       {(item === null) ? null :
         <View key="MainFrame" style={styles.mainFrame}>
-          <View key={"Image"+item.uuid} style={{width:"100%"}}>
-            {(imageUrl===null) ? null :<Image style={{width:windowWidth,height:200}} source={{uri : imageUrl}} />}
+          <View key={"Image"+item.uuid} style={styles.imageContainer}>
+            {(imageUrl===null) ? null :<Image style={styles.imageStyle} source={{uri : imageUrl}} />}
           </View> 
           <View key={item.uuid}>
             <View key="TitleBlock" style={styles.titleBlock}>
               <Text style={styles.listName} key={"Name"+item.uuid}>{item.name}</Text>
             </View>
             <View key="DescriptionBlock" style={styles.descriptionBlock}>
-              {("text" in item )? <Text key={"Text"+item.uuid} style={styles.listDesc}>Ce qu'on en dit : {item.text}</Text> : null}
+              {("text" in item )? <Text key={"Text"+item.uuid} style={styles.listDesc}>Description : {item.text}</Text> : null}
               {("bilanCarbone" in item )? <Text key={"blianCarbone"+item.uuid} style={styles.listDesc}>Bilan Carbone : {item.bilanCarbone}</Text> : null}
               {("origine" in item )? <Text key={"origine"+item.uuid} style={styles.listDesc}>Origine : {item.origine}</Text> : null}
             </View>
@@ -120,6 +120,15 @@ export default function ProductDetailScreen ( {navigation, route} ) {
       marginLeft:"2%",
       width:"96%",
       justifyContent:"center"
+    },
+    imageContainer: {
+      width:Mixins.windowWidth,
+      backgroundColor:Colors.WHITE,
+    },
+    imageStyle: {
+      width:Mixins.windowWidth/2,
+      height:Mixins.windowWidth/2,
+      marginLeft:Mixins.windowWidth/4
     },
     input: {
       padding:10,
