@@ -102,9 +102,9 @@ export default function ListDetailScreen({ navigation, route }) {
         <ScrollView style={styles.scrollView}> */}
         <View>
           {itemList.map((item) => (
-            <View style={styles.item}>
-              <ListItem item={item} onPress={() => handleInCartChange(!item['inCart'], item.uuid)} />
-              <CrossButton onPress={() => handleDeleteItem(item.uuid)} />
+            <View style={styles.item} key={item.uuid}>
+              <ListItem item={item} onPress={() => handleInCartChange(!item['inCart'], item.uuid)} key={"item"+item.uuid} />
+              <CrossButton onPress={() => handleDeleteItem(item.uuid)} key={"delete"+item.uuid} />
           </View>))}
           </View>
         {/* </ScrollView>
