@@ -9,7 +9,7 @@ import MainTemplate from '../components/templates/MainTemplate';
 import { AuthContext } from '../navigation/AuthProvider';
 import { DatabaseContext } from '../navigation/DatabaseProvider';
 
-import { Colors, Mixins } from '../styles/index';
+import { Colors, Mixins, Spacing } from '../styles/index';
 
 export default function CatalogScreen ( { navigation } ) {
 
@@ -79,9 +79,9 @@ export default function CatalogScreen ( { navigation } ) {
   
   const styles = StyleSheet.create({
     buttonContainer: {
-      width:13*Mixins.windowWidth/30,
-      marginLeft:Mixins.windowWidth/30,
-      marginRight:Mixins.windowWidth/30,
+      width:Spacing.DepartmentButtonWidth,
+      marginLeft:Spacing.DepartmentButtonHorizontalMargin,
+      marginRight:Spacing.DepartmentButtonHorizontalMargin,
       marginBottom:Mixins.windowHeight/50,
       backgroundColor:Colors.WHITE,
       borderColor: "rgba(0,0,0,0.3)",

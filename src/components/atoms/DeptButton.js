@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
-import { Colors, Mixins, Typography } from '../../styles/index';
+import { Colors, Mixins, Spacing, Typography } from '../../styles/index';
 
 export default function DeptButton({ buttonTitle,imageUrl, ...rest }) {
   return (
@@ -14,7 +14,7 @@ export default function DeptButton({ buttonTitle,imageUrl, ...rest }) {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    width: Mixins.windowWidth / 2.5,
+    width: Spacing.DepartmentButtonWidth,
     height: Mixins.windowHeight / 13,
     backgroundColor: Colors.WHITE,
     padding: 0.1*(Mixins.windowHeight / 15),
@@ -34,8 +34,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width:Mixins.windowWidth / 3,
     height:Mixins.windowWidth / 3,
-    borderColor:Colors.ORANGE,
-    borderWidth:5,
     marginLeft:1.5*Mixins.windowWidth/30
   }
 });
