@@ -60,7 +60,7 @@ buck-out/
 /ios/Pods/
 
 # Infos API
-android/app/google-services.json
+# android/app/google-services.json
 
 # APK
 android/app/release/app-release.apk
