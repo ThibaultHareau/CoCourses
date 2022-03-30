@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Modal, StyleSheet, Text, View } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-import { DatabaseContext } from '../../navigation/DatabaseProvider';
+import { DatabaseContext } from '../../providers/DatabaseProvider';
 import { Colors } from '../../styles';
 import MembersButton from '../atoms/MembersButton';
 import FormInput from '../atoms/FormInput';

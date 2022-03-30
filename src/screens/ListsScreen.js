@@ -5,8 +5,8 @@ import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
 import MainTemplate from '../components/templates/MainTemplate';
 
-import { AuthContext } from '../navigation/AuthProvider';
-import { DatabaseContext } from '../navigation/DatabaseProvider';
+import { AuthContext } from '../providers/AuthProvider';
+import { DatabaseContext } from '../providers/DatabaseProvider';
 
 export default function ListsScreen ( {navigation, route} ) {
 

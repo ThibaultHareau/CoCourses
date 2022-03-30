@@ -5,7 +5,7 @@ import auth from '@react-native-firebase/auth';
 import AuthStack from './AuthStack';
 import HomeStack from './HomeStack';
 
-import { AuthContext } from './AuthProvider';
+import { AuthContext } from '../providers/AuthProvider';
 
 import Loading from '../components/Loading';
 import LoadingScreen from '../components/LoadingScreen';

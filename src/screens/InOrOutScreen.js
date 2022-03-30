@@ -6,8 +6,8 @@ import MainTemplate from '../components/templates/MainTemplate';
 
 import { Colors } from '../styles/index';
 
-import { AuthContext } from '../navigation/AuthProvider';
-import { DatabaseContext } from '../navigation/DatabaseProvider';
+import { AuthContext } from '../providers/AuthProvider';
+import { DatabaseContext } from '../providers/DatabaseProvider';
 
 export default function InOrOutScreen( {navigation} ) {
 

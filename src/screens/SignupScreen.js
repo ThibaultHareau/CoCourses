@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import FormButton from '../components/atoms/FormButton';
 import FormInput from '../components/atoms/FormInput';
 
-import { AuthContext } from '../navigation/AuthProvider';
+import { AuthContext } from '../providers/AuthProvider';
 
 export default function SignupScreen({navigation}) {
 

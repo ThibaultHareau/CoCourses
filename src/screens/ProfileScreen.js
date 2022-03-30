@@ -1,10 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import MainTemplate from '../components/templates/MainTemplate';
-import { AuthContext } from '../navigation/AuthProvider';
-import { DatabaseContext } from '../navigation/DatabaseProvider';
-import LoginButton from '../components/atoms/LoginButton';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
+import LoginButton from '../components/atoms/LoginButton';
+import MainTemplate from '../components/templates/MainTemplate';
+
+import { AuthContext } from '../providers/AuthProvider';
+import { DatabaseContext } from '../providers/DatabaseProvider';
+
 import { Colors } from '../styles/index';
 
 export default function ProfileScreen ({ navigation, route }) {

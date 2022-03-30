@@ -9,8 +9,8 @@ import MainTemplate from '../components/templates/MainTemplate';
 import { Colors } from '../styles/index';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-import { AuthContext } from '../navigation/AuthProvider';
-import { DatabaseContext } from '../navigation/DatabaseProvider';
+import { AuthContext } from '../providers/AuthProvider';
+import { DatabaseContext } from '../providers/DatabaseProvider';
 
 import ShopButton from '../components/atoms/ShopButton';
 import ListsLink from '../components/atoms/ListsLink';

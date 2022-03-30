@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Modal, StyleSheet, Text, View } from "react-native";
 
-import { AuthContext } from '../../navigation/AuthProvider';
-import { DatabaseContext } from '../../navigation/DatabaseProvider';
+import { AuthContext } from '../../providers/AuthProvider';
+import { DatabaseContext } from '../../providers/DatabaseProvider';
 import PlusButton from "../atoms/PlusButton";
 import BasicButton from '../atoms/BasicButton';
 import { Colors } from '../../styles';

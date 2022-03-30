@@ -6,8 +6,8 @@ import FormInput from '../components/atoms/FormInput';
 import ProductButton from '../components/atoms/ProductButton';
 import MainTemplate from '../components/templates/MainTemplate';
 
-import { DatabaseContext } from '../navigation/DatabaseProvider';
-import { StorageContext } from '../navigation/StorageProvider';
+import { DatabaseContext } from '../providers/DatabaseProvider';
+import { StorageContext } from '../providers/StorageProvider';
 
 export default function DepartmentScreen({ navigation, route }) {
 

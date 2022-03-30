@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { AuthProvider } from './AuthProvider';
-import { DatabaseProvider } from './DatabaseProvider';
-import { StorageProvider } from './StorageProvider';
+import { AuthProvider } from '../providers/AuthProvider';
+import { DatabaseProvider } from '../providers/DatabaseProvider';
+import { StorageProvider } from '../providers/StorageProvider';
 
 import Routes from './Routes';
 

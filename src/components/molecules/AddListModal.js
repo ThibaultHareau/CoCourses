@@ -7,8 +7,8 @@ import FormInput from "../atoms/FormInput";
 import ListButton from '../atoms/BasicButton';
 import PlusButton from "../atoms/PlusButton";
 
-import { AuthContext } from '../../navigation/AuthProvider';
-import { DatabaseContext } from '../../navigation/DatabaseProvider';
+import { AuthContext } from '../../providers/AuthProvider';
+import { DatabaseContext } from '../../providers/DatabaseProvider';
 
 import { Colors } from '../../styles';
 

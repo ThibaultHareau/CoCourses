@@ -6,8 +6,8 @@ import FormInput from '../components/atoms/FormInput';
 import AddProductModal from '../components/molecules/AddProductModal';
 import MainTemplate from '../components/templates/MainTemplate';
 
-import { DatabaseContext } from '../navigation/DatabaseProvider';
-import { StorageContext } from '../navigation/StorageProvider';
+import { DatabaseContext } from '../providers/DatabaseProvider';
+import { StorageContext } from '../providers/StorageProvider';
 
 import { Colors, Mixins, Spacing, windowWidth, windowHeight } from "../styles/index";
 

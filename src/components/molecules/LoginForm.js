@@ -8,7 +8,7 @@ import SignInLink from '../atoms/SignInLink';
 import LoginButton from '../atoms/LoginButton';
 import LoginInput from '../atoms/LoginInput';
 
-import { LoginDataContext } from '../../navigation/LoginDataProvider';
+import { LoginDataContext } from '../../providers/LoginDataProvider';
 
 import { Colors } from '../../styles/index';
 

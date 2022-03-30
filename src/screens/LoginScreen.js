@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 import LoginTemplate from '../components/templates/LoginTemplate';
 
-import { AuthContext } from '../navigation/AuthProvider';
-import { LoginDataContext, LoginDataProvider } from '../navigation/LoginDataProvider';
+import { AuthContext } from '../providers/AuthProvider';
+import { LoginDataContext, LoginDataProvider } from '../providers/LoginDataProvider';
 
 
 import { Colors } from '../styles/index';
