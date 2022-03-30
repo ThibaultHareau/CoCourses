@@ -27,13 +27,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight:'bold',
     color: Colors.DARK_GREY,
-    textAlign:"center"
+    textAlign:"center",
+    height:0.2*Spacing.DepartmentButtonWidth
   },
   imageStyle : {
     alignItems: 'center',
     justifyContent: 'center',
-    width:Mixins.windowWidth / 3,
-    height:Mixins.windowWidth / 3,
-    marginLeft:1.5*Mixins.windowWidth/30
+    width:0.8*Spacing.DepartmentButtonWidth,
+    height:0.8*Spacing.DepartmentButtonWidth,
+    marginTop:1,
+    marginLeft:0.1*Spacing.DepartmentButtonWidth
   }
 });

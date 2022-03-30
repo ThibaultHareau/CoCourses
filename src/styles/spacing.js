@@ -1,4 +1,5 @@
 import * as Mixins from './mixins';
 
-export const DepartmentButtonWidth = (13/30)*Mixins.windowWidth;
-export const DepartmentButtonHorizontalMargin = (Mixins.windowWidth-2*DepartmentButtonWidth)/4;
+const DepartmentButtonPerRow = 2;
+export const DepartmentButtonWidth = 0.85* (Mixins.windowWidth/DepartmentButtonPerRow);
+export const DepartmentButtonHorizontalMargin = (Mixins.windowWidth-2*DepartmentButtonWidth)/(2*DepartmentButtonPerRow);
