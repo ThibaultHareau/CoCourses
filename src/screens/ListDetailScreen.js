@@ -22,7 +22,7 @@ export default function ListDetailScreen({ navigation, route }) {
   const { deletion, setDeletion } = useContext(DatabaseContext);
   // const { userData } = useContext(DatabaseContext);
 
-  const [count, setCount] = useState(0);
+  //const [count, setCount] = useState(0);
   const [name, setName] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [items, setItems] = useState({});
@@ -84,21 +84,21 @@ export default function ListDetailScreen({ navigation, route }) {
     getListDetails(listUid)
   }, [deletion]);
 
-  function countItems(itemList) {
-    let count = 0
-    itemList.map( (item) => (item['inCart']) ? count++ : null )
-    return { count }
-  }
+  // function countItems(itemList) {
+  //   let count = 0
+  //   itemList.map( (item) => (item['inCart']) ? count++ : null )
+  //   return { count }
+  // }
 
-  useEffect(() => {
-    setCount(0)
-    itemList.map((item) => (item['inCart']) ? setCount(count+1) : null)
-  }, [itemList]);
+  // useEffect(() => {
+  //   setCount(0)
+  //   itemList.map((item) => (item['inCart']) ? setCount(count+1) : null)
+  // }, [itemList]);
 
   return (
     <MainTemplate>
       <ModifyListModal navigation={navigation} listUid={listUid} listName={listName} listOwner={listOwner} userId={userId} />
-      {<Text style={styles.text}>{count} / {itemList.length}</Text>}
+      {/*<Text style={styles.text}>{count} / {itemList.length}</Text>*/}
       {/* <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scrollView}> */}
         <View>
